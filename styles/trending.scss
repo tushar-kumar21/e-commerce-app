@@ -1,0 +1,54 @@
+@import './config.scss';
+
+.trending-container {
+    padding: 0em 2em;
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .trending-items {
+        max-width: 100%;
+        display: flex;
+        gap: 1.5em;
+        padding-top: 1em;
+        display: flex;
+        flex-wrap: wrap;
+
+        .trending-product {
+            flex:1 1 500px;
+            height: fit-content;
+            overflow: hidden;
+            border-radius: .5em;
+            background-color: #f5f6f6;
+            cursor: pointer;
+
+            img {
+                width: 100%;
+                object-fit: cover;
+            }
+
+            .trending-item-details {
+                padding: 1em 2em;
+                display: flex;
+                flex-direction: column;
+
+                h2 {
+                    font-size: 1.35rem;
+                    margin: 0;
+                    margin-bottom: .4em;
+                }
+
+                span {
+                    margin-bottom: 1.2em;
+                    font-size: .95rem;
+                }
+
+                button {
+                    @include btn;
+                    background-color: #000000e1;
+                }
+            }
+        }
+    }
+}

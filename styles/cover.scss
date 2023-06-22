@@ -1,0 +1,34 @@
+@import './config.scss';
+
+.cover-container{
+    max-width: 100%;
+    height: 600px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    background: url('https://firebasestorage.googleapis.com/v0/b/newcapp-38895.appspot.com/o/shopping-bg.avif?alt=media&token=b5442dad-7e71-4e79-9215-795d4b1ff260') no-repeat center center/cover;    
+
+    .content{
+        width: 50%;
+        display: flex;        
+        flex-direction: column;
+        gap: 2em;
+        padding: 0em 2.5em;
+
+        
+        h1{
+            font-size: 4rem;
+            color: var(--main-color);
+            margin: 0;
+        }
+
+        span{
+            font-size: 1.3rem;
+            color:var(--main-color);
+
+        }
+        button{
+         @include btn; 
+        }
+    }
+}

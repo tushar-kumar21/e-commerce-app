@@ -1,0 +1,84 @@
+@import './config.scss';
+
+.deals-container {
+    max-width: 100%;
+    padding: 0em 2.3em;
+
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    .deals-cards {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1em;
+
+        .product {
+            // border: 2px solid red;            
+            // max-width: 380px;
+            height: fit-content;
+            position: relative;
+            flex:1 1 380px;
+
+            img {
+                width: 100%;
+                border-radius: .8em;
+            }
+
+            .like-product {
+                margin: 1em;
+                width: 20px;
+                height: 20px;
+                position: absolute;
+                right: 0;
+                padding: .7em;
+                background: #fff;
+                border-radius: 50%;
+            }
+
+            .product-name {
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                margin: .3em 0em;
+
+                span {
+                    font-size: 1.1rem;
+                    font-weight: 600;
+                    letter-spacing: .3px;
+                }
+
+            }
+
+            .product-details {
+
+                span {
+                    color: #757575;
+                    font-size: .8rem;
+                    font-size: 0.75rem;
+                    letter-spacing: .3px;
+                }
+
+                .stars {
+                    display: flex;
+                    margin-top: .5em;
+
+                    img {
+                        width: 15px;
+                        height: 15px;
+                    }
+
+                    span {
+                        color: #3c3c3c;
+                    }
+                }
+
+                button {
+                    @include addToCartBtn;
+                }
+            }
+        }
+    }
+}

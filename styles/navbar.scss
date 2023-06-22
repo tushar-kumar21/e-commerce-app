@@ -1,0 +1,128 @@
+.navbar-container {
+    // border: 2px solid red;
+    max-width: 100%;
+
+    .small-navbar {
+        max-width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: var(--main-color);
+        padding: .5em 2em;
+
+        .phn {
+            display: flex;
+            align-items: center;
+            gap: .5em;
+
+            span {
+                font-size: 0.8rem;
+                color: #fff;
+                letter-spacing: .3px;
+            }
+        }
+
+        .nav-discount {
+            display: flex;
+            align-items: center;
+
+            span {
+                color: #fff;
+                font-size: 0.8rem;
+                letter-spacing: .3px;
+            }
+        }
+
+        .loc-lang {
+            display: flex;
+            align-items: center;
+
+            span {
+                color: #fff;
+                font-size: 0.8rem;
+            }
+
+            img {
+                margin: 0em 1em;
+            }
+        }
+    }
+
+    .main-navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: .5em 1.5em;
+
+        .logo-name {
+            display: flex;
+            align-items: center;
+
+            span{
+                color: var(--main-color);
+                font-size: 1.6rem;
+                -webkit-text-stroke: 1.3px;
+                letter-spacing: 1px;
+            }
+        }
+
+        .nav-menu{
+            display: flex;
+            align-items: center;
+            gap: 1.5em;
+
+            li{
+                list-style: none;
+                position: relative;
+
+                span{
+                    color: #000;
+                    letter-spacing: .5px;
+                }
+            }
+        }
+
+        .search-item{
+            border: 1px solid rgba(128, 128, 128, 0.744);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 2em;
+            height: 2.5em;
+            width: 23%;
+            padding: 0em 1em;
+
+            input{
+             border: none;   
+             background: transparent;
+             outline:none;
+             letter-spacing: .3px;
+
+             &::placeholder{
+                color: rgba(128, 128, 128, 0.767);
+                font-size: .9rem;
+                padding: auto 0em;
+             }
+            }
+        }
+
+        .account{
+            display: flex;
+            gap: .8em;
+
+            span{
+                font-size: 0.9rem;
+                color: #000;
+            }
+        }
+
+        .cart{
+            display: flex;
+            gap: .8em;
+
+            span{
+                font-size: 0.9rem;
+            }
+        }
+    }
+}
