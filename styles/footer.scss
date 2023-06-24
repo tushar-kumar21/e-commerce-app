@@ -5,12 +5,16 @@
     flex-wrap: wrap;
     gap: 1em;
     padding: 0em 2.3em;
-
+    margin-top: 6em;
+    
     .sections{
+        border-top: 1px solid #0000004d;
         display: flex;
         flex-direction: column;
         gap: .5em;
         flex: 1 1 fit-content;        
+        padding-top: 3em;
+        padding-bottom: 2em;
 
         h3{
             font-size: 1rem;

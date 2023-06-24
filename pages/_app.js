@@ -11,6 +11,12 @@ import '../styles/trending.scss'
 import '../styles/sellingstore.scss'
 import '../styles/services.scss'
 import '../styles/footer.scss'
+import '../styles/cart.scss'
+import { FirebaseProvider } from '@/firebase/firebase';
 export default function App({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return (
+    <FirebaseProvider>
+      <Component {...pageProps} />
+    </FirebaseProvider>
+  )
 }

@@ -29,6 +29,12 @@
         }
         button{
          @include btn; 
+
+         &:hover{
+            background-color: transparent;
+            color: var(--main-color);
+            border: 1.5px solid var(--main-color);
+         }
         }
     }
 }

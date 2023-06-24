@@ -9,6 +9,8 @@
     letter-spacing: .3px;
     padding: .8em 2em;
     border-radius: 2em;
+    transition: all .3s ease-in-out;    
+    cursor: pointer;    
 }
 
 @mixin addToCartBtn{
@@ -22,6 +24,20 @@
         letter-spacing: .3px;
         background: #fff;
         margin-top:1em;
+}
+
+@mixin logo{
+    .logo-name {
+        display: flex;
+        align-items: center;
+
+        span{
+            color: var(--main-color);
+            font-size: 1.6rem;
+            -webkit-text-stroke: 1.3px;
+            letter-spacing: 1px;
+        }
+    }
 }
 
 @mixin transition-ease{

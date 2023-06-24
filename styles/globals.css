@@ -4,5 +4,6 @@ body{
   box-sizing: border-box;
   font-family: 'Roboto Slab', serif;
   --main-color:#5b18ac;  
+  user-select: none;
 }
 

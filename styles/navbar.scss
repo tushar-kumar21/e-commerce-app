@@ -1,3 +1,5 @@
+@import './config.scss';
+
 .navbar-container {
     // border: 2px solid red;
     max-width: 100%;
@@ -54,17 +56,18 @@
         justify-content: space-between;
         padding: .5em 1.5em;
 
-        .logo-name {
-            display: flex;
-            align-items: center;
+@include logo;
+        // .logo-name {
+        //     display: flex;
+        //     align-items: center;
 
-            span{
-                color: var(--main-color);
-                font-size: 1.6rem;
-                -webkit-text-stroke: 1.3px;
-                letter-spacing: 1px;
-            }
-        }
+        //     span{
+        //         color: var(--main-color);
+        //         font-size: 1.6rem;
+        //         -webkit-text-stroke: 1.3px;
+        //         letter-spacing: 1px;
+        //     }
+        // }
 
         .nav-menu{
             display: flex;
@@ -114,6 +117,7 @@
                 font-size: 0.9rem;
                 color: #000;
             }
+            cursor: pointer;
         }
 
         .cart{
