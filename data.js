@@ -176,3 +176,17 @@ export const helpData =[
     "Feedback",
     "Security & Fraud"
 ]
+export const monthsData=[
+"january",
+"February",
+"March",
+"April",
+"May",
+"June",
+"July",
+"August",
+"September",
+"October",
+"November",
+"December"
+]

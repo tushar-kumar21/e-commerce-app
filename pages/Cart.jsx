@@ -1,196 +1,163 @@
-import * as React from "react";
+import React, { Fragment, useEffect } from "react";
 import { useState } from "react";
 import Image from "next/image";
+import { CartNavbar } from "@/components/CartNavbar";
 import SecurityTwoToneIcon from '@mui/icons-material/SecurityTwoTone';
+import { useFirebase } from "@/firebase/firebase";
+import { monthsData } from "@/data";
+import { RemoveItem } from "@/components/RemoveItem";
+import { collection, doc, onSnapshot, updateDoc } from "firebase/firestore";
+import { db } from "@/firebase/firebase";
 
 const Cart = () => {
 
   const [items, setItems] = useState(1);
+  const [value, setValue] = useState(0);
+  const [price, setPrice] = useState(0);
+  const [currentDate, setCurrentDate] = useState(0);
+  const [currentMonth, setCurrentMonth] = useState(0);
+  const [isRemoveBox, setIsRemoveBox] = useState(false);
 
-  const addItems = () => {
-    setItems( items + 1)
+  const fb = useFirebase();
+  const { currentUser, productsData, getProductsData, getCurrentUser, getCartSize, cartSize, totalPrice, setTotalPrice, totalDiscount, setTotalDiscount } = fb;
+
+const addItems = async (ind, e) => {   
+  getProductsData()  
+  let id = e.target.getAttribute('id');
+  setTotalPrice( parseInt(e.target.getAttribute('price')) + totalPrice);
+  setTotalDiscount( parseInt(e.target.getAttribute('price')) + totalDiscount);
+  
+  try{
+    const docRef = doc(db, `${currentUser.uid}`, `${currentUser.displayName}_Details`);
+    const productCollectionRef = collection(docRef, "products");
+    const productDocs = doc(productCollectionRef, `product_Details${id}`)
+    await updateDoc(productDocs,{
+    quantity:productsData[ind].quantity + 1,
+  })
+}catch(error){
+  console.log(error);
+}    
+}
+  
+  const removeItems = async (ind, e) => {
+    getProductsData()    
+    let id = e.target.getAttribute('id');
+    setTotalPrice( parseInt(e.target.getAttribute('price')) + totalPrice);
+    setTotalDiscount( parseInt(e.target.getAttribute('price')) + totalDiscount);
+    
+    try{
+     const docRef = doc(db, `${currentUser.uid}`, `${currentUser.displayName}_Details`);
+     const productCollectionRef = collection(docRef, "products");
+     const productDocs = doc(productCollectionRef, `product_Details${id}`)
+     await updateDoc(productDocs,{
+      quantity:productsData[ind].quantity - 1,
+     })
+     const getData = onSnapshot(productDocs, async(snap)=>{
+            const productsData = await snap.data();
+            console.log(productsData)
+     })
+    }catch(error){
+      console.log(error);
+    }
+        
   }
-  const removeItems = () => {
-    items >= 1 && setItems( items - 1)
-  }
+
+  let date = new Date().getDate() + 3;
+  let month = new Date().getMonth() + 1;
+
+  useEffect(() => {
+    getCurrentUser()
+    getProductsData()
+    getCartSize()
+    if (date > 31) {
+      date = 5
+      month += 1;
+    }
+    setCurrentDate(date)
+    setCurrentMonth(month)
+  }, [currentUser])
+  
 
   return (
-    <div className="cart-container">
-      <div className="cart-navbar">
-        <div className="logo-name">
-          <Image src={`/assets/shopexpress.jpg`} height={60} width={60} alt="dasd" />
-          <span>ShopExpress</span>
-        </div>
-        <div className="cart-input">
-          <input type="text" placeholder="Search for products, brands and more" />
-          <Image src={`/assets/search.svg`} height={20} width={20} alt="sdasd" />
-        </div>
-        <div className="user">
-          <span>Sign in</span>
-          <Image src={`/assets/cart-account.svg`} height={23} width={23} alt="asa" />
+    <>
+      <div className="cart-container">
+        <CartNavbar />
+        <div className="main-cart">
+          <div className="cart-items-container">
+            <div className="cart-items-category">
+              <span>ShopExpress<span>{`(${cartSize})`}</span></span>
+              <span>Grocery</span>
+            </div>
+            <div className="delivery-address">
+              <span>From Saved Address</span>
+              <span>Enter Delivery Pincode</span>
+            </div>
+            <div className="cart-order-details">
+              {
+                productsData && productsData.map((item, ind) => {
+                  return (
+                    <Fragment key={item.id}>
+                      <div className="cart-items" >
+                        <Image src={`https://res.cloudinary.com/demo/image/fetch/${item.image}`} height={100} width={100} alt="" />
+                        <div>
+                          <span>{item.name}</span>
+                          <span>smartphones</span>
+                          <span>Seller: <span>&nbsp;{item.brand}</span>
+                            <span>
+                              <Image
+                                src={`/assets/shopexpress.jpg`}
+                                height={15}
+                                width={15}
+                                alt="dasd"
+                              />
+                              <span>Assured</span>
+                            </span></span>
+                          <span><span>${item.price}</span> <span
+                            style={{
+                              color: 'green',
+                              fontSize: '.8rem'
+                            }}>{` ${item.discount}% off`}</span></span>
+                        </div>
+                        <span>Delivery by {monthsData[currentMonth]} {currentDate} | <span
+                          style={{ color: "green" }}>Free</span>
+                          <span style={{
+                            textDecoration: 'line-through',
+                            color: '#808080'
+                          }}>{item.discount} </span>
+                        </span>
+                      </div>
+                      <div className="cart-order" >
+                        <span>
+                          <span onClick={(e)=>removeItems(ind, e)} price={item.price} id={item.id}>-</span>
+                          <span>{item.quantity}</span>
+                          <span onClick={(e)=>addItems(ind, e)} price={item.price} id={item.id}>+</span>
+                        </span>
+                        <span>SAVE FOR LATER</span>
+                        <span onClick={() => setIsRemoveBox(true)}>REMOVE</span>
+                      </div>
+                    </Fragment>
+                  )
+                })
+              }
+            </div>
+            <div className="place-order">
+              <button>PLACE ORDER</button>
+            </div>
+          </div>
+          <div className="cart-price-details">
+            <h2>PRICE DETAILS</h2>
+            <li><span>{`Price (${cartSize} items)`}</span> <span>{`$${totalPrice}`}</span></li>
+            <li><span>Discount</span> <span style={{ color: 'green' }}>{`-$${totalDiscount}`}</span></li>
+            <li><span>Delivery Charges</span> <span style={{ color: 'green', fontSize: '.9rem' }}>Free</span></li>
+            <li><span>Secured Packaging Fee</span> <span>$5</span></li>
+            <li><span>Total Amount</span> <span>${((totalPrice - totalDiscount)-5)}</span></li>
+            <span>You will save <span>${totalDiscount}</span> on this order</span>
+            <h3><SecurityTwoToneIcon sx={{ color: '#5b18ac' }} />Safe and Secure Payments.Easy Returns. 100% Authentic Products.</h3>
+          </div>
         </div>
       </div>
-      <div className="main-cart">
-        <div className="cart-items-container">
-          <div className="cart-items-category">
-            <span>ShopExpress<span>(1)</span></span>
-            <span>Grocery</span>
-          </div>
-          <div className="delivery-address">
-            <span>From Saved Address</span>
-            <span>Enter Delivery Pincode</span>
-          </div>
-          <div className="cart-order-details">
-          <div className="cart-items">
-            <Image src={`https://res.cloudinary.com/demo/image/fetch/https://thumbs.dreamstime.com/z/taj-mahal-sunset-view-mehtab-bagh-banks-river-yamuna-tourist-couple-enjoying-romantic-moment-white-marble-180928460.jpg`} height={100} width={100} alt="" />
-            <div>
-              <span>MOTOROLA g73 5G (Midnight Blue, 128 GB)</span>
-              <span>8GB RAM</span>
-              <span>Seller: <span>sadasd</span>
-                <span>
-                  <Image
-                    src={`/assets/shopexpress.jpg`}
-                    height={15}
-                    width={15}
-                    alt="dasd"
-                  />
-                  <span>Assured</span>
-                </span></span>
-              <span><span>₹4,666</span> <span
-                style={{
-                  color: 'green',
-                  fontSize: '.8rem'
-                }}>20% 0ff</span></span>
-            </div>
-            <span>Delivery by Wed june 28 | <span
-              style={{ color: "green" }}>Free</span> <span style={{ textDecoration: 'line-through', color: '#808080' }}>₹40</span></span>
-          </div>
-          <div className="cart-order">
-            <span>
-              <span onClick={removeItems}>-</span>
-              <span>{items}</span>
-              <span onClick={addItems}>+</span>
-            </span>
-            <span>SAVE FOR LATER</span>
-            <span>REMOVE</span>
-          </div>
-          <div className="cart-items">
-            <Image src={`https://res.cloudinary.com/demo/image/fetch/https://thumbs.dreamstime.com/z/taj-mahal-sunset-view-mehtab-bagh-banks-river-yamuna-tourist-couple-enjoying-romantic-moment-white-marble-180928460.jpg`} height={100} width={100} alt="" />
-            <div>
-              <span>MOTOROLA g73 5G (Midnight Blue, 128 GB)</span>
-              <span>8GB RAM</span>
-              <span>Seller: <span>sadasd</span>
-                <span>
-                  <Image
-                    src={`/assets/shopexpress.jpg`}
-                    height={15}
-                    width={15}
-                    alt="dasd"
-                  />
-                  <span>Assured</span>
-                </span></span>
-              <span><span>₹4,666</span> <span
-                style={{
-                  color: 'green',
-                  fontSize: '.8rem'
-                }}>20% 0ff</span></span>
-            </div>
-            <span>Delivery by Wed june 28 | <span
-              style={{ color: "green" }}>Free</span> <span style={{ textDecoration: 'line-through', color: '#808080' }}>₹40</span></span>
-          </div>
-          <div className="cart-order">
-            <span>
-              <span onClick={removeItems}>-</span>
-              <span>{items}</span>
-              <span onClick={addItems}>+</span>
-            </span>
-            <span>SAVE FOR LATER</span>
-            <span>REMOVE</span>
-          </div>
-          <div className="cart-items">
-            <Image src={`https://res.cloudinary.com/demo/image/fetch/https://thumbs.dreamstime.com/z/taj-mahal-sunset-view-mehtab-bagh-banks-river-yamuna-tourist-couple-enjoying-romantic-moment-white-marble-180928460.jpg`} height={100} width={100} alt="" />
-            <div>
-              <span>MOTOROLA g73 5G (Midnight Blue, 128 GB)</span>
-              <span>8GB RAM</span>
-              <span>Seller: <span>sadasd</span>
-                <span>
-                  <Image
-                    src={`/assets/shopexpress.jpg`}
-                    height={15}
-                    width={15}
-                    alt="dasd"
-                  />
-                  <span>Assured</span>
-                </span></span>
-              <span><span>₹4,666</span> <span
-                style={{
-                  color: 'green',
-                  fontSize: '.8rem'
-                }}>20% 0ff</span></span>
-            </div>
-            <span>Delivery by Wed june 28 | <span
-              style={{ color: "green" }}>Free</span> <span style={{ textDecoration: 'line-through', color: '#808080' }}>₹40</span></span>
-          </div>
-          <div className="cart-order">
-            <span>
-              <span onClick={removeItems}>-</span>
-              <span>{items}</span>
-              <span onClick={addItems}>+</span>
-            </span>
-            <span>SAVE FOR LATER</span>
-            <span>REMOVE</span>
-          </div>
-          <div className="cart-items">
-            <Image src={`https://res.cloudinary.com/demo/image/fetch/https://thumbs.dreamstime.com/z/taj-mahal-sunset-view-mehtab-bagh-banks-river-yamuna-tourist-couple-enjoying-romantic-moment-white-marble-180928460.jpg`} height={100} width={100} alt="" />
-            <div>
-              <span>MOTOROLA g73 5G (Midnight Blue, 128 GB)</span>
-              <span>8GB RAM</span>
-              <span>Seller: <span>sadasd</span>
-                <span>
-                  <Image
-                    src={`/assets/shopexpress.jpg`}
-                    height={15}
-                    width={15}
-                    alt="dasd"
-                  />
-                  <span>Assured</span>
-                </span></span>
-              <span><span>₹4,666</span> <span
-                style={{
-                  color: 'green',
-                  fontSize: '.8rem'
-                }}>20% 0ff</span></span>
-            </div>
-            <span>Delivery by Wed june 28 | <span
-              style={{ color: "green" }}>Free</span> <span style={{ textDecoration: 'line-through', color: '#808080' }}>₹40</span></span>
-          </div>
-          <div className="cart-order">
-            <span>
-              <span onClick={removeItems}>-</span>
-              <span>{items}</span>
-              <span onClick={addItems}>+</span>
-            </span>
-            <span>SAVE FOR LATER</span>
-            <span>REMOVE</span>
-          </div>
-          </div>
-          <div className="place-order">
-            <button>PLACE</button>
-          </div>
-        </div>
-        <div className="cart-price-details">
-          <h2>PRICE DETAILS</h2>
-          <li><span>Price (4 items) </span> <span>₹30,000</span></li>
-          <li><span>Discount</span> <span>-₹6000</span></li>
-          <li><span>Delivery Charges</span> <span>Free</span></li>
-          <li><span>Secured Packaging Fee</span> <span>₹49</span></li>
-          <li><span>Total Amount</span> <span>₹23,000</span></li>
-          <span>You will save <span>₹6000</span> on this order</span>
-        <h3><SecurityTwoToneIcon sx={{color:'#5b18ac'}}/>Safe and Secure Payments.Easy Returns. 100% Authentic Products.</h3>
-        </div>
-      </div>
-      
-    </div>
+      {isRemoveBox && <RemoveItem setIsRemoveBox={setIsRemoveBox} />}
+    </>
   )
 }
 export default Cart;

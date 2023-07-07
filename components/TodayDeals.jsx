@@ -2,6 +2,8 @@ import { productCategoriesData } from "@/data";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import { useFirebase } from "@/firebase/firebase";
 
 const productsFetcher=async(url)=>{
     try{
@@ -16,6 +18,9 @@ const productsFetcher=async(url)=>{
 export const TodayDeals = () => {
     const [value, setValue] = useState(0);
     const [category, setCategory] = useState("smartphones");
+    const fb = useFirebase()
+    const { addItemToCart } = fb;
+    const router = useRouter();
     
     const { data : productsData, error : productsError } = useSWR(`https://dummyjson.com/products/category/${category}`, productsFetcher);
 
@@ -56,7 +61,7 @@ export const TodayDeals = () => {
                         productsData &&
                         productsData.products.map((product,ind)=>{
                             return(
-                                <div className="product" key={product.id}>                
+                                <div className="product" key={product.id} onClick={() => router.push(`/Products/${product.id}`)}>                
                                 <img src={product.thumbnail} alt="" />
                                 <Image src={`/assets/like.svg`} height={20} width={20} alt="asdasd" className="like-product" />
                                 <div className="product-name">
@@ -73,7 +78,15 @@ export const TodayDeals = () => {
                                         <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds"/>
                                         <span>{product.rating}</span>
                                     </div>
-                                    <button>Add to Cart</button>
+                                    <button 
+                                    img={product.thumbnail} 
+                                    name={product.title} 
+                                    brand={product.brand} 
+                                    discount={product.discountPercentage} 
+                                    price={product.price}
+                                    category={product.category}
+                                    id={product.id}
+                                    onClick={addItemToCart}>Add to Cart</button>
                                 </div>
                                 </div>
                             )

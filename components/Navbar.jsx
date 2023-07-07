@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Image from 'next/image';
-import { getAuth } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 import { useFirebase } from '@/firebase/firebase';
 // MATERIAL ICONS
 import CallIcon from '@mui/icons-material/Call';
@@ -9,81 +9,83 @@ import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import AddShoppingCartRoundedIcon from '@mui/icons-material/AddShoppingCartRounded';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 
-const auth = getAuth();
+//STYLES
+
+const styles = {    
+    smallNavbar:'max-w-full flex justify-between items-center bg-main px-[2em] py-[.5em]',    
+    callIcon:'h-[17px] w-[17px] text-white',
+    navText:'text-[.8rem] text-white tracking-tight',
+    downArrow:'h-[25] w-[25] text-white',
+    mainNavbar:'flex items-center justify-between px-[1.5em] py-[.5em]',
+    logoName:'text-main text-[1.6rem] tracking-wide font-bold',
+    navMenu:'flex items-center gap-[1.5em] list-custom',    
+    searchItem:'border border-borderGrey flex justify-between items-center h-[2.5em] w-[23%] px-[1em] py-[0] rounded-lg'
+}
 
 export const Navbar = () => {
+    const auth = getAuth();
     const fb = useFirebase();
-    const { signInWithGoogle } = fb;
+    const { signInWithGoogle } = fb;        
 
     return (
-        <div className="navbar-container">
-            <div className="small-navbar">
-                <div className="phn">
+        <div className="max-w-full">
+            <div className={styles.smallNavbar}>
+                <div className="flex items-center gap-[.5em]">                    
+                    <CallIcon className={styles.callIcon} />
 
-                    {/* <Image
-                        src={`/assets/phone.svg`}
-                        height={17}
-                        width={17}
-                    /> */}
-                    <CallIcon sx={{height:'17px', width:'17px', color:'#fff'}}/>
-
-                    <span>+001234567890</span>
+                    <span className={styles.navText}>+001234567890</span>
                 </div>
 
-                <div className="nav-discount">
-                    <span>Get 50% Off on Selected Items &nbsp; &nbsp;| &nbsp; &nbsp; Shop Now</span>
+                <div className="flex items-center">
+                    <span className={styles.navText}>Get 50% Off on Selected Items &nbsp; &nbsp;| &nbsp; &nbsp; Shop Now</span>
                 </div>
 
-                <div className="loc-lang">
-                    <span>English</span>
+                <div className="flex items-center">
+                    <span className='text-white text-[.8rem]'>English</span>
 
-                    <KeyboardArrowDownRoundedIcon sx={{height:'25px', width:'25px', color:'#fff'}}/>
+                    <KeyboardArrowDownRoundedIcon className={styles.downArrow}/>
 
-                    <span>Location</span>
+                    <span className='text-white text-[.8rem]'>Location</span>
 
-                    <KeyboardArrowDownRoundedIcon sx={{height:'25px', width:'25px', color:'#fff'}}/>
+                    <KeyboardArrowDownRoundedIcon className={styles.downArrow}/>
 
                 </div>
             </div>
-            <div className="main-navbar">
-                <div className="logo-name">
+            <div className={styles.mainNavbar}>
+                <div className="flex items-center">
                     <Image src={`/assets/shopexpress.jpg`} height={70} width={70} alt="dasd" />
-                    <span>ShopExpress</span>
+                    <span className={styles.logoName}>ShopExpress</span>
                 </div>
-                <div className="nav-menu">
-                    <li>
-                        <span>Category</span>
+                <div className={styles.navMenu}>
+                        <li className='relative mr-2'>
+                            <span>Category</span>
 
-                        <Image
-                            src={`/assets/arrow-down.svg`}
-                            height={20}
-                            width={20}
-                            style={{
-                                filter: 'invert(1)',
-                                position: 'relative',
-                                top: '.35em'
-                            }}
-                            alt="ddfsdf"
-                        />                        
-                    </li>
-                    <li>
-                        <span>Deals</span>
-                    </li>
-                    <li>
-                        <span>What's New</span>
-                    </li>
-                    <li>
-                        <span>Delivery</span>
-                    </li>
+                            <Image
+                                src={`/assets/arrow-down.svg`}
+                                height={20}
+                                width={20}
+                                className='absolute top-1 invert right-[-1.3em]'                                
+                                alt="ddfsdf"
+                            />                        
+                        </li>
+                        <li>
+                            <span>Deals</span>
+                        </li>
+                        <li>
+                            <span>What's New</span>
+                        </li>
+                        <li >
+                            <span>Delivery</span>
+                        </li>
                 </div>
-                <div className="search-item">
+                <div className={styles.searchItem}>
 
-                    <input type="text" placeholder='Search Product' />
+                    <input type="text" placeholder='Search Product' className='bg-transparent outline-none tracking-wide placeholder:text-borderGrey placeholder:text-[.9rem] px-0 py-auto'/>
                     <SearchRoundedIcon/>
 
                 </div>
 
-                <div className="account" onClick={signInWithGoogle}>
+                <div className="flex gap-[.8em] cursor-pointer" onClick={signInWithGoogle}>
 
                     {auth.currentUser ?
                         <>
@@ -91,25 +93,24 @@ export const Navbar = () => {
                                 src={`https://res.cloudinary.com/demo/image/fetch/${auth.currentUser.photoURL}`}
                                 height={20}
                                 width={20}
-                                alt="asdasdas"
-                                style={{borderRadius:'50%',transform:'scale(1.8)'}}
+                                alt="asdasdas"                                
+                                className='rounded-full scale-[1.8]'
                             />
 
-                            <span>{auth.currentUser.displayName}</span>
+                            <span className='text-[.9rem] text-black'>{auth.currentUser.displayName}</span>
                         </>
                         :
                         <>
                             <AccountCircleRoundedIcon/>
 
-                            <span>Account</span>
+                            <span className='text-[.9rem] text-black'>Account</span>
                         </>
                     }
                 </div>
 
-                <div className="cart">
-
+                <div className="flex gap-[.1em]" onClick={()=>signOut(auth)}>
                 <AddShoppingCartRoundedIcon/>
-                    <span>Cart</span>
+                    <span className='text-[.9rem]'>Cart</span>
                 </div>
             </div>
         </div>

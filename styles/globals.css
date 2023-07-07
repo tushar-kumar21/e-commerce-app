@@ -1,4 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Arvo&family=Josefin+Sans&family=Kanit:wght@700&family=Mea+Culpa&family=Monomaniac+One&family=Noto+Sans&family=Pacifico&family=Philosopher&family=Poppins&family=Roboto+Slab&family=Space+Grotesk&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body{
   margin: 0;
   box-sizing: border-box;
@@ -7,3 +12,25 @@ body{
   user-select: none;
 }
 
+@layer utilities {
+  @variants {
+    .list-custom li{
+    list-style: none;
+    }
+    .list-custom > li > span{
+      color:#000;
+      letter-spacing:.5px;
+    }
+    .cover-bg{
+      background: url('https://firebasestorage.googleapis.com/v0/b/newcapp-38895.appspot.com/o/shopping-bg.avif?alt=media&token=b5442dad-7e71-4e79-9215-795d4b1ff260') no-repeat center center/cover;        
+    }
+    .transition-cubic{
+      transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+    .product-details > img{
+      width: 15px;
+      height: 15px;
+      margin-bottom: 1em;
+    }
+  }
+}
