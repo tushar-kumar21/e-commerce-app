@@ -18,6 +18,22 @@ const productsFetcher = async (url) => {
     }
 };
 
+//STYLES
+
+const styles = {
+    dealsContainer: 'max-w-full pt-16 px-8 py-0 overflow-hidden relative group-hover:visible group-hover:pointer-events-auto deals-custom',
+    dealsCards: 'flex justify-between gap-8 w-full h-fit pt-4 transition-cubic',
+    product: "relative min-w-[380px] h-[460px] cursor-grab flex flex-col justify-start rounded-xl",
+    productImg: "w-full h-[55%] object-cover rounded-xl pointer-events-none mb-10",
+    likeImg: "m-4 w-9 h-9 absolute p-2 right-0 bg-likeBg rounded-full",
+    productName:"flex justify-between gap-4 mx-1 my-0",
+    productContent:"text-[1rem] font-semibold tracking-wide",
+    productCategory:"text-[#757575] text-xs tracking-wide ml-1",
+    cartBtn:"border-black border-[1.3px] text-black font-semibold text-xs w-fit py-3 px-6 rounded-[2rem] tracking-wide bg-white absolute bottom-0",
+    leftArrow:"absolute bottom-[45%] scale-[2] my-0 mx-4 z-10 cursor-pointer border border-[#00000042] px-[.1em] bg-white rounded-md invisible pointer-events-none right-0 right arrows",
+    rightArrow:"absolute bottom-[45%] scale-[2] my-0 mx-4 z-10 cursor-pointer border border-[#00000042] px-[.1em] bg-white rounded-md invisible pointer-events-none left-0 left arrows"
+}
+
 export const Popular = () => {
     const [transform, setTransform] = useState(0);
     const [width, setWidth] = useState(0);
@@ -56,31 +72,31 @@ export const Popular = () => {
     }
 
     return (
-        <div className="deals-container" ref={carousel}>
+        <div className={styles.dealsContainer} ref={carousel}>
             <ArrowBackIosNewRoundedIcon className="arrow left lp" onClick={rightArrow} />
             <ArrowForwardIosRoundedIcon className="arrow right rp" onClick={leftArrow} />
-            <h2>Weekly Popular Products</h2>
-            <div className="deals-cards" style={{ transform: `translateX(${transform}%)` }}>
+            <h2 className="text-3xl">Weekly Popular Products</h2>
+            <div className={styles.dealsCards} style={{ transform: `translateX(${transform}%)` }}>
                 {
                     productsData &&
                     productsData.products.map((product, ind) => {
                         return (
-                            <div className="product" key={product.id} style={{ padding: '0', border: 'none' }} onClick={() => router.push(`/Products/${product.id}`)}>
-                                <img src={product.thumbnail} alt="" style={{ objectFit: 'cover' }} />
-                                <Image src={`/assets/like.svg`} height={20} width={20} alt="asdasd" className="like-product" />
-                                <div className="product-name">
-                                    <span>{product.title}</span>
-                                    <span>${product.price}</span>
+                            <div className={styles.product} key={product.id} style={{ padding: '0', border: 'none' }} onClick={() => router.push(`/Products/${product.id}`)}>
+                                <img src={product.thumbnail} alt="" style={{ objectFit: 'cover' }} className={styles.productImg}/>
+                                <Image src={`/assets/like.svg`} height={20} width={20} alt="asdasd" className={styles.likeImg} />
+                                <div className={styles.productName}>
+                                    <span className={styles.productContent}>{product.title}</span>
+                                    <span className={styles.productContent}>${product.price}</span>
                                 </div>
                                 <div className="product-details">
-                                    <span>{product.category}</span>
-                                    <div className="stars">
+                                    <span className={styles.productCategory}>{product.category}</span>
+                                    <div className="flex mt-2">
                                         <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
                                         <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
                                         <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
                                         <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
                                         <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
-                                        <span>{product.rating}</span>
+                                        <span className="text-[#3c3c3c] text-xs ml-1">{product.rating}</span>
                                     </div>
                                     <button
                                         img={product.thumbnail}
@@ -90,6 +106,7 @@ export const Popular = () => {
                                         category={product.category}
                                         price={product.price}
                                         id={product.id}
+                                        className={styles.cartBtn}
                                         onClick={addItemToCart}>Add to Cart</button>
                                 </div>
                             </div>

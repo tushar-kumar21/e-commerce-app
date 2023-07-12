@@ -30,7 +30,9 @@ const styles = {
     productName:"flex justify-between gap-4 mx-1 my-0",
     productContent:"text-[1rem] font-semibold tracking-wide",
     productCategory:"text-[#757575] text-xs tracking-wide ml-1",
-    // cartBtn:
+    cartBtn:"border-black border-[1.3px] text-black font-semibold text-xs w-fit py-3 px-6 rounded-[2rem] tracking-wide bg-white absolute bottom-0",
+    leftArrow:"absolute bottom-[45%] scale-[2] my-0 mx-4 z-10 cursor-pointer border border-[#00000042] px-[.1em] bg-white rounded-md invisible pointer-events-none right-0 right arrows",
+    rightArrow:"absolute bottom-[45%] scale-[2] my-0 mx-4 z-10 cursor-pointer border border-[#00000042] px-[.1em] bg-white rounded-md invisible pointer-events-none left-0 left arrows"
 }
 
 export const Deals = () => {
@@ -51,29 +53,10 @@ export const Deals = () => {
         }
     }, []);
 
-    const rightArrow = () => {
-        setTransform(transform + 103)
-        if (transform === -103) {
-            document.querySelector('.left').style.display = "none";
-        } else {
-            document.querySelector('.left').style.display = "block";
-        }
-        document.querySelector('.right').style.display = "block";
-    }
-    const leftArrow = () => {
-        setTransform(transform - 103)
-        if (transform === -824) {
-            document.querySelector('.right').style.display = "none";
-        } else {
-            document.querySelector('.right').style.display = "block";
-        }
-        document.querySelector('.left').style.display = "block";
-    }
-
     return (
         <div className={styles.dealsContainer} ref={carousel}>
-            <ArrowBackIosNewRoundedIcon className="absolute bottom-[45%] scale-[2] my-0 mx-4 z-10 cursor-pointer border border-[#00000042] px-[.1em] bg-white rounded-md invisible pointer-events-none left-0 left arrows" onClick={rightArrow} />
-            <ArrowForwardIosRoundedIcon className="absolute bottom-[45%] scale-[2] my-0 mx-4 z-10 cursor-pointer border border-[#00000042] px-[.1em] bg-white rounded-md invisible pointer-events-none right-0 right arrows" onClick={leftArrow} />
+            <ArrowBackIosNewRoundedIcon className={styles.rightArrow} />
+            <ArrowForwardIosRoundedIcon className={styles.leftArrow}  />
             <h2 className="text-3xl">Todays Best Deals For You!</h2>
             <div className={styles.dealsCards} style={{ transform: `translateX(${transform}%)` }}>
                 {
@@ -107,7 +90,7 @@ export const Deals = () => {
                                     <span className={styles.productCategory}>{product.category}</span>
                                     <div className="flex mt-2">
 
-                                        <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" className="w"/>
+                                        <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds"/>
                                         <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
                                         <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
                                         <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
@@ -115,7 +98,7 @@ export const Deals = () => {
                                         <span className="text-[#3c3c3c] text-xs ml-1">{product.rating}</span>
                                     </div>
                                     <button
-                                        className="border-black border-[1.4px] text-black font-semibold text-xs w-fit py-3 px-6 rounded-[2rem] tracking-wide bg-white absolute bottom-0"
+                                        className={styles.cartBtn}
                                         img={product.thumbnail}
                                         name={product.title}
                                         brand={product.brand}
