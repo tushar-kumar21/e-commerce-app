@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { GoogleAuthProvider, getAuth, onAuthStateChanged, signInWithPopup } from "firebase/auth";
-import { addDoc, collection, getFirestore, setDoc, doc, getDocs, onSnapshot } from "firebase/firestore";
+import { addDoc, collection, getFirestore, setDoc, doc, getDocs, onSnapshot, updateDoc } from "firebase/firestore";
 import { createContext, useContext, useState } from "react";
 
 const firebaseConfig = {
@@ -25,7 +25,8 @@ export const FirebaseProvider = ({ children }) => {
   const [cartSize, setCartSize] = useState(0);
   const [productsData, setProductsData] = useState(null);
   const [totalPrice, setTotalPrice] = useState(null);
-  const [totalDiscount, setTotalDiscount] = useState(null); 
+  const [totalDiscount, setTotalDiscount] = useState(null);
+  const [priceData, setPriceData] = useState(null);
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
@@ -99,19 +100,16 @@ export const FirebaseProvider = ({ children }) => {
       const size = docSize.size;
       setCartSize(size)      
       docSize.forEach((val)=>{
-        priceSum += parseInt(val.data().price);                 
+        priceSum += parseInt(val.data().price);                         
+       
       })
-      setTotalPrice(priceSum)
+      setTotalPrice(priceSum/2)      
 
       docSize.forEach((val)=>{
         discountSum += parseInt(val.data().discount)        
       })
-      setTotalDiscount(discountSum)
+      setTotalDiscount(discountSum/2)
     }
-  }
-
-  const getProductSum=()=>{
-    
   }
 
   const getProductsData = async () => {
@@ -129,14 +127,9 @@ export const FirebaseProvider = ({ children }) => {
         });
         setProductsData(data);
       });
-
-      // const productsData = await getDocs(productCollectionRef)
-      // productsData.forEach((doc)=>{
-      //  data.push(doc.data())
-      // })                
-      // setProductsData(data)
     }
   }
+
 
   return (
     <FirebaseContext.Provider value={{ signInWithGoogle, getCurrentUser, userCollection, currentUser, addItemToCart, cartSize, getCartSize, productsData, getProductsData, totalPrice, setTotalPrice, setTotalDiscount, totalDiscount }}>
