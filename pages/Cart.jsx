@@ -36,78 +36,45 @@ const Cart = () => {
   const [currentDate, setCurrentDate] = useState(0);
   const [currentMonth, setCurrentMonth] = useState(0);
   const [isRemoveBox, setIsRemoveBox] = useState(false);
-  const [quantity, setQuantity] = useState();
-
+  
   const fb = useFirebase();
-  const { currentUser, productsData, getProductsData, getCurrentUser, getCartSize, cartSize, totalPrice, setTotalPrice, totalDiscount, setTotalDiscount, AddTotalPrice } = fb;
+  const { currentUser, productsData, getProductsData, getCurrentUser, getCartSize, cartSize, totalPrice, setTotalPrice, totalDiscount, setTotalDiscount, setProductsData } = fb;
+  
+  const [myPrice, setMyPrice] = useState();
+  const [quantities, setQuantities] = useState([]);
 
+  // const addItems = (id) => {    
+  //   productsData.map(item =>
+  //     id === item.id ? {...item, quantity : item.quantity+1} : item.quantity
+  //     )
+  //     // console.log(quantities)
+  // };
+  const addItems = (id) => {
+    setProductsData(items =>
+    items.map((item) => 
+      id === item.id ? { ...item, quantity: item.quantity + 1 } : item
+    ))
+  };
   
 
-  const addItems = async (ind, e) => {
-    getProductsData()
-    let id = e.target.getAttribute('id');
-    // setTotalPrice(parseInt(e.target.getAttribute('price')) + totalPrice);
-    // setTotalDiscount(parseInt(e.target.getAttribute('price')) + totalDiscount);
-    
-    totalFunc(ind)
-    try {
-      const docRef = doc(db, `${currentUser.uid}`, `${currentUser.displayName}_Details`);
-      const productCollectionRef = collection(docRef, "products");
-      const productDocs = doc(productCollectionRef, `product_Details${id}`)
-      const totalPriceRef = doc(db, `${currentUser.uid}`,'totalPrice')      
-      onSnapshot(productDocs, async (snap) => {
-        const productsData = await snap.data();        
-        setQuantity(snap.data().quantity)
-      })
-      if(quantity){        
-        await updateDoc(productDocs, {
-          quantity: productsData[ind].quantity + 1,
-        })}
-    } catch (error) {
-      console.log(error);
-    }
+  const removeItems=(id)=>{
+    setProductsData(items =>
+      items.map((item) => 
+        item.quantity > 1 && id === item.id ? { ...item, quantity: item.quantity - 1 } : item
+      ))
   }
-  const removeItems = async (ind, e) => {
-    getProductsData()
-    let id = e.target.getAttribute('id');
-    // setTotalPrice(totalPrice - parseInt(e.target.getAttribute('price')));
-    // setTotalDiscount(parseInt(totalDiscount - e.target.getAttribute('price')));
-    totalFunc(ind)
+  
 
-    try {       
-      const docRef = doc(db, `${currentUser.uid}`, `${currentUser.displayName}_Details`);
-      const productCollectionRef = collection(docRef, "products");
-      const productDocs = doc(productCollectionRef, `product_Details${id}`)
-      onSnapshot(productDocs, async (snap) => {
-        const productsData = await snap.data();        
-         setQuantity(snap.data().quantity)
-      })
-      if(quantity){
-      console.log(quantity)
-      await updateDoc(productDocs, {
-        quantity: quantity > 1 ? productsData[ind].quantity - 1 : quantity,
-      })}
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  const totalFunc=(ind)=>{
-    // let pr = totalPrice+ parseInt(productsData[ind].price);        
-    console.log(parseInt(productsData[ind].price))           
-    // console.log(pr,'yes')
-  }
-
-  useEffect(() => {    
-    getCurrentUser()  
+  useEffect(() => {
+    getCurrentUser()
     getProductsData()
     getCartSize()
     if (date > 31) {
       date = 5
       month += 1;
-    }    
+    }
     setCurrentDate(date)
     setCurrentMonth(month)
-    AddTotalPrice()
   }, [currentUser])
 
 
@@ -161,9 +128,9 @@ const Cart = () => {
                       </div>
                       <div className={styles.cartOrder} >
                         <span className="inline-flex gap-3 items-center ml-3">
-                          <span className={styles.subBtn} onClick={(e) => removeItems(ind, e)} price={item.price} id={item.id}>-</span>
+                          <span className={styles.subBtn} onClick={() => removeItems(item.id)} price={item.price} id={item.id}>-</span>
                           <span>{item.quantity}</span>
-                          <span className={styles.plusBtn} onClick={(e) => addItems(ind, e)} price={item.price} id={item.id}>+</span>
+                          <span className={styles.plusBtn} onClick={() => addItems(item.id)} price={item.price} id={item.id}>+</span>
                         </span>
                         <span className={styles.productBtn}>SAVE FOR LATER</span>
                         <span onClick={() => setIsRemoveBox(true)} className={styles.productBtn}>REMOVE</span>

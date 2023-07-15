@@ -132,7 +132,7 @@ export const FirebaseProvider = ({ children }) => {
 
 
   return (
-    <FirebaseContext.Provider value={{ signInWithGoogle, getCurrentUser, userCollection, currentUser, addItemToCart, cartSize, getCartSize, productsData, getProductsData, totalPrice, setTotalPrice, setTotalDiscount, totalDiscount }}>
+    <FirebaseContext.Provider value={{ signInWithGoogle, getCurrentUser, userCollection, currentUser, addItemToCart, cartSize, getCartSize, productsData, getProductsData, totalPrice, setTotalPrice, setTotalDiscount, totalDiscount, setProductsData }}>
       {children}
     </FirebaseContext.Provider>
   )
