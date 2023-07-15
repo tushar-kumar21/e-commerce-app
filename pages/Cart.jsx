@@ -43,12 +43,6 @@ const Cart = () => {
   const [myPrice, setMyPrice] = useState();
   const [quantities, setQuantities] = useState([]);
 
-  // const addItems = (id) => {    
-  //   productsData.map(item =>
-  //     id === item.id ? {...item, quantity : item.quantity+1} : item.quantity
-  //     )
-  //     // console.log(quantities)
-  // };
   const addItems = (id) => {
     setProductsData(items =>
     items.map((item) => 
@@ -64,7 +58,7 @@ const Cart = () => {
       ))
   }
   
-
+console.log(':ldflfnldf')
   useEffect(() => {
     getCurrentUser()
     getProductsData()
