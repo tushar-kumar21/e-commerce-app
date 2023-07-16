@@ -65,6 +65,7 @@ export const FirebaseProvider = ({ children }) => {
     const discount = e.target.getAttribute('discount');
     const brand = e.target.getAttribute('brand');
     const category = e.target.getAttribute('category');
+    const stock = e.target.getAttribute('stock');
     const id = e.target.getAttribute('id');
 
     try {
@@ -79,6 +80,7 @@ export const FirebaseProvider = ({ children }) => {
         image: img,
         discount: discount,
         category: category,
+        stock:stock,
         id:id,
         quantity:0,
       });

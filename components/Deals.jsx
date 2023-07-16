@@ -105,6 +105,7 @@ export const Deals = () => {
                                         discount={product.discountPercentage}
                                         price={product.price}
                                         category={product.category}
+                                        stock={product.stock}
                                         id={product.id}
                                         onClick={addItemToCart}>
                                         Add to Cart</button>

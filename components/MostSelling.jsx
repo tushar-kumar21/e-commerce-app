@@ -87,6 +87,7 @@ export const MostSelling = () => {
                                     discount={product.discountPercentage} 
                                     category={product.category}
                                     price={product.price}
+                                    stock={product.stock}
                                     id={product.id}
                                     onClick={addItemToCart}>Add to Cart</button>
                                 </div>

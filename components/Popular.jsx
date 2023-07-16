@@ -105,6 +105,7 @@ export const Popular = () => {
                                         discount={product.discountPercentage}
                                         category={product.category}
                                         price={product.price}
+                                        stock={product.stock}
                                         id={product.id}
                                         className={styles.cartBtn}
                                         onClick={addItemToCart}>Add to Cart</button>

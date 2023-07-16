@@ -36,29 +36,41 @@ const Cart = () => {
   const [currentDate, setCurrentDate] = useState(0);
   const [currentMonth, setCurrentMonth] = useState(0);
   const [isRemoveBox, setIsRemoveBox] = useState(false);
-  
+
   const fb = useFirebase();
   const { currentUser, productsData, getProductsData, getCurrentUser, getCartSize, cartSize, totalPrice, setTotalPrice, totalDiscount, setTotalDiscount, setProductsData } = fb;
-  
-  const [myPrice, setMyPrice] = useState();
+
+  const [counter, setCounter] = useState(0);
   const [quantities, setQuantities] = useState([]);
 
-  const addItems = (id) => {
+  
+  const addItems = (id, e) => {    
+    setCounter(counter+1)
+    setTotalPrice(totalPrice + parseInt(e.target.getAttribute('price')))
+    setTotalDiscount(totalDiscount + parseInt(e.target.getAttribute('discount')))
     setProductsData(items =>
-    items.map((item) => 
-      id === item.id ? { ...item, quantity: item.quantity + 1 } : item
-    ))
+      items.map((item) =>
+        id === item.id ? { ...item, quantity: item.quantity + 1 } : item
+      ))      
   };
-  
 
-  const removeItems=(id)=>{
+
+  const removeItems = (id, e) => {
+    if (counter > 0) {
+      setCounter(counter-1)
+      setTotalPrice(totalPrice - parseInt(e.target.getAttribute('price')))
+      setTotalDiscount(totalDiscount - parseInt(e.target.getAttribute('discount')))
+    }
+
     setProductsData(items =>
-      items.map((item) => 
+      items.map(item =>
         item.quantity > 1 && id === item.id ? { ...item, quantity: item.quantity - 1 } : item
-      ))
-  }
-  
-console.log(':ldflfnldf')
+      ))      
+  };
+
+  let date = new Date().getDate() + 3;
+  let month = new Date().getMonth() + 1;
+
   useEffect(() => {
     getCurrentUser()
     getProductsData()
@@ -72,8 +84,6 @@ console.log(':ldflfnldf')
   }, [currentUser])
 
 
-  let date = new Date().getDate() + 3;
-  let month = new Date().getMonth() + 1;
 
 
   return (
@@ -122,9 +132,19 @@ console.log(':ldflfnldf')
                       </div>
                       <div className={styles.cartOrder} >
                         <span className="inline-flex gap-3 items-center ml-3">
-                          <span className={styles.subBtn} onClick={() => removeItems(item.id)} price={item.price} id={item.id}>-</span>
+                          <span className={styles.subBtn}
+                            onClick={(e) => removeItems(item.id, e)}
+                            price={item.price}
+                            id={item.id}
+                            discount={item.discount}>-</span>
+
                           <span>{item.quantity}</span>
-                          <span className={styles.plusBtn} onClick={() => addItems(item.id)} price={item.price} id={item.id}>+</span>
+
+                          <span className={styles.plusBtn}
+                            onClick={(e) => addItems(item.id, e)}
+                            price={item.price}
+                            id={item.id}
+                            discount={item.discount}>+</span>
                         </span>
                         <span className={styles.productBtn}>SAVE FOR LATER</span>
                         <span onClick={() => setIsRemoveBox(true)} className={styles.productBtn}>REMOVE</span>

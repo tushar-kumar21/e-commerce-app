@@ -123,6 +123,7 @@ export const TodayDeals = () => {
                                             discount={product.discountPercentage}
                                             price={product.price}
                                             category={product.category}
+                                            stock={product.stock}
                                             id={product.id}
                                             className={styles.cartBtn}
                                             onClick={addItemToCart}>Add to Cart</button>

@@ -19,6 +19,7 @@
     "react-dom": "18.2.0",
     "sass": "^1.63.5",
     "scss": "^0.2.4",
+    "stripe": "^12.13.0",
     "swr": "^2.2.0"
   },
   "devDependencies": {
