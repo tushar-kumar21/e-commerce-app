@@ -124,6 +124,7 @@ export const TodayDeals = () => {
                                             price={product.price}
                                             category={product.category}
                                             stock={product.stock}
+                                            desc={product.description}
                                             id={product.id}
                                             className={styles.cartBtn}
                                             onClick={addItemToCart}>Add to Cart</button>

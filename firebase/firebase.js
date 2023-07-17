@@ -67,6 +67,7 @@ export const FirebaseProvider = ({ children }) => {
     const category = e.target.getAttribute('category');
     const stock = e.target.getAttribute('stock');
     const id = e.target.getAttribute('id');
+    const desc = e.target.getAttribute('desc')
 
     try {
       const userCollectionRef = collection(db, `${currentUser.uid}`);
@@ -83,6 +84,7 @@ export const FirebaseProvider = ({ children }) => {
         stock:stock,
         id:id,
         quantity:0,
+        desc:desc
       });
 
       console.log("Data added successfully!");

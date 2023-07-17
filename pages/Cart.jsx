@@ -106,7 +106,12 @@ const Cart = () => {
                   return (
                     <Fragment key={item.id}>
                       <div className={styles.cartItems} >
-                        <Image src={`https://res.cloudinary.com/demo/image/fetch/${item.image}`} height={100} width={100} alt="" className="rounded-xl" />
+                        <img 
+                        src={item.image} 
+                        height={100} 
+                        width={100} 
+                        alt="" 
+                        className="rounded-xl" />
                         <div className="flex flex-col">
                           <span className="text-base">{item.name}</span>
                           <span className="text-[#808080] text-xs mt-1">smartphones</span>

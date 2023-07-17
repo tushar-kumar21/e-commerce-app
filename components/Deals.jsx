@@ -106,6 +106,7 @@ export const Deals = () => {
                                         price={product.price}
                                         category={product.category}
                                         stock={product.stock}
+                                        desc={product.description}
                                         id={product.id}
                                         onClick={addItemToCart}>
                                         Add to Cart</button>
