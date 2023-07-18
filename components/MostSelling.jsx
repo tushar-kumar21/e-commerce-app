@@ -22,7 +22,7 @@ const productsFetcher = async (url) => {
 
 const styles = {
     dealsContainer: 'max-w-full pt-16 px-8 py-0 overflow-hidden relative group-hover:visible group-hover:pointer-events-auto deals-custom',
-    dealsCards: 'flex justify-between gap-8 w-full h-fit pt-4 transition-cubic',
+    dealsCards: 'flex justify-between gap-8 w-full h-fit pt-4 transition-cubic pb-3 overflow-x-scroll scrollbar',
     product: "relative min-w-[380px] h-[460px] cursor-grab flex flex-col justify-start rounded-xl",
     productImg: "w-full h-[55%] object-cover rounded-xl pointer-events-none mb-10",
     likeImg: "m-4 w-9 h-9 absolute p-2 right-0 bg-likeBg rounded-full",

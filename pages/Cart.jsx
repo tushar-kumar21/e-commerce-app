@@ -107,11 +107,9 @@ const Cart = () => {
                     <Fragment key={item.id}>
                       <div className={styles.cartItems} >
                         <img 
-                        src={item.image} 
-                        height={100} 
-                        width={100} 
+                        src={item.image}                         
                         alt="" 
-                        className="rounded-xl" />
+                        className="rounded-xl h-24 w-24" />
                         <div className="flex flex-col">
                           <span className="text-base">{item.name}</span>
                           <span className="text-[#808080] text-xs mt-1">smartphones</span>

@@ -22,9 +22,9 @@ const productsFetcher = async (url) => {
 //STYLES
 
 const styles = {
-    dealsContainer: 'max-w-full pt-16 px-8 py-0 overflow-hidden relative group-hover:visible group-hover:pointer-events-auto deals-custom',
-    dealsCards: 'flex justify-between gap-8 w-full h-fit pt-4 transition-cubic',
-    product: "relative min-w-[380px] h-[460px] cursor-grab flex flex-col justify-start rounded-xl",
+    dealsContainer: 'max-w-full pt-16 px-8 py-0 relative group-hover:visible group-hover:pointer-events-auto deals-custom',
+    dealsCards: 'flex justify-between gap-8 pb-3 w-full h-fit pt-4 transition-cubic scrollbar cards ',
+    product: "relative min-w-[380px] h-[460px] cursor-grab flex flex-col justify-start rounded-xl cbox",
     productImg: "w-full h-[55%] object-cover rounded-xl pointer-events-none mb-10",
     likeImg: "m-4 w-9 h-9 absolute p-2 right-0 bg-likeBg rounded-full",
     productName:"flex justify-between gap-4 mx-1 my-0",
@@ -45,16 +45,12 @@ export const Deals = () => {
 
     const { data: productsData, error: productsError } = useSWR(`https://dummyjson.com/products?limit=30&skip=12`, productsFetcher)
 
-    let c = 0;
-    useEffect(() => {
-        c++;
-        if (c < 5) {
-            setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
-        }
-    }, []);
+    const rightArrow=()=>{
+
+    }
 
     return (
-        <div className={styles.dealsContainer} ref={carousel}>
+        <div className={styles.dealsContainer}>
             <ArrowBackIosNewRoundedIcon className={styles.rightArrow} />
             <ArrowForwardIosRoundedIcon className={styles.leftArrow}  />
             <h2 className="text-3xl">Todays Best Deals For You!</h2>
@@ -62,10 +58,20 @@ export const Deals = () => {
                 {
                     productsData &&
                     productsData.products.map((product, ind) => {
+                        
                         return (
                             <div className={styles.product}
                                 key={product.id}
                                 onClick={() => router.push(`/Products/${product.id}`)}>
+                                    <span className="tilt"></span>
+                                    <span className="tilt"></span>
+                                    <span className="tilt"></span>
+                                    <span className="tilt"></span>
+                                    <span className="tilt"></span>
+                                    <span className="tilt"></span>
+                                    <span className="tilt"></span>
+                                    <span className="tilt"></span>
+                                    <span className="tilt"></span>
 
                                 <img
                                     src={product.thumbnail}

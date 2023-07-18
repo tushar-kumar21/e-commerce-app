@@ -68,12 +68,13 @@ export const FirebaseProvider = ({ children }) => {
     const stock = e.target.getAttribute('stock');
     const id = e.target.getAttribute('id');
     const desc = e.target.getAttribute('desc')
+    console.log(stock,category)
 
+    if(stock && desc && category){
     try {
       const userCollectionRef = collection(db, `${currentUser.uid}`);
       const productDocRef = doc(userCollectionRef, `${currentUser.displayName}_Details`);
       const productCollectionRef = collection(productDocRef, 'products');      
-
       await setDoc(doc(productCollectionRef, `product_Details${id}`), {
         name: name,
         price: price,
@@ -81,15 +82,16 @@ export const FirebaseProvider = ({ children }) => {
         image: img,
         discount: discount,
         category: category,
-        stock:stock,
-        id:id,
-        quantity:0,
+        stock: stock,
+        id:id && id,
+        quantity:1,
         desc:desc
-      });
+      })
 
       console.log("Data added successfully!");
     } catch (error) {
       console.log(error);
+    }
     }
   };
   

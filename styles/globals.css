@@ -4,33 +4,140 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
+body {
   margin: 0;
   box-sizing: border-box;
   font-family: 'Roboto Slab', serif;
-  --main-color:#5b18ac;  
+  --main-color: #5b18ac;
   user-select: none;
 }
 
 @layer utilities {
   @variants {
-    .list-custom li{
-    list-style: none;
+    .list-custom li {
+      list-style: none;
     }
-    .list-custom > li > span{
-      color:#000;
-      letter-spacing:.5px;
+
+    .list-custom>li>span {
+      color: #000;
+      letter-spacing: .5px;
     }
-    .cover-bg{
-      background: url('https://firebasestorage.googleapis.com/v0/b/newcapp-38895.appspot.com/o/shopping-bg.avif?alt=media&token=b5442dad-7e71-4e79-9215-795d4b1ff260') no-repeat center center/cover;        
+
+    .cover-bg {
+      background: url('https://www.techwyse.com/wp-content/uploads/2018/09/UX-Design-Tips-1.jpg') no-repeat center center/cover;
+      animation: coverbg 20s linear infinite;
     }
-    .transition-cubic{
+
+    .transition-cubic {
       transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
     }
-    .product-details > img{
+
+    .product-details>img {
       width: 15px;
       height: 15px;
       margin-bottom: 1em;
     }
+
+    .scrollbar::-webkit-scrollbar {
+      width: 1em;
+      height: .8em;
+      cursor: pointer;
+    }
+
+    .scrollbar::-webkit-scrollbar-track {
+      background: #5b18ac;
+      background: linear-gradient(90deg, #fff 0%, #5b18ac 100%);
+      border-radius: 100vw;
+      cursor: pointer;
+    }
+
+    .scrollbar::-webkit-scrollbar-thumb {
+      /* background:#ffffffde; */
+      background: linear-gradient(90deg, #5b18ac, #fff);
+      border: 1px solid #fff;
+      border-radius: 100vw;
+      cursor: pointer;
+    }
+    .cards{
+      perspective:1000px;      
+      position: relative;
+    }
+    .cbox{
+      transform: rotateX(0deg) rotateY(0deg);
+      perspective:1000px;
+      transform-style:preserve-3d;
+    }
+    .cbox:hover{
+      transition:all .3s linear;
+      transform: scale(1.1);
+    }
+    .product-details{
+      /* transform:translateZ(40px); */
+    }
+    .tilt{
+      width: 33.333%;
+      height: 33.333%;
+      position: absolute;
+      z-index: 1;
+    }
+    .tilt:nth-child(1){ left: 0; top: 0; }
+    .tilt:nth-child(2){ left: 33.333%; top: 0; }
+    .tilt:nth-child(3){ left: 66.666%; top: 0; }
+    .tilt:nth-child(4){ left: 0; top: 33.333%; }
+    .tilt:nth-child(5){ left: 33.333%; top: 33.333%; }
+    .tilt:nth-child(6){ left: 66.666%; top: 33.333%; }
+    .tilt:nth-child(7){ left: 0; top: 66.666%; }
+    .tilt:nth-child(8){ left: 0; top: 66.666%; }
+    .tilt:nth-child(9){ left: 0; top: 66.666%; }
+    .tilt:nth-child(1):hover ~ .cbox{transform: rotateX(-20deg) rotateY(20deg)}
+  }
+}
+
+.img-container{
+  width: 100%;
+  height: 100%;
+  display: flex;  
+  position: absolute;
+  animation:anim 13s cubic-bezier(0.19, 1, 0.22, 1)infinite;
+}
+.img-container > img{
+  min-width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@keyframes anim{
+  0%{
+    transform: translateX(-100%);
+  }
+  10%{
+    transform: translateX(-100%);
+  }
+  20%{
+    transform: translateX(-200%);
+  }
+  30%{
+    transform: translateX(-200%);
+  }
+  40%{
+    transform: translateX(-300%);
+  }
+  50%{
+    transform: translateX(-300%);
+  }
+  60%{
+    transform: translateX(-400%);
+  }
+  70%{
+    transform: translateX(-400%);
+  }
+  80%{
+    transform: translateX(-500%);
+  }
+  90%{
+    transform: translateX(-500%);
+  }
+  100%{
+    transform: translateX(-600%);
   }
 }

@@ -26,9 +26,10 @@ const styles = {
     product: "relative basis-[23.5%] cursor-grab h-[480px] flex flex-col justify-start rounded-xl",
     productImg: "w-full h-[55%] object-cover rounded-xl pointer-events-none mb-10",
     likeImg: "m-4 w-5 h-5 absolute right-0 p-2 bg-[#ffffffb1] rounded-full",
-    cartBtn: "border-black border-[1.3px] text-black font-semibold text-xs w-fit py-3 px-6 rounded-[2rem] tracking-wide bg-white absolute bottom-0",
+    cartBtn: "border-black border-[1.3px] text-black font-semibold text-xs w-fit py-3 px-6 rounded-[2rem] tracking-wide bg-white absolute bottom-0 shadow-[0px_5px_15px_#80808094]",
     productName: "flex justify-between gap-4 my-1 mx-0",
     btn: 'text-white bg-main border-[1.5px] border-transparent border-solid text-lg mt-2 w-fit tracking-wide px-8 py-3 rounded-[2rem] cursor-pointer transition duration-500 hover:bg-transparent hover:text-main hover:border-main',
+    cashback:"max-w-full flex justify-around items-center bg-[#ffe6cc] mt-24"
 
 }
 
@@ -50,6 +51,8 @@ export const TodayDeals = () => {
             console.log(error)
         }
     });
+
+    
 
     return (
         <div className="max-w-full pt-16">
@@ -136,7 +139,7 @@ export const TodayDeals = () => {
                 </div>
             </div>
 
-            <div className="max-w-full flex justify-around items-center bg-[#ffe6cc] mt-24">
+            <div className={styles.cashback}>
                 <div>
                     <h1 className="text-5xl leading-10">Get 5% Cash Back</h1>
                     <h4 className="text-xl leading-10">on ShopExpress.com</h4>

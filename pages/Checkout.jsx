@@ -1,26 +1,38 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import NorthRoundedIcon from '@mui/icons-material/NorthRounded';
 import ShoppingBasketRoundedIcon from '@mui/icons-material/ShoppingBasketRounded';
 import DoneRoundedIcon from '@mui/icons-material/DoneRounded';
 import Button from '@mui/material/Button';
+import { useFirebase } from '@/firebase/firebase';
 
 //STYLES
 
-const styles={
-    itemSection:'p-12 basis-1/2 grow shrink',
-    paymentSection:'w-1/2 flex flex-col basis-[33%] grow shrink p-12 shadow-[-3px_0px_10px_#80808061]',
-    emailInput:'outline-none border-[1.5px] border-[#808080] py-[7px] px-4 rounded-md text-base mb-6 placeholder:text-sm',
-    cardInfo:'flex gap-1 border-[1.5px] border-[#808080] rounded-md overflow-hidden px-4 justify-between items-center py-1',
-    cardInput:'outline-none border-none py-1 placeholder:text-sm',
-    valid:'flex gap-1 border-[1.5px] border-[#808080] rounded-md overflow-hidden justify-between items-center border-t-0 mb-6',
-    monthInput:'basis-[50%] grow shrink border-r-2 border-r-[#808080] px-4 py-[7px] outline-none placeholder:text-sm',
-    cvcInput:'basis-[50%] grow shrink px-4 py-[7px] outline-none placeholder:text-sm',
-    nameInput:'py-[7px] px-4 border-[1.5px] border-[#808080] rounded-md outline-none mb-6 placeholder:text-sm',
-    terms:'border-[1.5px] border-[#808080] rounded-md flex items-start p-3 mb-6',
-    checkbox:'border-[1.5px] border-[#808080] h-5 w-5 flex justify-center items-center rounded-[3px] cursor-pointer'
+const styles = {
+    totalAmount: 'text-2xl font-semibold my-2 mt-10',
+    itemSection: 'p-12 basis-1/2 grow shrink',
+    paymentSection: 'w-1/2 flex flex-col basis-[33%] grow shrink p-12 shadow-[-3px_0px_10px_#80808061]',
+    emailInput: 'outline-none border-[1.5px] border-[#808080] py-[7px] px-4 rounded-md text-base mb-6 placeholder:text-sm',
+    cardInfo: 'flex gap-1 border-[1.5px] border-[#808080] rounded-md overflow-hidden px-4 justify-between items-center py-1',
+    cardInput: 'outline-none border-none py-1 placeholder:text-sm',
+    valid: 'flex gap-1 border-[1.5px] border-[#808080] rounded-md overflow-hidden justify-between items-center border-t-0 mb-6',
+    monthInput: 'basis-[50%] grow shrink border-r-2 border-r-[#808080] px-4 py-[7px] outline-none placeholder:text-sm',
+    cvcInput: 'basis-[50%] grow shrink px-4 py-[7px] outline-none placeholder:text-sm',
+    nameInput: 'py-[7px] px-4 border-[1.5px] border-[#808080] rounded-md outline-none mb-6 placeholder:text-sm',
+    terms: 'border-[1.5px] border-[#808080] rounded-md flex items-start p-3 mb-6',
+    checkbox: 'border-[1.5px] border-[#808080] h-5 w-5 flex justify-center items-center rounded-[3px] cursor-pointer'
 }
 
 const Checkout = () => {
+
+    const fb = useFirebase()
+    const { productsData, getProductsData, getCurrentUser, currentUser } = fb;
+
+    useEffect(()=>{
+        getProductsData()
+        getCurrentUser()        
+        console.log(productsData)
+    },[currentUser])
+
     return (
         <main className='flex justify-between'>
             <section className={styles.itemSection}>
@@ -29,72 +41,23 @@ const Checkout = () => {
                     <ShoppingBasketRoundedIcon className=' rounded-full text-gray-600 shadow-[0px_2px_10px_0px_rgba(133,131,133,1)] p-[2px]' />
                     <span className='text-black'>Place Your Orders</span>
                 </div>
-                <h3 className='text-2xl font-semibold my-2 mt-10'>Total Amount: $3323</h3>
-                <aside className='p-1 border h-96 overflow-auto overscroll-y-contain'>
-                    <div className='flex gap-2 mb-4'>
-                        <img className='rounded-md' src="https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?cs=srgb&dl=pexels-pixabay-268533.jpg&fm=jpg" height={80} width={80} alt="" />
-                        <div className='flex flex-col'>
-                            <span className='text-gray-600 text-sm'><span className='text-black text-sm'>Quantity: </span>Lorem ipsum dolor sit</span>
-                            <span className='text-gray-600 text-sm'><span className='text-black text-sm'>Description: </span>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officiis ipsa adipisci molestiae amet.</span>
-                        </div>
-                        <span>$8999</span>
-                    </div>
-                    <div className='flex gap-2 mb-4'>
-                        <img className='rounded-md' src="https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?cs=srgb&dl=pexels-pixabay-268533.jpg&fm=jpg" height={80} width={80} alt="" />
-                        <div className='flex flex-col'>
-                            <span className='text-gray-600 text-sm'><span className='text-black text-sm'>Quantity: </span>Lorem ipsum dolor sit</span>
-                            <span className='text-gray-600 text-sm'><span className='text-black text-sm'>Description: </span>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officiis ipsa adipisci molestiae amet.</span>
-                        </div>
-                        <span>$8999</span>
-                    </div>
-                    <div className='flex gap-2 mb-4'>
-                        <img className='rounded-md' src="https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?cs=srgb&dl=pexels-pixabay-268533.jpg&fm=jpg" height={80} width={80} alt="" />
-                        <div className='flex flex-col'>
-                            <span className='text-gray-600 text-sm'><span className='text-black text-sm'>Quantity: </span>Lorem ipsum dolor sit</span>
-                            <span className='text-gray-600 text-sm'><span className='text-black text-sm'>Description: </span>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officiis ipsa adipisci molestiae amet.</span>
-                        </div>
-                        <span>$8999</span>
-                    </div>
-                    <div className='flex gap-2 mb-4'>
-                        <img className='rounded-md' src="https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?cs=srgb&dl=pexels-pixabay-268533.jpg&fm=jpg" height={80} width={80} alt="" />
-                        <div className='flex flex-col'>
-                            <span className='text-gray-600 text-sm'><span className='text-black text-sm'>Quantity: </span>Lorem ipsum dolor sit</span>
-                            <span className='text-gray-600 text-sm'><span className='text-black text-sm'>Description: </span>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officiis ipsa adipisci molestiae amet.</span>
-                        </div>
-                        <span>$8999</span>
-                    </div>
-                    <div className='flex gap-2 mb-4'>
-                        <img className='rounded-md' src="https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?cs=srgb&dl=pexels-pixabay-268533.jpg&fm=jpg" height={80} width={80} alt="" />
-                        <div className='flex flex-col'>
-                            <span className='text-gray-600 text-sm'><span className='text-black text-sm'>Quantity: </span>Lorem ipsum dolor sit</span>
-                            <span className='text-gray-600 text-sm'><span className='text-black text-sm'>Description: </span>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officiis ipsa adipisci molestiae amet.</span>
-                        </div>
-                        <span>$8999</span>
-                    </div>
-                    <div className='flex gap-2 mb-4'>
-                        <img className='rounded-md' src="https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?cs=srgb&dl=pexels-pixabay-268533.jpg&fm=jpg" height={80} width={80} alt="" />
-                        <div className='flex flex-col'>
-                            <span className='text-gray-600 text-sm'><span className='text-black text-sm'>Quantity: </span>Lorem ipsum dolor sit</span>
-                            <span className='text-gray-600 text-sm'><span className='text-black text-sm'>Description: </span>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officiis ipsa adipisci molestiae amet.</span>
-                        </div>
-                        <span>$8999</span>
-                    </div>
-                    <div className='flex gap-2 mb-4'>
-                        <img className='rounded-md' src="https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?cs=srgb&dl=pexels-pixabay-268533.jpg&fm=jpg" height={80} width={80} alt="" />
-                        <div className='flex flex-col'>
-                            <span className='text-gray-600 text-sm'><span className='text-black text-sm'>Quantity: </span>Lorem ipsum dolor sit</span>
-                            <span className='text-gray-600 text-sm'><span className='text-black text-sm'>Description: </span>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officiis ipsa adipisci molestiae amet.</span>
-                        </div>
-                        <span>$8999</span>
-                    </div>
-                    <div className='flex gap-2 mb-4'>
-                        <img className='rounded-md' src="https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?cs=srgb&dl=pexels-pixabay-268533.jpg&fm=jpg" height={80} width={80} alt="" />
-                        <div className='flex flex-col'>
-                            <span className='text-gray-600 text-sm'><span className='text-black text-sm'>Quantity: </span>Lorem ipsum dolor sit</span>
-                            <span className='text-gray-600 text-sm'><span className='text-black text-sm'>Description: </span>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Officiis ipsa adipisci molestiae amet.</span>
-                        </div>
-                        <span>$8999</span>
-                    </div>
+                <h3 className={styles.totalAmount}>Total Amount: $3323</h3>
+                <aside className={styles.products}>
+                    {
+                        productsData && productsData.map(({image,desc,id}) => {
+                            return (
+                                <div className='flex gap-2 mb-4' key={id}>
+                                    <img className='rounded-md' src={image} height={80} width={80} alt="" />
+                                    <div className='flex flex-col'>
+                                        <span className='text-gray-600 text-sm'><span className='text-black text-sm'>Quantity: </span>{}</span>
+                                        <span className='text-gray-600 text-sm'><span className='text-black text-sm'>Description: </span>{desc}</span>
+                                    </div>
+                                    <span>$8999</span>
+                                </div>        
+                            )
+                        })
+                    }
+                 
                 </aside>
                 <span className='text-xs text-[#808080] inline-block my-4'>Powered by <span className='font-semibold text-gray-600'>ShopExpress</span> | <span className='text-[#808080] text-xs'>Terms</span> &nbsp;&nbsp;&nbsp;<span className='text-[#808080] text-xs'>Privacy</span></span>
             </section>
