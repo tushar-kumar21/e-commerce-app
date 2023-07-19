@@ -15,6 +15,7 @@ import { Service } from '../components/Service';
 import { Footer } from '../components/Footer';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useFirebase } from '@/firebase/firebase';
+import Head from 'next/head';
 
 const index = () => {
   const auth = getAuth();

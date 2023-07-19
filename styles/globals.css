@@ -10,6 +10,7 @@ body {
   font-family: 'Roboto Slab', serif;
   --main-color: #5b18ac;
   user-select: none;
+  perspective: 1000px;
 }
 
 @layer utilities {
@@ -24,8 +25,7 @@ body {
     }
 
     .cover-bg {
-      background: url('https://www.techwyse.com/wp-content/uploads/2018/09/UX-Design-Tips-1.jpg') no-repeat center center/cover;
-      animation: coverbg 20s linear infinite;
+      background: url('https://www.techwyse.com/wp-content/uploads/2018/09/UX-Design-Tips-1.jpg') no-repeat center center/cover;      
     }
 
     .transition-cubic {
@@ -58,38 +58,15 @@ body {
       border-radius: 100vw;
       cursor: pointer;
     }
-    .cards{
-      perspective:1000px;      
-      position: relative;
+    .card{      
+      transform-style:preserve-3d ;
     }
-    .cbox{
-      transform: rotateX(0deg) rotateY(0deg);
-      perspective:1000px;
-      transform-style:preserve-3d;
-    }
-    .cbox:hover{
-      transition:all .3s linear;
-      transform: scale(1.1);
+    .card-container{
+     perspective:1000px;
     }
     .product-details{
-      /* transform:translateZ(40px); */
+      /* perspective:1000px; */
     }
-    .tilt{
-      width: 33.333%;
-      height: 33.333%;
-      position: absolute;
-      z-index: 1;
-    }
-    .tilt:nth-child(1){ left: 0; top: 0; }
-    .tilt:nth-child(2){ left: 33.333%; top: 0; }
-    .tilt:nth-child(3){ left: 66.666%; top: 0; }
-    .tilt:nth-child(4){ left: 0; top: 33.333%; }
-    .tilt:nth-child(5){ left: 33.333%; top: 33.333%; }
-    .tilt:nth-child(6){ left: 66.666%; top: 33.333%; }
-    .tilt:nth-child(7){ left: 0; top: 66.666%; }
-    .tilt:nth-child(8){ left: 0; top: 66.666%; }
-    .tilt:nth-child(9){ left: 0; top: 66.666%; }
-    .tilt:nth-child(1):hover ~ .cbox{transform: rotateX(-20deg) rotateY(20deg)}
   }
 }
 
