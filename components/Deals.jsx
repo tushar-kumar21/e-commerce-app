@@ -24,13 +24,13 @@ const productsFetcher = async (url) => {
 const styles = {
     dealsContainer: 'max-w-full pt-16 px-8 py-0 relative group-hover:visible group-hover:pointer-events-auto deals-custom ',
     dealsCards: 'flex justify-between gap-8 pb-3 w-full h-fit pt-4 transition-cubic overflow-x-scroll overflow-y-hidden scrollbar card-container',
-    product: "relative min-w-[380px] h-[490px] cursor-grab flex flex-col justify-start rounded-xl card",
+    product: "relative min-w-[380px] h-[490px] cursor-grab flex flex-col justify-start rounded-xl card px-2",
     productImg: "w-full h-[55%] object-contain rounded-xl pointer-events-none mb-10 likeimg",
     likeImg: "m-4 w-9 h-9 absolute p-2 right-2 top-4 bg-likeBg rounded-full z-[9999] like",
     productName: "flex justify-between gap-4 mx-1 my-0 title",
     productContent: "text-[1rem] font-semibold tracking-wide ",
     productCategory: "text-[#757575] text-xs tracking-wide ml-1",
-    cartBtn: "border-black border-[1.3px] text-black font-semibold text-xs w-fit py-3 px-6 rounded-[2rem] tracking-wide bg-white absolute bottom-0 mb-4 cbtn",
+    cartBtn: "border-black border-[1.3px] text-black font-semibold text-xs w-fit py-3 px-6 rounded-[2rem] tracking-wide transition-all duration-300 hover:bg-black hover:text-white bg-white absolute bottom-0 mb-4 cbtn",
 }
 
 export const Deals = () => {

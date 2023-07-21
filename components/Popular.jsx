@@ -23,13 +23,13 @@ const productsFetcher = async (url) => {
 const styles = {
     dealsContainer: 'max-w-full pt-16 px-8 py-0 overflow-hidden relative group-hover:visible group-hover:pointer-events-auto deals-custom',
     dealsCards: 'flex justify-between gap-8 w-full h-fit pt-4 transition-cubic pb-3 overflow-x-scroll overflow-y-hidden scrollbar pcard-container',
-    product: "relative min-w-[380px] h-[460px] cursor-grab flex flex-col justify-start rounded-xl pcard",
+    product: "relative min-w-[380px] h-[460px] cursor-grab flex flex-col justify-start rounded-xl pcard px-2",
     productImg: "w-full h-[55%] object-contain rounded-xl pointer-events-none mb-10 plikeimg",
     likeImg: "m-4 w-9 h-9 absolute p-2 right-0 bg-likeBg rounded-full plike",
     productName: "flex justify-between gap-4 mx-1 my-0 ptitle",
     productContent: "text-[1rem] font-semibold tracking-wide",
     productCategory: "text-[#757575] text-xs tracking-wide ml-1",
-    cartBtn: "border-black border-[1.3px] text-black font-semibold text-xs w-fit py-3 px-6 rounded-[2rem] tracking-wide bg-white absolute bottom-0 mb-4 pcbtn",
+    cartBtn: "border-black border-[1.3px] text-black font-semibold text-xs w-fit py-3 px-6 rounded-[2rem] tracking-wide bg-white absolute bottom-0 mb-4 transition-all duration-300 hover:bg-black hover:text-white pcbtn",
     leftArrow: "absolute bottom-[45%] scale-[2] my-0 mx-4 z-10 cursor-pointer border border-[#00000042] px-[.1em] bg-white rounded-md invisible pointer-events-none right-0 right arrows",
     rightArrow: "absolute bottom-[45%] scale-[2] my-0 mx-4 z-10 cursor-pointer border border-[#00000042] px-[.1em] bg-white rounded-md invisible pointer-events-none left-0 left arrows"
 }

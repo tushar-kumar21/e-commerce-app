@@ -3,7 +3,7 @@ import { brandsData } from "@/data"
 //STYLES
 
 const styles = {
-    brandsCards:"border border-[#f5f6f6] flex w-fit gap-5 mb-4 py-4 px-5 rounded-xl bg-[#f5f6f6]",
+    brandsCards:"border border-[#f5f6f6] flex w-fit gap-5 mb-4 py-4 px-5 rounded-xl bg-[#f5f6f6] hover:scale-110 transition-all hover:shadow-[0px_0px_5px_lightgray] cursor-pointer",
 }
 
 export const Brands = () => {

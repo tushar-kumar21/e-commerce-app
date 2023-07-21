@@ -3,11 +3,11 @@ import { categoriesData } from "@/data"
 //STYLES
 
 const styles = {
-    categoriesContainer: 'max-w-full py-0 px-8 pt-16',
+    categoriesContainer: 'max-w-full py-0 px-8 pt-16 ',
     cards: 'max-w-full flex justify-between pt-5 category-cards-container',
     categoryCards: 'w-[180px] rounded-xl h-[210px] text-center pt-[1em] relative overflow-hidden cursor-pointer category-card transition ease-[cubic-bezier(0.19, 1, 0.22, 1)] duration-1000',
     cardImg: 'w-full min-h-full object-cover z-[-1] absolute top-0 left-0',
-    cardTitle: 'text-2xl text-semibold text-white z-10 category-title'
+    cardTitle: 'text-2xl text-semibold text-white z-10 inline-block transition ease-[cubic-bezier(0.19, 1, 0.22, 1)] duration-500 category-title'
 }
 
 // const categoryHandleMouseMove=(e,val)=>{    
@@ -21,16 +21,21 @@ const styles = {
 // }
 
 const categoryHandleMouseEnter=(val)=>{
-    if (document.querySelectorAll('.category-card')[val]) {
-        document.querySelectorAll('.category-card')[val].style.transform = `rotateY(360deg)`;        
-        document.querySelectorAll('.category-title')[val].style.transform = `scale(1.2)`;       
-        console.log(document.querySelectorAll('.category-title')[val])
+    let card = document.querySelectorAll('.category-card');
+    let title = document.querySelectorAll('.category-title');
+    if (card[val]) {
+        card[val].style.transform = `translateZ(50px) rotateY(360deg) scale(1.05)`;                
+        card[val].style.zIndex = `5`;                
+        title[val].style.transform=`translateZ(200px)`;
     }
 }
 const categoryHandleMouseLeave=(val)=>{
-    if (document.querySelectorAll('.category-card')[val]) {
-        document.querySelectorAll('.category-card')[val].style.transform = `rotateY(0deg)`;
-        // document.querySelectorAll('.category-title')[val].style.transform = `translateZ(0px)`;                  
+    let card = document.querySelectorAll('.category-card');
+    let title = document.querySelectorAll('.category-title');
+    if (card[val]) {
+        card[val].style.transform = `translateZ(0px) rotateY(0deg) scale(1)`;
+        card[val].style.zIndex = `0`;                
+        title[val].style.transform=`translateZ(0px)`;
     }
 }
 

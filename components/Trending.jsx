@@ -3,10 +3,10 @@
 
 const styles = {
     trendingItems: "max-w-full flex gap-6 pt-4 flex-wrap",
-    trendingProducts: "flex grow shrink basis-[500px] flex-col h-fit rounded-lg bg-[#f5f6f6] cursor-pointer",
+    trendingProducts: "flex grow shrink basis-[500px] flex-col h-fit rounded-lg bg-[#f5f6f6] cursor-pointer overflow-hidden group",
     trendingItemsDetails: "py-4 px-8 flex flex-col",
     h2: "text-[1.35rem] m-0 mb-2",
-    productImg: "w-full min-h-[300px] object-cover",
+    productImg: "w-full min-h-[300px] object-cover transition-all duration-300 group-hover:scale-105",
     btn: 'text-white bg-[#000000e1] border-[1.5px] border-transparent border-solid text-lg mt-2 w-fit tracking-wide px-8 py-3 rounded-[2rem] cursor-pointer transition duration-500 hover:bg-transparent hover:text-main hover:border-main',
 }
 

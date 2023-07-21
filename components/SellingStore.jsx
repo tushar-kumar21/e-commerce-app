@@ -10,20 +10,20 @@ export const SellingStore = () => {
                     sellingStoreData &&
                     sellingStoreData.map((data, ind) => {
                         return (
-                            <div className="relative basis-72">
+                            <div className="relative basis-72 overflow-hidden rounded-xl group">
                                 <img 
-                                    className="w-full rounded-xl"
+                                    className="w-full rounded-xl transition-all duration-300 cursor-pointer group-hover:scale-105"
                                     src={data.img}
                                     alt=""
                                 />
                                 <img
-                                    className="absolute bottom-20 left-5"
+                                    className="absolute bottom-20 left-5 transition-all duration-300 group-hover:scale-110"
                                     src={data.brand}
                                     alt=""
                                 />                                
                                 <div className="mt-10 flex flex-col gap-2">
                                     <span className="text-xl tracking-wide font-semibold">{data.name}</span>
-                                    <div className="flex gap-1">
+                                    <div className="flex gap-1 items-center">
                                         <span className="text-xs text-[#808080] font-medium tracking-wide">{data.item}</span>
                                         <span className="font-black">~</span>
                                         <span className="text-xs text-[#808080] font-medium tracking-wide">{data.secItem}</span>

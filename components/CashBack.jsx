@@ -2,7 +2,7 @@
 
 const styles={
     banner:"max-w-full h-[600px] relative flex justify-end mt-28",
-    bannerImg:"w-full h-full absolute object-cover",
+    bannerImg:"w-full h-full absolute object-cover  ",
     cashBackDetails:"max-w-[400px] relative z-10 py-16 px-12 bg-main",
     btn:'text-white bg-main border-[1.5px] border-transparent border-solid text-lg mt-2 w-fit tracking-wide px-8 py-3 rounded-[2rem] cursor-pointer transition duration-500 my-5 mb-0 border-white hover:bg-white hover:text-main hover:border-white',
     h4:"text-white tracking-wide font-medium text-[1.2rem] mt-2 mb-4",

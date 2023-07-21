@@ -43,11 +43,20 @@ body {
       height: .8em;
       cursor: pointer;
     }
+    .search-scrollbar::-webkit-scrollbar{
+      width: 0.6em;
+      height: 0.6em;
+      cursor: pointer;
+    }
 
     .scrollbar::-webkit-scrollbar-track {
-      background: #5b18ac;
       background: linear-gradient(90deg, #fff 0%, #5b18ac 100%);
       border-radius: 100vw;
+      cursor: pointer;
+    }
+    .search-scrollbar::-webkit-scrollbar-track{
+      background: #5b18ac;
+      border-radius:100vw;
       cursor: pointer;
     }
 
@@ -58,7 +67,14 @@ body {
       border-radius: 100vw;
       cursor: pointer;
     }
-    .card, .mcard, .pcard, .tcard, .category-card{      
+    .search-scrollbar::-webkit-scrollbar-thumb{
+      background: linear-gradient(0deg, #5b18ac, #fff);
+      border:1px solid #fff;
+      border-radius:100vw;
+      cursor: pointer;
+    }
+
+    .card, .mcard, .pcard, .tcard,{      
       transform-style:preserve-3d ;
     }    
     .card-container, .mcard-container, .pcard-container, .tcard-container{
@@ -67,8 +83,11 @@ body {
     .category-cards-container{
       perspective:1000px;
     }
-    .product-details, .mproduct-details, .pproduct-details, .tproduct-details{
-      /* perspective:1000px; */
+    .category-card{
+      perspective:2000px;
+    }
+    .category-title{
+      transform-style:preserve-3d;
     }
   }
 }
@@ -84,6 +103,11 @@ body {
   min-width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.content-container{
+  width: 100%;
+  height: 100%;
+  border: 2px solid red;
 }
 
 @keyframes anim{

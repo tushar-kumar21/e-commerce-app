@@ -23,10 +23,10 @@ const styles = {
     categoryDealCards: "flex flex-wrap justify-start gap-6 w-full h-fit tcard-container",
     categoriesName: "border border-[#00000079] py-3 px-4 text-sm rounded-[2em] tracking-wide cursor-pointer select-none hover:bg-main hover:text-white transition-cubic",
     categoryActive: "text-white bg-main",
-    product: "relative basis-[23.5%] cursor-grab h-[480px] flex flex-col justify-start rounded-xl tcard",
+    product: "relative basis-[23.5%] cursor-grab h-[480px] flex flex-col justify-start rounded-xl tcard p-2",
     productImg: "w-full h-[55%] object-contain rounded-xl pointer-events-none mb-10 tlikeimg",
     likeImg: "m-4 w-8 h-8 absolute p-2 right-2 top-4 bg-likeBg rounded-full z-[9999]  tlike",
-    cartBtn: "border-black border-[1.3px] text-black font-semibold text-xs w-fit py-3 px-6 rounded-[2rem] tracking-wide bg-white absolute bottom-0 tcbtn",
+    cartBtn: "border-black border-[1.3px] text-black font-semibold text-xs w-fit py-3 px-6 rounded-[2rem] tracking-wide bg-white absolute bottom-0 transition-all duration-300 hover:bg-black hover:text-white tcbtn",
     productName: "flex justify-between gap-4 my-1 mx-0 ttitle",
     btn: 'text-white bg-main border-[1.5px] border-transparent border-solid text-lg mt-2 w-fit tracking-wide px-8 py-3 rounded-[2rem] cursor-pointer transition duration-500 hover:bg-transparent hover:text-main hover:border-main',
     cashback: "max-w-full flex justify-around items-center bg-[#ffe6cc] mt-24"
