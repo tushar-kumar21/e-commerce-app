@@ -10,6 +10,7 @@ import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import AddShoppingCartRoundedIcon from '@mui/icons-material/AddShoppingCartRounded';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
 //STYLES
 
@@ -22,7 +23,7 @@ const styles = {
     logoName: 'text-main text-[1.6rem] tracking-wide font-bold',
     navMenu: 'flex items-center gap-[1.5em] list-custom',
     searchItem: 'border border-borderGrey flex justify-between items-center h-[2.5em] w-[23%] px-[1em] py-[0] rounded-lg relative',
-    searchInput: 'bg-transparent outline-none tracking-wide placeholder:text-borderGrey placeholder:text-[.9rem] px-0 py-auto',
+    searchInput: 'bg-transparent outline-none tracking-wide placeholder:text-borderGrey placeholder:text-[.9rem] px-0 py-auto searchInput',
     searchProducts: 'list-none px-3 py-1 border-b-[1.5px] border-b-[#80808023] flex gap-5 items-center justify-start cursor-pointer hover:bg-gray-100',
     searchBox: 'absolute top-[100%] w-full bg-white h-fit left-0 z-10 mt-2 rounded-lg max-h-[430px] overflow-auto search-scrollbar',
 
@@ -40,15 +41,18 @@ const productFetcher = async (url) => {
 export const Navbar = () => {
 
     const [query, setQuery] = useState(null);
+    const [input, setInput] = useState("");
     const auth = getAuth();
     const fb = useFirebase();
     const { signInWithGoogle } = fb;
+    const router = useRouter();
              
         const { data: queryData, error: errorData } = useSWR(`https://dummyjson.com/products/search?q=${query}`, productFetcher)
 
-        useEffect(()=>{
-        setQuery(query)
-        },[query])
+    useEffect(()=>{
+    let input = document.querySelector('.searchInput')
+    setInput(input);
+    },[])    
         
     return (
         <div className="max-w-full">
@@ -112,15 +116,14 @@ export const Navbar = () => {
                         placeholder='Search Product'
                         className={styles.searchInput}
                         onChange={(e) => {
-                            setQuery(e.target.value)
-                            console.log(query,e.target.value)
+                            setQuery(e.target.value)                            
                         }}
                     />
                     <SearchRoundedIcon />
 
                     <aside className={styles.searchBox}>
                         {
-                            queryData && queryData.data.products.map((data) => {
+                          input.value!=="" && queryData && queryData.data.products.map((data) => {
                                 return (
                                     <li
                                         className={styles.searchProducts}>
@@ -160,8 +163,8 @@ export const Navbar = () => {
                     }
                 </div>
 
-                <div className="flex gap-[.1em]" onClick={() => signOut(auth)}>
-                    <AddShoppingCartRoundedIcon />
+                <div className="flex gap-[.1em] cursor-pointer" onClick={()=>router.push("/Cart")}>
+                    <AddShoppingCartRoundedIcon/>
                     <span className='text-[.9rem]'>Cart</span>
                 </div>
             </div>

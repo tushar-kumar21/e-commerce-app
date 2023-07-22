@@ -208,3 +208,37 @@ export const sectionData=[
     "Services",
     "Help"
 ]
+
+export const coverContent=[
+    {
+        h1:"Shopping And Department Store.",
+        span:"Shopping is a bit of a relaxing hobby for me, which is sometimes troubling for the bank balance.",
+        color:"#fff"
+    },
+    {
+        h1: "Fashionable Apparel Sale",
+        span: "Discover the latest trends in fashion at unbeatable prices! From chic dresses to trendy accessories, our apparel sale has something for everyone.",
+        color:"#5b18ac"
+    },
+    {
+        h1: "Tech Extravaganza",
+        span: "Upgrade your gadgets and unleash the power of technology with our Tech Extravaganza! Get incredible deals on smartphones, laptops, smartwatches, and more.",
+        color:"skyblue"
+    },    
+    {
+        h1: "Home Decor Bonanza",
+        span: "Transform your living space into a paradise with our Home Decor Bonanza! Explore a wide range of furniture, decor items, and lighting solutions to suit your style.",
+        color:"#5b18ac"
+    },
+    {
+        h1: "Health and Wellness Essentials",
+        span: "Prioritize your well-being with our Health and Wellness Essentials collection. From fitness equipment to nutritious supplements, we have everything you need to stay healthy.",
+        color:"dodgerblue"
+    },
+    {
+        h1: "Bookworm's Paradise",
+        span: "Calling all book lovers! Dive into a world of literature with our Bookworm's Paradise. Find bestsellers, classic novels, and thrilling reads to satisfy your reading cravings.",
+        color:"#5b18ac"
+    }    
+    
+]

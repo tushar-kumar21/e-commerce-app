@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect } from "react";
 import { useState } from "react";
 import Image from "next/image";
+import { Button } from "@mui/material";
 import { CartNavbar } from "@/components/CartNavbar";
 import SecurityTwoToneIcon from '@mui/icons-material/SecurityTwoTone';
 import { useFirebase } from "@/firebase/firebase";
@@ -8,6 +9,8 @@ import { monthsData } from "@/data";
 import { RemoveItem } from "@/components/RemoveItem";
 import { collection, doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "@/firebase/firebase";
+import { getAuth } from "firebase/auth";
+import { useRouter } from "next/router";
 
 //STYLES
 
@@ -38,26 +41,28 @@ const Cart = () => {
   const [isRemoveBox, setIsRemoveBox] = useState(false);
 
   const fb = useFirebase();
+  const auth = getAuth();
+  const router = useRouter();
   const { currentUser, productsData, getProductsData, getCurrentUser, getCartSize, cartSize, totalPrice, setTotalPrice, totalDiscount, setTotalDiscount, setProductsData } = fb;
 
   const [counter, setCounter] = useState(0);
-  const [quantities, setQuantities] = useState([]);
 
-  
-  const addItems = (id, e) => {    
-    setCounter(counter+1)
+
+  const addItems = (id, e) => {
+    setCounter(counter + 1)
     setTotalPrice(totalPrice + parseInt(e.target.getAttribute('price')))
     setTotalDiscount(totalDiscount + parseInt(e.target.getAttribute('discount')))
+
     setProductsData(items =>
       items.map((item) =>
         id === item.id ? { ...item, quantity: item.quantity + 1 } : item
-      ))      
+      ))
   };
 
 
   const removeItems = (id, e) => {
     if (counter > 0) {
-      setCounter(counter-1)
+      setCounter(counter - 1)
       setTotalPrice(totalPrice - parseInt(e.target.getAttribute('price')))
       setTotalDiscount(totalDiscount - parseInt(e.target.getAttribute('discount')))
     }
@@ -65,7 +70,7 @@ const Cart = () => {
     setProductsData(items =>
       items.map(item =>
         item.quantity > 1 && id === item.id ? { ...item, quantity: item.quantity - 1 } : item
-      ))      
+      ))
   };
 
   let date = new Date().getDate() + 3;
@@ -73,8 +78,8 @@ const Cart = () => {
 
   useEffect(() => {
     getCurrentUser()
-    getProductsData()
-    getCartSize()
+    !currentUser && getCartSize()
+    !currentUser && getProductsData()    
     if (date > 31) {
       date = 5
       month += 1;
@@ -106,10 +111,10 @@ const Cart = () => {
                   return (
                     <Fragment key={item.id}>
                       <div className={styles.cartItems} >
-                        <img 
-                        src={item.image}                         
-                        alt="" 
-                        className="rounded-xl h-24 w-24" />
+                        <img
+                          src={item.image}
+                          alt=""
+                          className="rounded-xl h-24 w-24" />
                         <div className="flex flex-col">
                           <span className="text-base">{item.name}</span>
                           <span className="text-[#808080] text-xs mt-1">smartphones</span>
@@ -123,7 +128,9 @@ const Cart = () => {
                                 className={styles.assuredLogoImg}
                               />
                               <span className={styles.assuredText}>Assured</span>
-                            </span></span>
+                            </span>
+                          </span>
+                          <span className="text-[#808080] text-xs mt-1">InStock - {item.stock}</span>                          
                           <span className="text-black font-black text-base tracking-widest mr-1 mt-4"><span>${item.price}</span>
                             <span className="text-green-500 text-xs">{` ${item.discount}% off`}</span>
                           </span>
@@ -157,8 +164,8 @@ const Cart = () => {
                 })
               }
             </div>
-            <div className={styles.placeOrder}>
-              <button className={styles.placeBtn}>PLACE ORDER</button>
+            <div className={styles.placeOrder} onClick={() => router.push("/Checkout")}>
+              <Button variant="contained" className={styles.placeBtn}>PLACE ORDER</Button>
             </div>
           </div>
           <div className="max-w-[30%] py-0 px-6 rounded-lg bg-white sticky">

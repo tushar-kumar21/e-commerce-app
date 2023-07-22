@@ -2,7 +2,8 @@ import Image from "next/image"
 import AddShoppingCartRoundedIcon from '@mui/icons-material/AddShoppingCartRounded'
 import { useRouter } from "next/router"
 import { useFirebase } from "@/firebase/firebase";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { getAuth } from "firebase/auth";
 
 //STYLES
 const styles = {
@@ -10,19 +11,37 @@ const styles = {
     cartSize: "flex justify-center items-center border-[1.5px] border-white rounded-lg bg-red-500 text-white absolute left-[6px] top-[-12px] p-[.46em] text-xs h-[.5em]",
     cart: "flex items-center text-main gap-1 relative cursor-pointer",
     cartNavbar: "flex justify-center items-center gap-20 bg-white shadow-[0_0_6px_grey]",
-    cartInput: "border-2 border-main rounded-[.3em] h-fit w-1/3 py-1 px-4 flex justify-between items-center"
+    cartInput: "border-2 border-main rounded-[.3em] h-fit w-1/3 py-1 px-4 flex justify-between items-center relative",
+    cartInputSearch: "h-6 w-[60%] border-0 outline-0 placeholder:text-[#808080] placeholder:text-xs",
+    searchBox: 'absolute top-[100%] w-full bg-white h-fit left-0 z-10 mt-2 rounded-lg max-h-[430px] overflow-auto search-scrollbar',
+    searchProducts: 'list-none px-3 py-1 border-b-[1.5px] border-b-[#80808023] flex gap-5 items-center justify-start cursor-pointer hover:bg-gray-100',
 }
 
 export const CartNavbar = () => {
-
+    const [input, setInput] = useState("");
+    const [products, getProducts] = useState(null)
     const router = useRouter();
     const fb = useFirebase();
-    const { cartSize, getCartSize, getCurrentUser, currentUser } = fb;
+    const { cartSize, getCartSize, getCurrentUser, currentUser, getProductsData, productsData } = fb;
+    const auth = getAuth();
+
+    const handleChange = (value) => {
+        getProductsData()
+        const results = productsData && productsData.filter((user) => {
+            return (
+                value &&
+                user &&
+                user.name &&
+                user.name.toLowerCase().includes(value)
+            )
+        })
+      getProducts(results)
+    }
 
     useEffect(() => {
+        getProductsData()
         getCurrentUser();
         getCartSize();
-        console.log("yes")
     }, [currentUser])
 
     return (
@@ -38,18 +57,61 @@ export const CartNavbar = () => {
                     <span className={styles.logoName}>ShopExpress</span>
                 </div>
                 <div className={styles.cartInput}>
-                    <input type="text" placeholder="Search for products, brands and more" className="h-6 w-[60%] border-0 outline-0 placeholder:text-[#808080] placeholder:text-xs" />
+                    <input
+                        type="text"
+                        placeholder="Search for products, brands and more"
+                        className={styles.cartInputSearch}
+                        onChange={(e) => handleChange(e.target.value)}
+                    />
                     <Image
                         src={`/assets/search.svg`}
                         height={20}
                         width={20}
                         alt="sdasd"
                     />
+                    <aside className={styles.searchBox}>
+                        {
+                          products && products.map((data) => {
+                                return (
+                                    <li
+                                        className={styles.searchProducts}
+                                        key={data.id}
+                                        >
+                                        <img
+                                            src={data.image}
+                                            alt="asCASDS"
+                                            className='rounded-sm w-12 h-10'
+                                        />
+                                        <span className='text-[#808080] text-sm'>{data.name}</span>
+                                    </li>
+                                )
+                            })
+                        }
+                    </aside>
                 </div>
-                <div className="text-main flex items-center gap-[.3em]">
-                    <span>Sign in</span>
-                    <Image src={`/assets/cart-account.svg`} height={23} width={23} alt="asa" />
-                </div>
+                {
+                    auth.currentUser ?
+                        <div className="text-main flex items-center gap-[.3em]">
+                            <span>{auth.currentUser.displayName}</span>
+                            <img
+                                src={auth.currentUser.photoURL}
+                                height={25}
+                                width={25}
+                                className="rounded-full"
+                                alt="asa"
+                            />
+                        </div>
+                        :
+                        <div className="text-main flex items-center gap-[.3em]">
+                            <span>Sign in</span>
+                            <img
+                                src={`/assets/cart-account.svg`}
+                                height={23}
+                                width={23}
+                                alt="asa"
+                            />
+                        </div>
+                }
                 <div className={styles.cart} onClick={() => router.push("/Cart")}>
                     <AddShoppingCartRoundedIcon sx={{ color: '#5b18ac' }} />
                     <span>Cart</span>

@@ -26,7 +26,6 @@ export const FirebaseProvider = ({ children }) => {
   const [productsData, setProductsData] = useState(null);
   const [totalPrice, setTotalPrice] = useState(null);
   const [totalDiscount, setTotalDiscount] = useState(null);
-  const [priceData, setPriceData] = useState(null);
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
@@ -67,8 +66,7 @@ export const FirebaseProvider = ({ children }) => {
     const category = e.target.getAttribute('category');
     const stock = e.target.getAttribute('stock');
     const id = e.target.getAttribute('id');
-    const desc = e.target.getAttribute('desc')
-    console.log(stock,category)
+    const desc = e.target.getAttribute('desc')    
 
     if(stock && desc && category){
     try {
@@ -104,17 +102,18 @@ export const FirebaseProvider = ({ children }) => {
       const productCollectionRef = collection(productDocRef, 'products');
       const docSize = await getDocs(productCollectionRef)
       const size = docSize.size;
-      setCartSize(size)      
+
+      setCartSize(size)            
       docSize.forEach((val)=>{
-        priceSum += parseInt(val.data().price);                         
-       
+        priceSum += parseInt(val.data().price);                                
       })
-      setTotalPrice(priceSum/2)      
+      setTotalPrice(priceSum)      
 
       docSize.forEach((val)=>{
         discountSum += parseInt(val.data().discount)        
       })
-      setTotalDiscount(discountSum/2)
+      setTotalDiscount(discountSum)
+      console.log("yes done!")
     }
   }
 

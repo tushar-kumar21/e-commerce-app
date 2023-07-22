@@ -19,52 +19,74 @@ const styles = {
     cvcInput: 'basis-[50%] grow shrink px-4 py-[7px] outline-none placeholder:text-sm',
     nameInput: 'py-[7px] px-4 border-[1.5px] border-[#808080] rounded-md outline-none mb-6 placeholder:text-sm',
     terms: 'border-[1.5px] border-[#808080] rounded-md flex items-start p-3 mb-6',
-    checkbox: 'border-[1.5px] border-[#808080] h-5 w-5 flex justify-center items-center rounded-[3px] cursor-pointer'
+    checkbox: 'border-[1.5px] border-[#808080] h-5 w-5 flex justify-center items-center rounded-[3px] cursor-pointer',
+    shoppingBasket: 'rounded-full text-gray-600 shadow-[0px_2px_10px_0px_rgba(133,131,133,1)] p-[2px]'
 }
 
 const Checkout = () => {
 
     const fb = useFirebase()
-    const { productsData, getProductsData, getCurrentUser, currentUser } = fb;
+    const { productsData, getProductsData, getCurrentUser, currentUser, totalPrice } = fb;
 
-    useEffect(()=>{
+    useEffect(() => {
         getProductsData()
-        getCurrentUser()        
-        console.log(productsData)
-    },[currentUser])
+        getCurrentUser()
+    }, [currentUser])
 
     return (
         <main className='flex justify-between'>
             <section className={styles.itemSection}>
                 <div className='flex gap-2'>
                     <NorthRoundedIcon className='text-[#808080] rotate-[-90deg]' />
-                    <ShoppingBasketRoundedIcon className=' rounded-full text-gray-600 shadow-[0px_2px_10px_0px_rgba(133,131,133,1)] p-[2px]' />
+                    <ShoppingBasketRoundedIcon className={styles.shoppingBasket} />
                     <span className='text-black'>Place Your Orders</span>
                 </div>
-                <h3 className={styles.totalAmount}>Total Amount: $3323</h3>
+                <h3 className={styles.totalAmount}>Total Amount: {`${totalPrice}`}</h3>
                 <aside className={styles.products}>
                     {
-                        productsData && productsData.map(({image,desc,id}) => {
+                        productsData && productsData.map(({ image, desc, id, stock, price }) => {
                             return (
                                 <div className='flex gap-2 mb-4' key={id}>
-                                    <img className='rounded-md' src={image} height={80} width={80} alt="" />
+                                    <img
+                                        className='rounded-md'
+                                        src={image}
+                                        height={80}
+                                        width={80}
+                                        alt="fd"
+                                    />
                                     <div className='flex flex-col'>
-                                        <span className='text-gray-600 text-sm'><span className='text-black text-sm'>Quantity: </span>{}</span>
-                                        <span className='text-gray-600 text-sm'><span className='text-black text-sm'>Description: </span>{desc}</span>
+                                        <span className='text-gray-600 text-sm'>
+                                            <span className='text-black text-sm'>Quantity: </span>
+                                            {stock}
+                                        </span>
+                                        <span className='text-gray-600 text-sm'>
+                                            <span className='text-black text-sm'>Description: </span>
+                                            {desc}
+                                        </span>
                                     </div>
-                                    <span>$8999</span>
-                                </div>        
+                                    <span>{`$${price}`}</span>
+                                </div>
                             )
                         })
                     }
-                 
+
                 </aside>
-                <span className='text-xs text-[#808080] inline-block my-4'>Powered by <span className='font-semibold text-gray-600'>ShopExpress</span> | <span className='text-[#808080] text-xs'>Terms</span> &nbsp;&nbsp;&nbsp;<span className='text-[#808080] text-xs'>Privacy</span></span>
+                <span className='text-xs text-[#808080] inline-block my-4'>Powered by <span className='font-semibold text-gray-600'>ShopExpress</span>
+                    |
+                    <span className='text-[#808080] text-xs'>Terms</span>
+                    &nbsp;&nbsp;&nbsp;
+                    <span className='text-[#808080] text-xs'>Privacy</span>
+                </span>
             </section>
+
             <section className={styles.paymentSection}>
                 <h3 className='my-3'>Pay with card</h3>
                 <label htmlFor="" className='text-sm text-gray-700'>Email</label>
-                <input type="email" className={styles.emailInput} placeholder='Enter your email' />
+                <input
+                    type="email"
+                    className={styles.emailInput}
+                    placeholder='Enter your email'
+                />
                 <label htmlFor="" className='text-sm text-gray-700'>Card information</label>
                 <div className={styles.cardInfo}>
                     <input type="text" placeholder='1234 1234 1234 1234' className={styles.cardInput} />
@@ -76,11 +98,23 @@ const Checkout = () => {
                     </div>
                 </div>
                 <div className={styles.valid}>
-                    <input type="text" placeholder='MM/YY' className={styles.monthInput} />
-                    <input type="text" placeholder='CVC' className={styles.cvcInput} />
+                    <input
+                        type="text"
+                        placeholder='MM/YY'
+                        className={styles.monthInput}
+                    />
+                    <input
+                        type="text"
+                        placeholder='CVC'
+                        className={styles.cvcInput}
+                    />
                 </div>
                 <label htmlFor="" className='text-sm text-gray-700'>Name on card</label>
-                <input type="text" placeholder='Firstname Lastname' className={styles.nameInput} />
+                <input
+                    type="text"
+                    placeholder='Firstname Lastname'
+                    className={styles.nameInput}
+                />
                 <div className={styles.terms}>
                     <div className={styles.checkbox}>
                         <DoneRoundedIcon className='scale-[.9]'
@@ -91,7 +125,9 @@ const Checkout = () => {
                         <p className='text-sm text-gray-500 pl-2'>Pay faster with shopexpress you don't get any problem here related transactions</p>
                     </div>
                 </div>
-                <Button variant="contained" className='bg-blue-500 text-md py-[5px]'>pay</Button>
+                <Button
+                    variant="contained"
+                    className='bg-blue-500 text-md py-[5px]'>pay</Button>
             </section>
         </main>
     )
