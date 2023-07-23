@@ -107,12 +107,12 @@ export const FirebaseProvider = ({ children }) => {
       docSize.forEach((val)=>{
         priceSum += parseInt(val.data().price);                                
       })
-      setTotalPrice(priceSum)      
+      !totalPrice && setTotalPrice(priceSum)      
 
       docSize.forEach((val)=>{
         discountSum += parseInt(val.data().discount)        
       })
-      setTotalDiscount(discountSum)
+      !totalDiscount && setTotalDiscount(discountSum)
       console.log("yes done!")
     }
   }

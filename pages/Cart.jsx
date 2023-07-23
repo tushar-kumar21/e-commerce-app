@@ -48,14 +48,15 @@ const Cart = () => {
   const [counter, setCounter] = useState(0);
 
 
-  const addItems = (id, e) => {
+  const addItems = (id, e, ind) => {
     setCounter(counter + 1)
-    setTotalPrice(totalPrice + parseInt(e.target.getAttribute('price')))
-    setTotalDiscount(totalDiscount + parseInt(e.target.getAttribute('discount')))
+    
+    productsData[ind].quantity <= productsData[ind].stock && setTotalPrice(totalPrice + parseInt(e.target.getAttribute('price')))
+    productsData[ind].quantity <= productsData[ind].stock && setTotalDiscount(totalDiscount + parseInt(e.target.getAttribute('discount')))
 
     setProductsData(items =>
       items.map((item) =>
-        id === item.id ? { ...item, quantity: item.quantity + 1 } : item
+        item.quantity <= item.stock && id === item.id ? { ...item, quantity: item.quantity + 1 } : item
       ))
   };
 
@@ -79,7 +80,7 @@ const Cart = () => {
   useEffect(() => {
     getCurrentUser()
     !currentUser && getCartSize()
-    !currentUser && getProductsData()    
+    !currentUser && getProductsData()
     if (date > 31) {
       date = 5
       month += 1;
@@ -130,7 +131,7 @@ const Cart = () => {
                               <span className={styles.assuredText}>Assured</span>
                             </span>
                           </span>
-                          <span className="text-[#808080] text-xs mt-1">InStock - {item.stock}</span>                          
+                          <span className="text-[#808080] text-xs mt-1">InStock - {item.stock}</span>
                           <span className="text-black font-black text-base tracking-widest mr-1 mt-4"><span>${item.price}</span>
                             <span className="text-green-500 text-xs">{` ${item.discount}% off`}</span>
                           </span>
@@ -151,7 +152,7 @@ const Cart = () => {
                           <span>{item.quantity}</span>
 
                           <span className={styles.plusBtn}
-                            onClick={(e) => addItems(item.id, e)}
+                            onClick={(e) => addItems(item.id, e, ind)}
                             price={item.price}
                             id={item.id}
                             discount={item.discount}>+</span>

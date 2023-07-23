@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react';
+import { Suspense } from 'react';
 import { Navbar } from '../components/Navbar';
 import { Cover } from '../components/Cover';
 import { Categories } from '../components/Categories';
@@ -29,7 +30,7 @@ const index = () => {
   },[currentUser])
 
   return (
-    <>
+    <Suspense fallback={null}>
     <Navbar/>
     <Cover/>
     <Categories/>
@@ -44,7 +45,7 @@ const index = () => {
     <SellingStore/>
     <Service/>
     <Footer/>
-    </>
+    </Suspense>
   )
 }
 
