@@ -10,16 +10,6 @@ const styles = {
     cardTitle: 'text-2xl text-semibold text-white z-10 inline-block transition ease-[cubic-bezier(0.19, 1, 0.22, 1)] duration-500 category-title'
 }
 
-// const categoryHandleMouseMove=(e,val)=>{    
-//         let categoryZaxis = (window.innerWidth / 2 - e.pageX) / 25;
-//         let categoryYaxis = (window.innerWidth / 2 - e.pageY) / 25;
-//         if (document.querySelectorAll('.category-card')[val]) {
-//             document.querySelectorAll('.category-card')[val].style.transform = `rotateY(${pxAxis*2}deg) rotateX(${pyAxis+95}deg)`
-//             document.querySelectorAll('.category-card')[val].addEventListener("mousemove", categoryHandleMouseMove);
-//         }
-//         console.log(pxAxis,pyAxis)
-// }
-
 const categoryHandleMouseEnter=(val)=>{
     let card = document.querySelectorAll('.category-card');
     let title = document.querySelectorAll('.category-title');

@@ -65,7 +65,7 @@ export const MostSelling = () => {
         let details = document.querySelectorAll('.mproduct-details');
         if (card) {
             card[val].style.transform = `rotateY(0deg) rotateX(0deg)`
-            card[val].style.transition = "all .5s ease";
+            card[val].style.transition = "all 1s ease-in-out";
             card[val].style.transform = "translateZ(0px)";
             title[val].style.transform = "translateZ(0px)";
             details[val].style.transform="none";            

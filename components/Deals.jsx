@@ -7,6 +7,7 @@ import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRound
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 import { useMyContext } from "@/Context/context";
 import { useFirebase } from "@/firebase/firebase";
+import { Loader } from "./Loader";
 
 const productsFetcher = async (url) => {
     try {
@@ -25,7 +26,7 @@ const styles = {
     dealsContainer: 'max-w-full pt-16 px-8 py-0 relative group-hover:visible group-hover:pointer-events-auto deals-custom ',
     dealsCards: 'flex justify-between gap-8 pb-3 w-full h-fit pt-4 transition-cubic overflow-x-scroll overflow-y-hidden scrollbar card-container',
     product: "relative min-w-[380px] h-[490px] cursor-grab flex flex-col justify-start rounded-xl card px-2",
-    productImg: "w-full h-[55%] object-contain rounded-xl pointer-events-none mb-10 likeimg",
+    productImg: "w-full h-[55%] object-contain rounded-xl pointer-events-none mb-10 likeimg z-10",
     likeImg: "m-4 w-9 h-9 absolute p-2 right-2 top-4 bg-likeBg rounded-full z-[9999] like",
     productName: "flex justify-between gap-4 mx-1 my-0 title",
     productContent: "text-[1rem] font-semibold tracking-wide ",
@@ -40,22 +41,21 @@ export const Deals = () => {
     const carousel = useRef();
     const router = useRouter();
     const fb = useFirebase();
-    const { addItemToCart } = fb;
+    const { addItemToCart } = fb;    
 
-
-    const { data: productsData, error: productsError } = useSWR(`https://dummyjson.com/products?limit=30&skip=12`, productsFetcher)
+    const { data: productsData, error: productsError } = useSWR(`https://dummyjson.com/products?limit=30&skip=12`, productsFetcher)    
 
     const handleMouseMove = (e, val) => {
         let xAxis = (window.innerWidth / 2 - e.pageX) / 25;
         let yAxis = (window.innerWidth / 2 - e.pageY) / 25;
         if (document.querySelectorAll('.card')[val]) {
-            document.querySelectorAll('.card')[val].style.transform = `rotateY(${xAxis*2}deg) rotateX(${yAxis+30}deg)`
+            document.querySelectorAll('.card')[val].style.transform = `rotateY(${xAxis * 2}deg) rotateX(${yAxis + 30}deg)`
             document.querySelectorAll('.card')[val].addEventListener("mousemove", handleMouseMove);
         }
-        console.log(xAxis,yAxis)
+        console.log(xAxis, yAxis)
     };
 
-    const handleMouseLeave = (val) => { 
+    const handleMouseLeave = (val) => {
         let card = document.querySelectorAll('.card');
         let like = document.querySelectorAll('.like');
         let title = document.querySelectorAll('.title');
@@ -64,12 +64,12 @@ export const Deals = () => {
         let details = document.querySelectorAll('.product-details');
         if (card) {
             card[val].style.transform = `rotateY(0deg) rotateX(0deg)`
-            card[val].style.transition = "all .5s ease";
+            card[val].style.transition = "all 1s ease-in-out";
             card[val].style.transform = "translateZ(0px)";
             title[val].style.transform = "translateZ(0px)";
-            details[val].style.transform="none";            
-            cbtn[val].style.transform="translateY(0px)";
-            cbtn[val].style.boxShadow="none";
+            details[val].style.transform = "none";
+            cbtn[val].style.transform = "translateY(0px)";
+            cbtn[val].style.boxShadow = "none";
             like[val].style.transform = "translateZ(0px)";
             img[val].style.transform = "translateZ(0px) scale(1)";
             card[val].style.boxShadow = "none";
@@ -88,79 +88,84 @@ export const Deals = () => {
             card[val].style.transform = "translateZ(100px)";
             like[val].style.transform = "translateZ(150px)";
             title[val].style.transform = "translateZ(130px)";
-            cbtn[val].style.transform="translateY(70px)";
-            cbtn[val].style.boxShadow="0px 5px 15px #80808094";
-            details[val].style.transform="translateZ(130px)";            
+            cbtn[val].style.transform = "translateY(70px)";
+            cbtn[val].style.boxShadow = "0px 5px 15px #80808094";
+            details[val].style.transform = "translateZ(130px)";
             img[val].style.transform = "translateZ(100px) scale(.8)";
             card[val].style.boxShadow = "0px 0px 10px grey";
         }
-    };    
+    };
 
     return (
-        <div className={styles.dealsContainer}>        
-            <h2 className="text-3xl">Todays Best Deals For You!</h2>
-            <div className={styles.dealsCards} style={{ transform: `translateX(${transform}%)` }}>
-                {
-                    productsData &&
-                    productsData.products.map((product, ind) => {
+            <div className={styles.dealsContainer}>
+                <h2 className="text-3xl">Todays Best Deals For You!</h2>
+                <div className={styles.dealsCards} style={{ transform: `translateX(${transform}%)` }}>
+                    {
+                        productsData &&
+                        productsData.products.map((product, ind) => {
 
-                        return (
-                            <div className={styles.product}
-                                key={product.id}
-                                onMouseMove={(e) => handleMouseMove(e, ind)}
-                                onMouseEnter={() => handleMouseEnter(ind)}
-                                onMouseLeave={() => handleMouseLeave(ind)}
-                                onClick={() => router.push(`/Products/${product.id}`)}>
+                            return (
+                                <div className={styles.product}
+                                    key={product.id}
+                                    onMouseMove={(e) => handleMouseMove(e, ind)}
+                                    onMouseEnter={() => handleMouseEnter(ind)}
+                                    onMouseLeave={() => handleMouseLeave(ind)}
+                                    onClick={() => {
+                                        setLoader(true)
+                                        router.push(`/Products/${product.id}`)
+                                    }}
+                                >
 
-                                <img
-                                    src={product.thumbnail}
-                                    alt=""
-                                    className={styles.productImg}                                    
-                                />
+                                    <img
+                                        src={product.thumbnail}
+                                        alt=""
+                                        className={styles.productImg}
+                                    />
 
-                                <Image
-                                    src={`/assets/like.svg`}
-                                    height={20}
-                                    width={20}
-                                    alt="asdasd"
-                                    className={styles.likeImg}
-                                />
+                                    <Image
+                                        src={`/assets/like.svg`}
+                                        height={20}
+                                        width={20}
+                                        alt="asdasd"
+                                        className={styles.likeImg}
+                                    />
 
-                                <div className={styles.productName}>
-                                    <span className={styles.productContent}>{product.title}</span>
-                                    <span className={styles.productContent}>${product.price}</span>
-                                </div>
-
-                                <div className="product-details">
-                                    <span className={styles.productCategory}>{product.category}</span>
-                                    <div className="flex mt-2">
-
-                                        <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
-                                        <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
-                                        <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
-                                        <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
-                                        <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
-                                        <span className="text-[#3c3c3c] text-xs ml-1">{product.rating}</span>
+                                    <div className={styles.productName}>
+                                        <span className={styles.productContent}>{product.title}</span>
+                                        <span className={styles.productContent}>${product.price}</span>
                                     </div>
-                                    <button
-                                        className={styles.cartBtn}
-                                        img={product.thumbnail}
-                                        name={product.title}
-                                        brand={product.brand}
-                                        discount={product.discountPercentage}
-                                        price={product.price}
-                                        category={product.category}
-                                        stock={product.stock}
-                                        desc={product.description}
-                                        id={product.id}
-                                        onClick={addItemToCart}>
-                                        Add to Cart</button>
+
+                                    <div className="product-details">
+                                        <span className={styles.productCategory}>{product.category}</span>
+                                        <div className="flex mt-2">
+
+                                            <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
+                                            <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
+                                            <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
+                                            <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
+                                            <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
+                                            <span className="text-[#3c3c3c] text-xs ml-1">{product.rating}</span>
+                                        </div>
+                                        <button
+                                            className={styles.cartBtn}
+                                            img={product.thumbnail}
+                                            name={product.title}
+                                            brand={product.brand}
+                                            discount={product.discountPercentage}
+                                            price={product.price}
+                                            category={product.category}
+                                            stock={product.stock}
+                                            desc={product.description}
+                                            id={product.id}
+                                            onClick={addItemToCart}>
+                                            Add to Cart</button>
+                                    </div>
                                 </div>
-                            </div>
-                        )
-                    })
-                }
-            </div>
-        </div>
+                            )
+                        })
+                    }
+                </div>
+            </div>            
+        
     )
 }

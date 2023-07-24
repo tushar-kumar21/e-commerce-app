@@ -4,9 +4,8 @@ export const useMyContext = () => useContext(Context);
 export const ContextProvider=({children})=>{
 
 
-
     return(
-   <Context.Provider value={{ }}>
+   <Context.Provider value={{}}>
     {children}
    </Context.Provider>
     )

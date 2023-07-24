@@ -23,19 +23,20 @@ body {
       color: #000;
       letter-spacing: .5px;
     }
-    .btn-hover:hover{
-     background-color:transparent!important;
+
+    .btn-hover:hover {
+      background-color: transparent !important;
     }
 
     .cover-bg {
-      background: url('https://assets.wpdeveloper.com/2019/04/How-to-Design-Homepage-of-Your-eCommerce-Site-To-Boost-Sales.png') no-repeat center center/cover;      
+      background: url('https://assets.wpdeveloper.com/2019/04/How-to-Design-Homepage-of-Your-eCommerce-Site-To-Boost-Sales.png') no-repeat center center/cover;
     }
 
     .transition-cubic {
       transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
     }
 
-    .product-details > img {
+    .product-details>img {
       width: 15px;
       height: 15px;
       margin-bottom: 1em;
@@ -46,7 +47,8 @@ body {
       height: .8em;
       cursor: pointer;
     }
-    .search-scrollbar::-webkit-scrollbar{
+
+    .search-scrollbar::-webkit-scrollbar {
       width: 0.6em;
       height: 0.6em;
       cursor: pointer;
@@ -57,9 +59,10 @@ body {
       border-radius: 100vw;
       cursor: pointer;
     }
-    .search-scrollbar::-webkit-scrollbar-track{
+
+    .search-scrollbar::-webkit-scrollbar-track {
       background: #5b18ac;
-      border-radius:100vw;
+      border-radius: 100vw;
       cursor: pointer;
     }
 
@@ -70,44 +73,65 @@ body {
       border-radius: 100vw;
       cursor: pointer;
     }
-    .search-scrollbar::-webkit-scrollbar-thumb{
-      background: linear-gradient(0deg, #5b18ac, #fff);
-      border:1px solid #fff;
-      border-radius:100vw;
-      cursor: pointer;
-    } 
 
-    .card-container, .mcard-container, .pcard-container, .tcard-container{
-      perspective:2000px;      
+    .search-scrollbar::-webkit-scrollbar-thumb {
+      background: linear-gradient(0deg, #5b18ac, #fff);
+      border: 1px solid #fff;
+      border-radius: 100vw;
+      cursor: pointer;
     }
-    .card, .mcard, .pcard, .tcard{          
-      transform-style:preserve-3d;
-    }    
-    .category-cards-container{
-      perspective:1000px;
+
+    .card-container,
+    .mcard-container,
+    .pcard-container,
+    .tcard-container {
+      perspective: 2000px;
     }
-    .category-card{
-      perspective:2000px;
+
+    .card,
+    .mcard,
+    .pcard,
+    .tcard {
+      transform-style: preserve-3d;
     }
-    .category-title{
-      transform-style:preserve-3d;
+
+    .category-cards-container {
+      perspective: 1000px;
+    }
+
+    .category-card {
+      perspective: 2000px;
+    }
+
+    .category-title {
+      transform-style: preserve-3d;
+    }
+
+    .animation-cover {
+      animation: anim 13s cubic-bezier(0.19, 1, 0.22, 1) infinite;
+    }
+
+    .animation-wrapper {
+      animation: contentanim 13s cubic-bezier(0.19, 1, 0.22, 1) infinite;
     }
   }
 }
 
-.img-container{
+.img-container {
   width: 100%;
   height: 100%;
-  display: flex;  
+  display: flex;
   position: absolute;
-  animation:anim 13s cubic-bezier(0.19, 1, 0.22, 1)infinite;
+  animation: anim 13s cubic-bezier(0.19, 1, 0.22, 1)infinite;
 }
-.img-container > img{
+
+.img-container>img {
   min-width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.content-container{
+
+.content-container {
   width: 40%;
   height: 100%;
   z-index: 10;
@@ -116,79 +140,223 @@ body {
   overflow: hidden;
   /* border: 2px solid red; */
 }
-.wrapper{
-  animation:contentanim 13s cubic-bezier(0.19, 1, 0.22, 1)infinite;
+
+.wrapper {
+  animation: contentanim 13s cubic-bezier(0.19, 1, 0.22, 1) infinite;
   /* border: 2px solid red; */
 }
-@keyframes contentanim{
-  0%{
-    transform: translateX(0%);      
+
+@keyframes contentanim {
+  0% {
+    transform: translateX(0%);
   }
-  10%{
-    transform: translateX(-16.66%);    
+
+  10% {
+    transform: translateX(-16.66%);
   }
-  20%{
-    transform: translateX(-33.32%);    
+
+  20% {
+    transform: translateX(-33.32%);
   }
-  30%{
-    transform: translateX(-33.32%);    
+
+  30% {
+    transform: translateX(-33.32%);
   }
-  40%{
-    transform: translateX(-49.98%);    
+
+  40% {
+    transform: translateX(-49.98%);
   }
-  50%{
-    transform: translateX(-49.98%);    
+
+  50% {
+    transform: translateX(-49.98%);
   }
-  60%{
-    transform: translateX(-66.64%);    
+
+  60% {
+    transform: translateX(-66.64%);
   }
-  70%{
-    transform: translateX(-66.64%);    
+
+  70% {
+    transform: translateX(-66.64%);
   }
-  80%{
-    transform: translateX(-83.3%);    
+
+  80% {
+    transform: translateX(-83.3%);
   }
-  90%{
-    transform: translateX(-83.3%);    
+
+  90% {
+    transform: translateX(-83.3%);
   }
-  100%{
+
+  100% {
     transform: translateX(-83.3%);
   }
 
 }
 
-@keyframes anim{
-  0%{
+@keyframes anim {
+  0% {
     transform: translateX(0%);
-  }  
-  10%{
+  }
+
+  10% {
     transform: translateX(-100%);
   }
-  20%{
+
+  20% {
     transform: translateX(-200%);
   }
-  30%{
+
+  30% {
     transform: translateX(-200%);
   }
-  40%{
+
+  40% {
     transform: translateX(-300%);
   }
-  50%{
+
+  50% {
     transform: translateX(-300%);
   }
-  60%{
+
+  60% {
     transform: translateX(-400%);
   }
-  70%{
+
+  70% {
     transform: translateX(-400%);
   }
-  80%{
+
+  80% {
     transform: translateX(-500%);
   }
-  90%{
+
+  90% {
     transform: translateX(-500%);
   }
-  100%{
+
+  100% {
     transform: translateX(-600%);
   }
+}
+
+.loadingio-spinner-ellipsis-75lzgu9lema {
+  z-index: 200;
+  position:absolute;
+  top: 50%;
+  left: 50%;
+  height: 100vh;
+  transform: translate(-50%,-50%);
+  background: transparent !important;
+}
+
+@keyframes ldio-9bbj4nvtw3i {
+  0% {
+    transform: translate(6.300000000000001px, 42px) scale(0);
+  }
+
+  25% {
+    transform: translate(6.300000000000001px, 42px) scale(0);
+  }
+
+  50% {
+    transform: translate(6.300000000000001px, 42px) scale(1);
+  }
+
+  75% {
+    transform: translate(42px, 42px) scale(1);
+  }
+
+  100% {
+    transform: translate(77.7px, 42px) scale(1);
+  }
+}
+
+@keyframes ldio-9bbj4nvtw3i-r {
+  0% {
+    transform: translate(77.7px, 42px) scale(1);
+  }
+
+  100% {
+    transform: translate(77.7px, 42px) scale(0);
+  }
+}
+
+@keyframes ldio-9bbj4nvtw3i-c {
+  0% {
+    background: #945be1
+  }
+
+  25% {
+    background: #70f3c9
+  }
+
+  50% {
+    background: #f9569c
+  }
+
+  75% {
+    background: #46c7d1
+  }
+
+  100% {
+    background: #945be1
+  }
+}
+
+.ldio-9bbj4nvtw3i div {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  transform: translate(42px, 42px) scale(1);
+  background: #945be1;
+  animation: ldio-9bbj4nvtw3i 1s infinite cubic-bezier(0, 0.5, 0.5, 1);
+}
+
+.ldio-9bbj4nvtw3i div:nth-child(1) {
+  background: #46c7d1;
+  transform: translate(77.7px, 42px) scale(1);
+  animation: ldio-9bbj4nvtw3i-r 0.25s infinite cubic-bezier(0, 0.5, 0.5, 1), ldio-9bbj4nvtw3i-c 1s infinite step-start;
+}
+
+.ldio-9bbj4nvtw3i div:nth-child(2) {
+  animation-delay: -0.25s;
+  background: #945be1;
+}
+
+.ldio-9bbj4nvtw3i div:nth-child(3) {
+  animation-delay: -0.5s;
+  background: #46c7d1;
+}
+
+.ldio-9bbj4nvtw3i div:nth-child(4) {
+  animation-delay: -0.75s;
+  background: #f9569c;
+}
+
+.ldio-9bbj4nvtw3i div:nth-child(5) {
+  animation-delay: -1s;
+  background: #70f3c9;
+}
+
+.loadingio-spinner-ellipsis-75lzgu9lema {
+  width: 105px;
+  height: 105px;
+  display: inline-block;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.ldio-9bbj4nvtw3i {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: translateZ(0) scale(1);
+  backface-visibility: hidden;
+  transform-origin: 0 0;
+  /* see note above */
+}
+
+.ldio-9bbj4nvtw3i div {
+  box-sizing: content-box;
 }

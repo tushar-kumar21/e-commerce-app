@@ -6,7 +6,9 @@ import { coverContent } from "@/data"
 const styles = {
     coverContainer: 'max-w-full h-[600px] flex justify-start items-center cover-bg relative overflow-hidden',
     content: 'w-[400px] flex flex-col gap-8 my-0 mx-10 z-10',
-    btn: 'text-white bg-main border-[1.5px] border-transparent border-solid text-lg mt-2 w-fit tracking-wide px-8 py-3 rounded-[2rem] cursor-pointer transition duration-500 btn-hover hover:text-main hover:border-main'
+    btn: 'text-white bg-main border-[1.5px] border-transparent border-solid text-lg mt-2 w-fit tracking-wide px-8 py-3 rounded-[2rem] cursor-pointer transition duration-500 btn-hover hover:text-main hover:border-main',
+    contentContainer:"w-[40%] h-full z-10 flex items-center overflow-hidden",
+    wrapper:"flex animation-wrapper"
 }
 
 export const Cover = () => {
@@ -20,8 +22,8 @@ export const Cover = () => {
                 <img src="https://leverageedublog.s3.ap-south-1.amazonaws.com/blog/wp-content/uploads/2020/05/15205240/Difference-Between-E-Commerce-and-E-Business.png" alt="" />
                 <img src="https://dailybayonet.com/wp-content/uploads/2020/04/5-creative-ways-to-boost.jpg" alt="" />
             </div>
-            <div className="content-container">
-                <div className="wrapper flex">
+            <div className={styles.contentContainer}>
+                <div className={styles.wrapper}>
                     {
                         coverContent && coverContent.map((data, ind) => {
                             return (

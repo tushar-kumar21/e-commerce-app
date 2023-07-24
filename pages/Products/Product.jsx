@@ -45,6 +45,7 @@ const Product = ({ id }) => {
     const router = useRouter();
     const fb = useFirebase();
     const { addItemToCart } = fb;
+    console.log(id)
 
     const { data: productsData, error: productsError } = useSWR(`https://dummyjson.com/products/${id}`, productsFetcher);
 
