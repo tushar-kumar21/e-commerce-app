@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { GoogleAuthProvider, getAuth, onAuthStateChanged, signInWithPopup } from "firebase/auth";
 import { addDoc, collection, getFirestore, setDoc, doc, getDocs, onSnapshot, updateDoc } from "firebase/firestore";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useReducer, useState } from "react";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA_UVFm_d-KZJdiZr2aVF70J_fswB0wWnU",
@@ -21,11 +21,31 @@ const FirebaseContext = createContext(null);
 export const useFirebase = () => useContext(FirebaseContext);
 export const FirebaseProvider = ({ children }) => {
 
-  const [currentUser, setCurrentUser] = useState(null);
-  const [cartSize, setCartSize] = useState(0);
   const [productsData, setProductsData] = useState(null);
   const [totalPrice, setTotalPrice] = useState(null);
   const [totalDiscount, setTotalDiscount] = useState(null);
+
+  const reducer = (state, action) => {
+   switch(action.type){
+    case 'currentUser':
+      return { ...state, currentUser: action.payload}
+    case 'cartSize':
+      return { ... state, cartSize: action.payload}
+    case 'productsData':
+      return { ...state, productsData:action.payload}  
+      default: throw new Error();
+   }
+
+  }
+
+  const initialStates={
+    currentUser:"",
+    cartSize:"",
+    productsData:"",
+    totalPrice:"",
+    totalDiscount:"",
+  }
+  const [state, dispatch] = useReducer(reducer,initialStates)
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
@@ -39,17 +59,17 @@ export const FirebaseProvider = ({ children }) => {
 
   const getCurrentUser = () => {
     onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user)
+      dispatch({type:'currentUser', payload:user})
     })
   }
 
   const userCollection = async () => {
-    if (currentUser) {
+    if (state.currentUser) {
       try {
-        const docRef = doc(db, `${currentUser.uid}`, `${currentUser.displayName}_Details`);
+        const docRef = doc(db, `${state.currentUser.uid}`, `${state.currentUser.displayName}_Details`);
         await setDoc(docRef, {
-          name: currentUser.displayName,
-          email: currentUser.email,
+          name: state.currentUser.displayName,
+          email: state.currentUser.email,
         })
       } catch (error) {
         console.log(error)
@@ -70,8 +90,8 @@ export const FirebaseProvider = ({ children }) => {
 
     if(stock && desc && category){
     try {
-      const userCollectionRef = collection(db, `${currentUser.uid}`);
-      const productDocRef = doc(userCollectionRef, `${currentUser.displayName}_Details`);
+      const userCollectionRef = collection(db, `${state.currentUser.uid}`);
+      const productDocRef = doc(userCollectionRef, `${state.state.currentUser.displayName}_Details`);
       const productCollectionRef = collection(productDocRef, 'products');      
       await setDoc(doc(productCollectionRef, `product_Details${id}`), {
         name: name,
@@ -96,14 +116,14 @@ export const FirebaseProvider = ({ children }) => {
   let priceSum = 0;
   let discountSum = 0;
   const getCartSize = async () => {
-    if (currentUser) {
-      const userCollectionRef = collection(db, `${currentUser.uid}`);
-      const productDocRef = doc(userCollectionRef, `${currentUser.displayName}_Details`);
+    if (state.currentUser) {
+      const userCollectionRef = collection(db, `${state.currentUser.uid}`);
+      const productDocRef = doc(userCollectionRef, `${state.currentUser.displayName}_Details`);
       const productCollectionRef = collection(productDocRef, 'products');
       const docSize = await getDocs(productCollectionRef)
       const size = docSize.size;
 
-      setCartSize(size)            
+      dispatch({type:'cartSize', payload:size})            
       docSize.forEach((val)=>{
         priceSum += parseInt(val.data().price);                                
       })
@@ -118,9 +138,9 @@ export const FirebaseProvider = ({ children }) => {
   }
 
   const getProductsData = async () => {
-    if (currentUser) {
-      const userCollectionRef = collection(db, `${currentUser.uid}`);
-      const productDocRef = doc(userCollectionRef, `${currentUser.displayName}_Details`);
+    if (state.currentUser) {
+      const userCollectionRef = collection(db, `${state.currentUser.uid}`);
+      const productDocRef = doc(userCollectionRef, `${state.currentUser.displayName}_Details`);
       const productCollectionRef = collection(productDocRef, 'products');
 
       const data = [];
@@ -130,14 +150,14 @@ export const FirebaseProvider = ({ children }) => {
         snap.forEach((docs)=>{
           data.push(docs.data());
         });
-        setProductsData(data);
+        dispatch({type:'productsData', payload:data});
       });
     }
   }
 
 
   return (
-    <FirebaseContext.Provider value={{ signInWithGoogle, getCurrentUser, userCollection, currentUser, addItemToCart, cartSize, getCartSize, productsData, getProductsData, totalPrice, setTotalPrice, setTotalDiscount, totalDiscount, setProductsData }}>
+    <FirebaseContext.Provider value={{ signInWithGoogle, getCurrentUser, userCollection, currentUser:state.currentUser, addItemToCart, cartSize:state.cartSize, getCartSize, productsData:state.productsData, getProductsData, totalPrice, setTotalPrice, setTotalDiscount, totalDiscount, setProductsData }}>
       {children}
     </FirebaseContext.Provider>
   )
