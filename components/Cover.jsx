@@ -4,11 +4,11 @@
 import { coverContent } from "@/data"
 
 const styles = {
-    coverContainer: 'max-w-full h-[600px] flex justify-start items-center cover-bg relative overflow-hidden',
-    content: 'w-[400px] flex flex-col gap-8 my-0 mx-10 z-10',
-    btn: 'text-white bg-main border-[1.5px] border-transparent border-solid text-lg mt-2 w-fit tracking-wide px-8 py-3 rounded-[2rem] cursor-pointer transition duration-500 btn-hover hover:text-main hover:border-main',
-    contentContainer:"w-[40%] h-full z-10 flex items-center overflow-hidden",
-    wrapper:"flex animation-wrapper"
+    coverContainer: 'max-w-full h-[600px] flex justify-start items-center cover-bg relative overflow-hidden md:h-[400px]',
+    content: 'w-[400px] flex flex-col gap-8 my-0 mx-10 z-10 xs:mx-8 xxs:mx-2',
+    btn: 'text-white bg-main border-[1.5px] border-transparent border-solid text-lg mt-2 w-fit tracking-wide px-8 py-3 rounded-[2rem] cursor-pointer transition duration-500 btn-hover hover:text-main hover:border-main xs:scale-90',
+    contentContainer:"w-[40%] h-full z-10 flex items-center overflow-hidden lg:w-3/5 sm:w-full xxs:py-2",
+    wrapper:"flex animation-wrapper xxs:py-2 xxs:mx-2"
 }
 
 export const Cover = () => {
@@ -28,8 +28,8 @@ export const Cover = () => {
                         coverContent && coverContent.map((data, ind) => {
                             return (
                                 <div className={styles.content} key={ind}>
-                                    <h1 className="text-4xl text-main m-0" style={{color:`${data.color}`}}>{data.h1}</h1>
-                                    <span className="text-xl text-main" style={{color:`${data.color}`}}>{data.span}
+                                    <h1 className="text-4xl text-main m-0 xs:text-3xl xxs:text-2xl" style={{color:`${data.color}`}}>{data.h1}</h1>
+                                    <span className="text-xl text-main xs:text-lg xxs:text-base" style={{color:`${data.color}`}}>{data.span}
                                     </span>
                                     <button className={styles.btn} style={{backgroundColor:`${data.color}`}}>Learn More</button>
                                 </div>

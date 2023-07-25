@@ -18,19 +18,19 @@ const productsFetcher = async (url) => {
 //STYLES
 
 const styles = {
-    productCategories: "flex max-w-full flex-wrap gap-4 py-0 px-8",
-    categoriesItemContainer: "max-w-full pt-16 py-0 px-8",
-    categoryDealCards: "flex flex-wrap justify-start gap-6 w-full h-fit tcard-container",
-    categoriesName: "border border-[#00000079] py-3 px-4 text-sm rounded-[2em] tracking-wide cursor-pointer select-none hover:bg-main hover:text-white transition-cubic",
+    productCategories:"flex max-w-full flex-wrap gap-4 py-0 px-8 md:hidden",
+    categoriesItemContainer:"max-w-full pt-16 py-0 px-8",
+    categoryDealCards:"flex flex-wrap justify-start gap-6 w-full h-fit tcard-container",
+    categoriesName:"border border-[#00000079] py-3 px-4 text-sm rounded-[2em] tracking-wide cursor-pointer select-none hover:bg-main hover:text-white transition-cubic",
     categoryActive: "text-white bg-main",
-    product: "relative basis-[23.5%] cursor-grab h-[480px] flex flex-col justify-start rounded-xl tcard p-2",
-    productImg: "w-full h-[55%] object-contain rounded-xl pointer-events-none mb-10 tlikeimg",
-    likeImg: "m-4 w-8 h-8 absolute p-2 right-2 top-4 bg-likeBg rounded-full z-[9999]  tlike",
-    cartBtn: "border-black border-[1.3px] text-black font-semibold text-xs w-fit py-3 px-6 rounded-[2rem] tracking-wide bg-white absolute bottom-0 transition-all duration-300 hover:bg-black hover:text-white tcbtn",
-    productName: "flex justify-between gap-4 my-1 mx-0 ttitle",
-    btn: 'text-white bg-main border-[1.5px] border-transparent border-solid text-lg mt-2 w-fit tracking-wide px-8 py-3 rounded-[2rem] cursor-pointer transition duration-500 hover:bg-transparent hover:text-main hover:border-main',
-    cashback: "max-w-full flex justify-around items-center bg-[#ffe6cc] mt-24"
-
+    product:"relative basis-[23.5%] cursor-grab h-[480px] flex flex-col justify-start rounded-xl tcard p-2",
+    productImg:"w-full h-[55%] object-contain rounded-xl pointer-events-none mb-10 tlikeimg",
+    likeImg:"m-4 w-8 h-8 absolute p-2 right-2 top-4 bg-likeBg rounded-full z-[9999]  tlike",
+    cartBtn:"border-black border-[1.3px] text-black font-semibold text-xs w-fit py-3 px-6 rounded-[2rem] tracking-wide bg-white absolute bottom-0 transition-all duration-300 hover:bg-black hover:text-white tcbtn",
+    productName:"flex justify-between gap-4 my-1 mx-0 ttitle",
+    btn:'text-white bg-main border-[1.5px] border-transparent border-solid text-lg mt-2 w-fit tracking-wide px-8 py-3 rounded-[2rem] cursor-pointer transition duration-500 hover:bg-transparent hover:text-main hover:border-main',
+    cashback:"max-w-full flex justify-around items-center bg-[#ffe6cc] mt-24",
+    selectBox:"hidden md:block border-2 border-slate-600 rounded-md mx-4 px-2 py-1 focus:border-main focus:border-[3px]"
 }
 
 export const TodayDeals = () => {
@@ -62,7 +62,6 @@ export const TodayDeals = () => {
         }
         console.log(txAxis, tyAxis)
     };
-
     const handleMouseLeave = (val) => {
         let card = document.querySelectorAll('.tcard');
         let like = document.querySelectorAll('.tlike');
@@ -107,7 +106,18 @@ export const TodayDeals = () => {
     return (
         <div className="max-w-full pt-16">
 
-            <h2 className="text-3xl py-0 px-4 pb-8">Todays Best Deals For You!</h2>
+            <h2 className="text-3xl py-0 px-4 pb-8 sm:pb-6 sm:text-2xl">Todays Best Deals For You!</h2>
+            <select className={styles.selectBox}  
+            onChange={(e)=>setCategory(e.target.value)}>                
+                {
+                    categoriesData &&
+                    categoriesData.map((categories,ind)=>{
+                        return(
+                            <option>{categories}</option>
+                        )                    
+                    })
+                }
+            </select>
 
             <div className={styles.productCategories}>
                 {

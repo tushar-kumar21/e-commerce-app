@@ -70,7 +70,6 @@ export const Navbar = () => {
             <div className={styles.smallNavbar}>
                 <div className="flex items-center gap-[.5em]">
                     <CallIcon className={styles.callIcon} />
-
                     <span className={styles.navText}>+001234567890</span>
                 </div>
 
@@ -170,7 +169,7 @@ export const Navbar = () => {
                                 className='rounded-full scale-[1.8]'
                             />
 
-                            <span className='text-[.9rem] text-black'>{auth.currentUser.displayName}</span>
+                            <span className='text-[.9rem] text-black ml-[-3px]'>{auth.currentUser.displayName}</span>
                         </>
                         :
                         <>

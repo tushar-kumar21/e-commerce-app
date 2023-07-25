@@ -5,10 +5,10 @@ import Image from "next/image";
 
 const styles = {
     footerContainer: "max-w-full flex justify-center flex-wrap gap-4 py-0 px-9 mt-24",
-    sections:"border-t-[1px] border-[#0000004d] flex flex-col gap-2 flex-grow flex-shrink basis-[fit-content] pt-12 pb-8",
-    logoName:"text-main text-[1.6rem] tracking-wide font-bold",
-    lastFooter:"w-full flex border-t-[1px] border-[#00000059] justify-between py-10 px-0",
-    options:"flex justify-between flex-wrap w-64 gap-2",
+    sections: "border-t-[1px] border-[#0000004d] flex flex-col gap-2 flex-grow flex-shrink basis-[fit-content] pt-12 pb-8",
+    logoName: "text-main text-[1.6rem] tracking-wide font-bold",
+    lastFooter: "w-full flex border-t-[1px] border-[#00000059] justify-between py-10 px-0 hidden",
+    options: "flex justify-between flex-wrap w-64 gap-2",
 }
 
 export const Footer = () => {
@@ -48,9 +48,33 @@ export const Footer = () => {
                 )
             })}
             <div className={styles.lastFooter}>
-                <div className="flex items-center gap-2"><Image src={`/assets/bag.svg`} height={20} width={20} /><span>Become Seller</span></div>
-                <div className="flex items-center gap-2"><Image src={`/assets/gift.svg`} height={25} width={25} /><span>Gift Cards</span></div>
-                <div className="flex items-center gap-2"><Image src={`/assets/question.svg`} height={25} width={25} /><span>Help Center</span></div>
+                <div className="flex items-center gap-2">
+                    <Image
+                        src={`/assets/bag.svg`}
+                        height={20}
+                        width={20}
+                    />
+                    <span>Become Seller</span>
+                </div>
+
+                <div className="flex items-center gap-2">
+                    <Image
+                        src={`/assets/gift.svg`}
+                        height={25}
+                        width={25}
+                    />
+                    <span>Gift Cards</span>
+                </div>
+
+                <div className="flex items-center gap-2">
+                    <Image
+                        src={`/assets/question.svg`}
+                        height={25}
+                        width={25}
+                    />
+                    <span>Help Center</span>
+                </div>
+
                 <span className="text-sm">Terms of Service</span>
                 <span className="text-sm">Privacy & Policy</span>
                 <span className="text-sm">All Right reserved by Shopexpress | 2023</span>

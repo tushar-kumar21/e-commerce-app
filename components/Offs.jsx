@@ -4,7 +4,7 @@ import { offData } from "@/data"
 //STYLES
 
 const styles = {
-    offDealCards: "rounded-lg w-[280px] h-[400px] flex flex-col justify-between bg-[#f2e4d9] overflow-hidden cursor-pointer hover:scale-105 transiition-all duration-300 group ",
+    offDealCards: "rounded-lg h-[400px] flex flex-col justify-between bg-[#f2e4d9] overflow-hidden cursor-pointer hover:scale-105 transiition-all duration-300 grow shrink basis-[280px] group ",
     img:"w-full h-[48%] group-hover:scale-110 transition-all duration-300",
     offContent: "p-8 h-full flex flex-col justify-between"
 
@@ -13,8 +13,8 @@ const styles = {
 export const Offs = () => {
     return (
         <div className="max-w-full py-0 px-8 pt-16">
-            <h2 className="text-3xl py-5">Get Up To 70% Off</h2>
-            <div className="max-w-full flex justify-between">
+            <h2 className="text-3xl py-5 sm:text-2xl">Get Up To 70% Off</h2>
+            <div className="max-w-full flex justify-between flex-wrap gap-4">
                 {
                     offData &&
                     offData.map((data, ind) => {

@@ -131,21 +131,6 @@ body {
   object-fit: cover;
 }
 
-.content-container {
-  width: 40%;
-  height: 100%;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  /* border: 2px solid red; */
-}
-
-.wrapper {
-  animation: contentanim 13s cubic-bezier(0.19, 1, 0.22, 1) infinite;
-  /* border: 2px solid red; */
-}
-
 @keyframes contentanim {
   0% {
     transform: translateX(0%);
@@ -359,4 +344,13 @@ body {
 
 .ldio-9bbj4nvtw3i div {
   box-sizing: content-box;
+}
+
+@media(width<600px){
+  .scrollbar::-webkit-scrollbar{    
+    height: 0.5em;
+  }
+  .scrollbar::-webkit-scrollbar-track{
+    background: rgba(128, 128, 128, 0.206);
+  }
 }

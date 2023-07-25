@@ -21,15 +21,15 @@ const productsFetcher = async (url) => {
 //STYLES
 
 const styles = {
-    dealsContainer: 'max-w-full pt-16 px-8 py-0 overflow-hidden relative group-hover:visible group-hover:pointer-events-auto deals-custom',
-    dealsCards: 'flex justify-between gap-8 w-full h-fit pt-4 transition-cubic pb-3 overflow-x-scroll overflow-y-hidden scrollbar pcard-container',
-    product: "relative min-w-[380px] h-[460px] cursor-grab flex flex-col justify-start rounded-xl pcard px-2",
+    dealsContainer: 'max-w-full pt-16 px-8 py-0 relative group-hover:visible group-hover:pointer-events-auto deals-custom sm:px-4',
+    dealsCards: 'flex justify-between gap-8 w-full h-fit pt-4 transition-cubic pb-3 overflow-x-scroll overflow-y-hidden scrollbar pcard-container sm:gap-4',
+    product: "relative min-w-[380px] h-[460px] cursor-grab flex flex-col justify-start rounded-xl pcard px-2 md:min-w-[300px] md:h-[370px] sm:min-w-[250px] sm:overflow-hidden xxs:min-w-[190px]",
     productImg: "w-full h-[55%] object-contain rounded-xl pointer-events-none mb-10 plikeimg",
     likeImg: "m-4 w-9 h-9 absolute p-2 right-0 bg-likeBg rounded-full plike",
     productName: "flex justify-between gap-4 mx-1 my-0 ptitle",
-    productContent: "text-[1rem] font-semibold tracking-wide",
+    productContent: "text-[1rem] font-semibold tracking-wide sm:mt-[-3em]",
     productCategory: "text-[#757575] text-xs tracking-wide ml-1",
-    cartBtn: "border-black border-[1.3px] text-black font-semibold text-xs w-fit py-3 px-6 rounded-[2rem] tracking-wide bg-white absolute bottom-0 mb-4 transition-all duration-300 hover:bg-black hover:text-white pcbtn",
+    cartBtn: "border-black border-[1.3px] text-black font-semibold text-xs w-fit py-3 px-6 rounded-[2rem] tracking-wide bg-white absolute bottom-0 mb-4 transition-all duration-300 hover:bg-black hover:text-white sm:bottom-[-8px] mb-4 pcbtn",
     leftArrow: "absolute bottom-[45%] scale-[2] my-0 mx-4 z-10 cursor-pointer border border-[#00000042] px-[.1em] bg-white rounded-md invisible pointer-events-none right-0 right arrows",
     rightArrow: "absolute bottom-[45%] scale-[2] my-0 mx-4 z-10 cursor-pointer border border-[#00000042] px-[.1em] bg-white rounded-md invisible pointer-events-none left-0 left arrows"
 }
@@ -118,7 +118,7 @@ export const Popular = () => {
         <div className={styles.dealsContainer}>
             {/* <ArrowBackIosNewRoundedIcon className="arrow left lp" onClick={rightArrow} />
             <ArrowForwardIosRoundedIcon className="arrow right rp" onClick={leftArrow} /> */}
-            <h2 className="text-3xl">Weekly Popular Products</h2>
+            <h2 className="text-3xl sm:text-2xl">Weekly Popular Products</h2>
             <div className={styles.dealsCards} style={{ transform: `translateX(${transform}%)` }}>
                 {
                     productsData &&

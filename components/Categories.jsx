@@ -4,9 +4,9 @@ import { categoriesData } from "@/data"
 
 const styles = {
     categoriesContainer: 'max-w-full py-0 px-8 pt-16 ',
-    cards: 'max-w-full flex justify-between pt-5 category-cards-container',
-    categoryCards: 'w-[180px] rounded-xl h-[210px] text-center pt-[1em] relative overflow-hidden cursor-pointer category-card transition ease-[cubic-bezier(0.19, 1, 0.22, 1)] duration-1000',
-    cardImg: 'w-full min-h-full object-cover z-[-1] absolute top-0 left-0',
+    cards: 'max-w-full flex justify-center gap-6 flex-wrap pt-5 category-cards-container',
+    categoryCards: 'rounded-xl h-[210px] text-center pt-[1em] relative overflow-hidden cursor-pointer category-card transition ease-[cubic-bezier(0.19, 1, 0.22, 1)] duration-1000 mb-3 shrink grow basis-[180px]',
+    cardImg: 'w-full min-h-full object-cover z-[-1] absolute top-0 left-0 h-full w-full',
     cardTitle: 'text-2xl text-semibold text-white z-10 inline-block transition ease-[cubic-bezier(0.19, 1, 0.22, 1)] duration-500 category-title'
 }
 
