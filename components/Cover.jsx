@@ -5,10 +5,10 @@ import { coverContent } from "@/data"
 
 const styles = {
     coverContainer: 'max-w-full h-[600px] flex justify-start items-center cover-bg relative overflow-hidden md:h-[400px]',
-    content: 'w-[400px] flex flex-col gap-8 my-0 mx-10 z-10 xs:mx-8 xxs:mx-0 xxs:w-[390px]',
+    content: 'w-[400px] flex flex-col gap-8 my-0 mx-10 z-10 xs:mx-8 xxs:mx-4',
     btn: 'text-white bg-main border-[1.5px] border-transparent border-solid text-lg mt-2 w-fit tracking-wide px-8 py-3 rounded-[2rem] cursor-pointer transition duration-500 btn-hover hover:text-main hover:border-main xs:scale-90',
     contentContainer:"w-[40%] h-full z-10 flex items-center overflow-hidden lg:w-3/5 sm:w-full xxs:py-2",
-    wrapper:"flex animation-wrapper xxs:py-2 xxs:mx-2"
+    wrapper:"flex animation-wrapper xxs:py-2 xxs:mx-2"  
 }
 
 export const Cover = () => {

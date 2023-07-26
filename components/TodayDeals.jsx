@@ -19,17 +19,17 @@ const productsFetcher = async (url) => {
 
 const styles = {
     productCategories:"flex max-w-full flex-wrap gap-4 py-0 px-8 md:hidden",
-    categoriesItemContainer:"max-w-full pt-16 py-0 px-8",
-    categoryDealCards:"flex flex-wrap justify-start gap-6 w-full h-fit tcard-container",
+    categoriesItemContainer:"max-w-full pt-16 py-0 px-8 md:pt-0",
+    categoryDealCards:"flex flex-wrap justify-start gap-6 w-full pb-3 h-fit tcard-container lg:justify-center md:flex-nowrap md:overflow-x-scroll md:justify-between scrollbar",
     categoriesName:"border border-[#00000079] py-3 px-4 text-sm rounded-[2em] tracking-wide cursor-pointer select-none hover:bg-main hover:text-white transition-cubic",
     categoryActive: "text-white bg-main",
-    product:"relative basis-[23.5%] cursor-grab h-[480px] flex flex-col justify-start rounded-xl tcard p-2",
+    product:"relative basis-[23.5%] cursor-grab h-[480px] flex flex-col justify-start rounded-xl tcard p-2 md:h-[350px] md:min-w-[150px]",
     productImg:"w-full h-[55%] object-contain rounded-xl pointer-events-none mb-10 tlikeimg",
     likeImg:"m-4 w-8 h-8 absolute p-2 right-2 top-4 bg-likeBg rounded-full z-[9999]  tlike",
     cartBtn:"border-black border-[1.3px] text-black font-semibold text-xs w-fit py-3 px-6 rounded-[2rem] tracking-wide bg-white absolute bottom-0 transition-all duration-300 hover:bg-black hover:text-white tcbtn",
-    productName:"flex justify-between gap-4 my-1 mx-0 ttitle",
-    btn:'text-white bg-main border-[1.5px] border-transparent border-solid text-lg mt-2 w-fit tracking-wide px-8 py-3 rounded-[2rem] cursor-pointer transition duration-500 hover:bg-transparent hover:text-main hover:border-main',
-    cashback:"max-w-full flex justify-around items-center bg-[#ffe6cc] mt-24",
+    productName:"flex justify-between gap-4 my-1 mx-0 ttitle md:mt-[-3em]",
+    btn:'text-white bg-main border-[1.5px] border-transparent border-solid text-lg mt-2 w-fit tracking-wide px-8 py-3 rounded-[2rem] cursor-pointer transition duration-500 hover:bg-transparent hover:text-main hover:border-main md:text-base md:px-6 md:py-2',
+    cashback:"max-w-full flex justify-around items-center bg-[#ffe6cc] mt-24 flex-wrap md:px-4 md:gap-4 ",
     selectBox:"hidden md:block border-2 border-slate-600 rounded-md mx-4 px-2 py-1 focus:border-main focus:border-[3px]"
 }
 
@@ -117,7 +117,7 @@ export const TodayDeals = () => {
                         )                    
                     })
                 }
-            </select>
+            </select>                  
 
             <div className={styles.productCategories}>
                 {
@@ -203,12 +203,12 @@ export const TodayDeals = () => {
             </div>
 
             <div className={styles.cashback}>
-                <div>
-                    <h1 className="text-5xl leading-10">Get 5% Cash Back</h1>
-                    <h4 className="text-xl leading-10">on ShopExpress.com</h4>
+                <div className="md:py-4">
+                    <h1 className="text-5xl leading-10 md:text-3xl md:font-semibold">Get 5% Cash Back</h1>
+                    <h4 className="text-xl leading-10 md:text-base md:my-4">on ShopExpress.com</h4>
                     <button className={styles.btn}>Learn More</button>
                 </div>
-                <img src="assets/card.jpg" alt="dsdas" className="w-[40%] rounded-full scale-90" />
+                <img src="assets/card.jpg" alt="dsdas" className="w-[40%] rounded-full scale-90 md:grow md:shrink" />
             </div>
         </div>
     )

@@ -29,7 +29,7 @@ const styles = {
     productImg: "w-full h-[55%] object-contain rounded-xl pointer-events-none mb-10 likeimg z-10 ",
     likeImg: "m-4 w-9 h-9 absolute p-2 right-2 top-4 bg-likeBg rounded-full z-[9999] like",
     productName: "flex justify-between gap-4 mx-1 my-0 title",
-    productContent: "text-[1rem] font-semibold tracking-wide text-sm sm:mt-[-3em]",
+    productContent: "text-[1rem] font-semibold tracking-wide sm:mt-[-3em]",
     productCategory: "text-[#757575] text-xs tracking-wide ml-1",
     cartBtn: "border-black border-[1.3px] text-black font-semibold text-xs w-fit py-3 px-6 rounded-[2rem] tracking-wide transition-all duration-300 hover:bg-black hover:text-white bg-white absolute bottom-0 sm:bottom-[-8px] mb-4 cbtn ",
 }
@@ -111,7 +111,7 @@ export const Deals = () => {
                                     onMouseEnter={() => handleMouseEnter(ind)}
                                     onMouseLeave={() => handleMouseLeave(ind)}
                                     onClick={() => {
-                                        setLoader(true)
+                                        
                                         router.push(`/Products/${product.id}`)
                                     }}
                                 >

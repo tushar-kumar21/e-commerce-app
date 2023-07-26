@@ -11,6 +11,7 @@ import { collection, doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "@/firebase/firebase";
 import { getAuth } from "firebase/auth";
 import { useRouter } from "next/router";
+import { ActionTypes } from "@/components/reducer";
 
 //STYLES
 
@@ -43,35 +44,40 @@ const Cart = () => {
   const fb = useFirebase();
   const auth = getAuth();
   const router = useRouter();
-  const { currentUser, productsData, getProductsData, getCurrentUser, getCartSize, cartSize, totalPrice, setTotalPrice, totalDiscount, setTotalDiscount, setProductsData } = fb;
+  const { currentUser, productsData, getProductsData, getCurrentUser, getCartSize, cartSize, totalPrice, setTotalPrice, totalDiscount, setTotalDiscount, setProductsData, dispatch } = fb;
+
+  const { SET_ITEM_QUANTITY, SET_TOTAL_PRICE, SET_TOTAL_DISCOUNT } = ActionTypes;
 
   const [counter, setCounter] = useState(0);
 
 
   const addItems = (id, e, ind) => {
-    setCounter(counter + 1)
+    setCounter(counter + 1)        
+    productsData[ind].quantity <= productsData[ind].stock && dispatch({type:SET_TOTAL_PRICE, payload:totalPrice + parseInt(e.target.getAttribute('price'))})
+    productsData[ind].quantity <= productsData[ind].stock && dispatch({type: SET_TOTAL_DISCOUNT, payload:totalDiscount + parseInt(e.target.getAttribute('discount'))})
     
-    productsData[ind].quantity <= productsData[ind].stock && setTotalPrice(totalPrice + parseInt(e.target.getAttribute('price')))
-    productsData[ind].quantity <= productsData[ind].stock && setTotalDiscount(totalDiscount + parseInt(e.target.getAttribute('discount')))
-
-    setProductsData(items =>
-      items.map((item) =>
-        item.quantity <= item.stock && id === item.id ? { ...item, quantity: item.quantity + 1 } : item
-      ))
+      dispatch({
+        type: SET_ITEM_QUANTITY, payload:{
+          id,
+          quantity: productsData[ind].quantity <= productsData[ind].stock ? productsData[ind].quantity + 1 : productsData[ind].quantity,
+        },
+      });
   };
 
 
-  const removeItems = (id, e) => {
+  const removeItems = (id, e, ind) => {
     if (counter > 0) {
       setCounter(counter - 1)
-      setTotalPrice(totalPrice - parseInt(e.target.getAttribute('price')))
-      setTotalDiscount(totalDiscount - parseInt(e.target.getAttribute('discount')))
-    }
+      dispatch({type:SET_TOTAL_PRICE, payload: totalPrice - parseInt(e.target.getAttribute('price'))})
+      dispatch({type:SET_TOTAL_DISCOUNT, payload: totalDiscount - parseInt(e.target.getAttribute('discount'))})
+    }    
 
-    setProductsData(items =>
-      items.map(item =>
-        item.quantity > 1 && id === item.id ? { ...item, quantity: item.quantity - 1 } : item
-      ))
+    dispatch({
+      type:SET_ITEM_QUANTITY, payload:{
+        id,
+        quantity: productsData[ind].quantity > 1 ? productsData[ind].quantity - 1 : productsData[ind].quantity
+      }
+    })  
   };
 
   let date = new Date().getDate() + 3;
@@ -144,7 +150,7 @@ const Cart = () => {
                       <div className={styles.cartOrder} >
                         <span className="inline-flex gap-3 items-center ml-3">
                           <span className={styles.subBtn}
-                            onClick={(e) => removeItems(item.id, e)}
+                            onClick={(e) => removeItems(item.id, e, ind)}
                             price={item.price}
                             id={item.id}
                             discount={item.discount}>-</span>

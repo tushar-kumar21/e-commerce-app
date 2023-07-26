@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import { GoogleAuthProvider, getAuth, onAuthStateChanged, signInWithPopup } from "firebase/auth";
 import { addDoc, collection, getFirestore, setDoc, doc, getDocs, onSnapshot, updateDoc } from "firebase/firestore";
 import { createContext, useContext, useReducer, useState } from "react";
+import { ActionTypes, initialStates, reducer } from "@/components/reducer";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA_UVFm_d-KZJdiZr2aVF70J_fswB0wWnU",
@@ -21,31 +22,9 @@ const FirebaseContext = createContext(null);
 export const useFirebase = () => useContext(FirebaseContext);
 export const FirebaseProvider = ({ children }) => {
 
-  const [productsData, setProductsData] = useState(null);
-  const [totalPrice, setTotalPrice] = useState(null);
-  const [totalDiscount, setTotalDiscount] = useState(null);
+  const { SET_CURRENT_USER, SET_CART_SIZE, SET_ITEM_QUANTITY, SET_PRODUCTS_DATA, SET_TOTAL_PRICE, SET_TOTAL_DISCOUNT } = ActionTypes;
 
-  const reducer = (state, action) => {
-   switch(action.type){
-    case 'currentUser':
-      return { ...state, currentUser: action.payload}
-    case 'cartSize':
-      return { ... state, cartSize: action.payload}
-    case 'productsData':
-      return { ...state, productsData:action.payload}  
-      default: throw new Error();
-   }
-
-  }
-
-  const initialStates={
-    currentUser:"",
-    cartSize:"",
-    productsData:"",
-    totalPrice:"",
-    totalDiscount:"",
-  }
-  const [state, dispatch] = useReducer(reducer,initialStates)
+  const [state, dispatch] = useReducer(reducer, initialStates)
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
@@ -59,7 +38,7 @@ export const FirebaseProvider = ({ children }) => {
 
   const getCurrentUser = () => {
     onAuthStateChanged(auth, (user) => {
-      dispatch({type:'currentUser', payload:user})
+      dispatch({type:SET_CURRENT_USER, payload:user})
     })
   }
 
@@ -91,7 +70,7 @@ export const FirebaseProvider = ({ children }) => {
     if(stock && desc && category){
     try {
       const userCollectionRef = collection(db, `${state.currentUser.uid}`);
-      const productDocRef = doc(userCollectionRef, `${state.state.currentUser.displayName}_Details`);
+      const productDocRef = doc(userCollectionRef, `${state.currentUser.displayName}_Details`);
       const productCollectionRef = collection(productDocRef, 'products');      
       await setDoc(doc(productCollectionRef, `product_Details${id}`), {
         name: name,
@@ -123,16 +102,16 @@ export const FirebaseProvider = ({ children }) => {
       const docSize = await getDocs(productCollectionRef)
       const size = docSize.size;
 
-      dispatch({type:'cartSize', payload:size})            
+      dispatch({type:SET_CART_SIZE, payload:size})            
       docSize.forEach((val)=>{
         priceSum += parseInt(val.data().price);                                
       })
-      !totalPrice && setTotalPrice(priceSum)      
+      !state.totalPrice && dispatch({type:SET_TOTAL_PRICE, payload:priceSum})      
 
       docSize.forEach((val)=>{
         discountSum += parseInt(val.data().discount)        
       })
-      !totalDiscount && setTotalDiscount(discountSum)
+      !state.totalDiscount && dispatch({type:SET_TOTAL_DISCOUNT, payload:discountSum})
       console.log("yes done!")
     }
   }
@@ -150,14 +129,14 @@ export const FirebaseProvider = ({ children }) => {
         snap.forEach((docs)=>{
           data.push(docs.data());
         });
-        dispatch({type:'productsData', payload:data});
+        dispatch({type:SET_PRODUCTS_DATA, payload:data});
       });
     }
   }
 
 
   return (
-    <FirebaseContext.Provider value={{ signInWithGoogle, getCurrentUser, userCollection, currentUser:state.currentUser, addItemToCart, cartSize:state.cartSize, getCartSize, productsData:state.productsData, getProductsData, totalPrice, setTotalPrice, setTotalDiscount, totalDiscount, setProductsData }}>
+    <FirebaseContext.Provider value={{ signInWithGoogle, getCurrentUser, userCollection, currentUser:state.currentUser, addItemToCart, cartSize:state.cartSize, getCartSize, productsData:state.productsData, getProductsData, totalPrice:state.totalPrice, totalDiscount:state.totalDiscount, dispatch }}>
       {children}
     </FirebaseContext.Provider>
   )
