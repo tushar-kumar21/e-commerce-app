@@ -13,8 +13,8 @@ const styles = {
 export const Service = () => {
     return (
         <div className={styles.servicesContainer}>
-            <h2 className="text-3xl">Services To Help You Shop</h2>
-            <div className="flex gap-4 pt-4">
+            <h2 className="text-3xl sm:text-2xl">Services To Help You Shop</h2>
+            <div className="flex gap-4 pt-4 flex-wrap shrink grow">
                 <div className={styles.servicesCards}>
                     <div className={styles.servicesCardsDetails}>
                         <h2 className={styles.h2}>Frequently Asked Questions</h2>

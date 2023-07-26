@@ -7,13 +7,13 @@ const styles = {
     trendingItemsDetails: "py-4 px-8 flex flex-col",
     h2: "text-[1.35rem] m-0 mb-2",
     productImg: "w-full min-h-[300px] object-cover transition-all duration-300 group-hover:scale-105",
-    btn: 'text-white bg-[#000000e1] border-[1.5px] border-transparent border-solid text-lg mt-2 w-fit tracking-wide px-8 py-3 rounded-[2rem] cursor-pointer transition duration-500 hover:bg-transparent hover:text-main hover:border-main',
+    btn: 'text-white bg-[#000000e1] border-[1.5px] border-transparent border-solid text-lg mt-2 w-fit tracking-wide px-8 py-3 rounded-[2rem] cursor-pointer transition duration-500 hover:bg-transparent hover:text-main hover:border-main sm:scale-90',
 }
 
 export const Trending = () => {
     return (
         <div className="py-0 px-8 pt-16">
-            <h1 className="text-3xl">Trending Products For You!</h1>
+            <h1 className="text-3xl sm:text-2xl">Trending Products For You!</h1>
             <div className={styles.trendingItems}>
                 <div className={styles.trendingProducts}>
 

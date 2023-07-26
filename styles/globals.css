@@ -353,4 +353,38 @@ body {
   .scrollbar::-webkit-scrollbar-track{
     background: rgba(128, 128, 128, 0.206);
   }
+  .card-container,
+  .mcard-container,
+  .pcard-container,
+  .tcard-container {
+    perspective: none;
+  }
+
+  .card,
+  .mcard,
+  .pcard,
+  .tcard {
+    transform-style: none;
+    transform: none!important;
+    box-shadow: none!important;
+  }
+
+  .cbtn, 
+  .mcbtn, 
+  .pcbtn, 
+  .tcbtn{
+    box-shadow: none!important;   
+  }
+
+  .category-cards-container {
+    perspective: none;
+  }
+
+  .category-card {
+    perspective: none;
+  }
+
+  .category-title {
+    transform-style: none;
+  } 
 }

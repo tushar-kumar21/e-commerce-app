@@ -4,13 +4,13 @@ import Image from "next/image";
 export const SellingStore = () => {
     return (
         <div className="max-w-full py-0 px-4 pt-16">
-            <h2 className="text-3xl pb-4">Best Selling Store</h2>
+            <h2 className="text-3xl pb-4 sm:text-2xl">Best Selling Store</h2>
             <div className="flex justify-between flex-wrap gap-6">
                 {
                     sellingStoreData &&
                     sellingStoreData.map((data, ind) => {
                         return (
-                            <div className="relative basis-72 overflow-hidden rounded-xl group" key={ind}>
+                            <div className="relative basis-72 grow shrink overflow-hidden rounded-xl group" key={ind}>
                                 <img 
                                     className="w-full rounded-xl transition-all duration-300 cursor-pointer group-hover:scale-105"
                                     src={data.img}

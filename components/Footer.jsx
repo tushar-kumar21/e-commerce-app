@@ -1,11 +1,11 @@
-import { aboutusData, departmentData, helpData, payLogo, sectionData, servicesData } from "@/data";
+import { aboutusData, departmentData, helpData, payLogo,servicesData } from "@/data";
 import Image from "next/image";
 
 //STYLES
 
 const styles = {
     footerContainer: "max-w-full flex justify-center flex-wrap gap-4 py-0 px-9 mt-24",
-    sections: "border-t-[1px] border-[#0000004d] flex flex-col gap-2 flex-grow flex-shrink basis-[fit-content] pt-12 pb-8",
+    sections: "border-t-[1px] border-[#0000004d] flex flex-col gap-2 flex-grow flex-shrink basis-[fit-content] pt-12 pb-8 sm:pt-6",
     logoName: "text-main text-[1.6rem] tracking-wide font-bold",
     lastFooter: "w-full flex border-t-[1px] border-[#00000059] justify-between py-10 px-0 hidden",
     options: "flex justify-between flex-wrap w-64 gap-2",
@@ -25,17 +25,15 @@ export const Footer = () => {
                     <div className={styles.options}>
                         {payLogo && payLogo.map((img, ind) => {
                             return (
-                                <img src={img} alt="dsmfbknds" className="border border-[#808080] p-2 rounded-lg" />
+                                <img src={img} key={ind} alt="dsmfbknds" className="border border-[#808080] p-2 rounded-lg" />
                             )
                         })}
                     </div>
                 </div>
-            </div>
-            {sectionData && sectionData.map((data, ind) => {
-                return (
+            </div>       
 
-                    <div className={styles.sections} key={ind}>
-                        <h3 className="m-0 mb-6">{data}</h3>
+                    <div className={styles.sections}>
+                        <h3 className="m-0 mb-6 sm:mb-4">Department</h3>
                         {
                             departmentData &&
                             departmentData.map((data, ind) => {
@@ -45,8 +43,40 @@ export const Footer = () => {
                             })
                         }
                     </div>
-                )
-            })}
+                    <div className={styles.sections}>
+                        <h3 className="m-0 mb-6 sm:mb-4">About Us</h3>
+                        {
+                            aboutusData &&
+                            aboutusData.map((data, ind) => {
+                                return (
+                                    <span className="text-[#5e5e5e] text-sm font-normal" key={ind}>{data}</span>
+                                )
+                            })
+                        }
+                    </div>
+                    <div className={styles.sections} >
+                        <h3 className="m-0 mb-6 sm:mb-4">Services</h3>
+                        {
+                            servicesData &&
+                            servicesData.map((data, ind) => {
+                                return (
+                                    <span className="text-[#5e5e5e] text-sm font-normal" key={ind}>{data}</span>
+                                )
+                            })
+                        }
+                    </div>
+                    <div className={styles.sections}>
+                        <h3 className="m-0 mb-6 sm:mb-4">Help</h3>
+                        {
+                            helpData &&
+                            helpData.map((data, ind) => {
+                                return (
+                                    <span className="text-[#5e5e5e] text-sm font-normal" key={ind}>{data}</span>
+                                )
+                            })
+                        }
+                    </div>
+               
             <div className={styles.lastFooter}>
                 <div className="flex items-center gap-2">
                     <Image

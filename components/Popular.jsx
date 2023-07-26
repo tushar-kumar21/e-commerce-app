@@ -23,7 +23,7 @@ const productsFetcher = async (url) => {
 const styles = {
     dealsContainer: 'max-w-full pt-16 px-8 py-0 relative group-hover:visible group-hover:pointer-events-auto deals-custom sm:px-4',
     dealsCards: 'flex justify-between gap-8 w-full h-fit pt-4 transition-cubic pb-3 overflow-x-scroll overflow-y-hidden scrollbar pcard-container sm:gap-4',
-    product: "relative min-w-[380px] h-[460px] cursor-grab flex flex-col justify-start rounded-xl pcard px-2 md:min-w-[300px] md:h-[370px] sm:min-w-[250px] sm:overflow-hidden xxs:min-w-[190px]",
+    product: "relative min-w-[380px] h-[460px] cursor-grab flex flex-col justify-start rounded-xl pcard px-2 md:min-w-[300px] md:h-[400px] sm:min-w-[250px] sm:overflow-hidden xxs:min-w-[190px]",
     productImg: "w-full h-[55%] object-contain rounded-xl pointer-events-none mb-10 plikeimg",
     likeImg: "m-4 w-9 h-9 absolute p-2 right-0 bg-likeBg rounded-full plike",
     productName: "flex justify-between gap-4 mx-1 my-0 ptitle",

@@ -3,8 +3,6 @@ import { motion } from "framer-motion"
 import { useEffect, useRef, useState } from "react";
 import useSWR from "swr";
 import { useRouter } from "next/router";
-import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
-import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 import { useFirebase } from "@/firebase/firebase";
 import { useMyContext } from "@/Context/context";
 
@@ -22,15 +20,15 @@ const productsFetcher = async (url) => {
 //STYLES
 
 const styles = {
-    dealsContainer: 'max-w-full pt-16 px-8 py-0 relative group-hover:visible group-hover:pointer-events-auto deals-custom ',
-    dealsCards: 'flex justify-between gap-8 pb-3 w-full h-fit pt-4 transition-cubic overflow-x-scroll overflow-y-hidden scrollbar mcard-container',
-    product: "relative min-w-[380px] h-[490px] cursor-grab flex flex-col justify-start rounded-xl mcard px-2",
+    dealsContainer: 'max-w-full pt-16 px-8 py-0 relative group-hover:visible group-hover:pointer-events-auto deals-custom sm:px-4',
+    dealsCards: 'flex justify-between gap-8 pb-3 w-full h-fit pt-4 transition-cubic overflow-x-scroll overflow-y-hidden scrollbar mcard-container sm:gap-4',
+    product: "relative min-w-[380px] h-[490px] cursor-grab flex flex-col justify-start rounded-xl mcard px-2 md:min-w-[300px] md:h-[400px] sm:min-w-[250px] sm:overflow-hidden xxs:min-w-[190px]",
     productImg: "w-full h-[55%] object-contain rounded-xl pointer-events-none mb-10 mlikeimg",
     likeImg: "m-4 w-9 h-9 absolute p-2 right-2 top-4 bg-likeBg rounded-full z-[9999] mlike",
     productName: "flex justify-between gap-4 mx-1 my-0 mtitle",
-    productContent: "text-[1rem] font-semibold tracking-wide ",
+    productContent: "text-[1rem] font-semibold tracking-wide sm:mt-[-2.5em]",
     productCategory: "text-[#757575] text-xs tracking-wide ml-1",
-    cartBtn: "border-black border-[1.3px] text-black font-semibold text-xs w-fit py-3 px-6 rounded-[2rem] tracking-wide transition-all duration-300 bg-white absolute bottom-0 mb-4 hover:bg-black hover:text-white mcbtn",
+    cartBtn: "border-black border-[1.3px] text-black font-semibold text-xs w-fit py-3 px-6 rounded-[2rem] tracking-wide transition-all duration-300 bg-white absolute bottom-0 mb-4 hover:bg-black hover:text-white sm:bottom-[-12px] mcbtn",
     // leftArrow: "absolute bottom-[45%] scale-[2] my-0 mx-4 z-10 cursor-pointer border border-[#00000042] px-[.1em] bg-white rounded-md invisible pointer-events-none right-0 right arrows",
     // rightArrow: "absolute bottom-[45%] scale-[2] my-0 mx-4 z-10 cursor-pointer border border-[#00000042] px-[.1em] bg-white rounded-md invisible pointer-events-none left-0 left arrows"
 }
@@ -55,7 +53,6 @@ export const MostSelling = () => {
         }
         console.log(mxAxis,myAxis)
     };
-
     const handleMouseLeave = (val) => { 
         let card = document.querySelectorAll('.mcard');
         let like = document.querySelectorAll('.mlike');
@@ -95,13 +92,11 @@ export const MostSelling = () => {
             card[val].style.boxShadow = "0px 0px 10px grey";
         }
     };    
-
-
     return (
         <div className={styles.dealsContainer}>
             {/* <ArrowBackIosNewRoundedIcon className={styles.rightArrow} />
             <ArrowForwardIosRoundedIcon className={styles.leftArrow} /> */}
-            <h2 className="text-3xl">Most Selling Product</h2>
+            <h2 className="text-3xl sm:text-2xl">Most Selling Product</h2>
             <div className={styles.dealsCards} style={{ transform: `translateX(${transform}%)` }}>
                 {
                     productsData &&
@@ -140,7 +135,7 @@ export const MostSelling = () => {
                                         <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
                                         <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
                                         <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
-                                        <span>{product.rating}</span>
+                                        <span className="text-[#3c3c3c] text-xs ml-1">{product.rating}</span>
                                     </div>
                                     <button
                                         className={styles.cartBtn}
