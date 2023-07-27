@@ -25,14 +25,14 @@ const productsFetcher = async (url) => {
 //STYLES
 
 const styles = {
-    productView: "py-0 px-3 min-h-[500px] flex w-[45%]",
+    productView: "py-0 px-3 min-h-[500px] flex w-[45%] lg:w-full",
+    productDesc: "flex flex-col gap-2 p-4 w-[51%] lg:w-full lg:pb-12",
     productImages: "w-fit flex flex-col gap-2 p-1 m-auto mr-1 border border-[#0000001f] cursor-pointer",
     mainProduct: "w-full border border-[#0000001f] my-4 mx-0",
     mainProductImg: "flex items-center justify-center h-[460px] w-full overflow-hidden",
     productImg: 'border-[1.5px] border-transparent rounded-[.3em] object-cover',
     activeImg: 'border-[1.5px] border-black rounded-[.3em] object-cover',
     btns: "flex gap-2 m-auto mb-0",
-    productDesc: "flex flex-col gap-2 p-4 w-[51%]",
     assuredLogo: 'inline-flex items-center ml-6 ',
     assuredLogoImg:'rounded-full border-[1.4px] border-main z-10 scale-[1.2]',
     assuredText: 'text-[.65rem] italic bg-main text-white py-0 px-[.9em] ml-[-7px] rounded-lg leading-snug',
@@ -48,11 +48,10 @@ const Product = ({ id }) => {
 
     const { data: productsData, error: productsError } = useSWR(`https://dummyjson.com/products/${id}`, productsFetcher);
 
-
     return (
         <>
             <CartNavbar />
-            <div className="max-w-full flex">
+            <div className="max-w-full flex lg:flex-col">
                 {productsData &&
                     <>
                         <div className={styles.productView}>
@@ -82,7 +81,7 @@ const Product = ({ id }) => {
                                 <div className={styles.btns}>
                                     <Button
                                         variant="contained"
-                                        className="p-3 bg-[#5b18ac] px-12 text-base font-semibold mb-4"
+                                        className="p-3 bg-[#5b18ac] px-12 text-base font-semibold mb-4 lg:px-8 lg:p-3"
                                         img={productsData.thumbnail}
                                         price={productsData.price}
                                         name={productsData.title}
@@ -94,12 +93,12 @@ const Product = ({ id }) => {
                                             router.push("/Cart")
                                         }}
                                     >
-                                        <AddShoppingCartRoundedIcon className='mr-2 mb-4' />
+                                        <AddShoppingCartRoundedIcon className='mr-2' />
                                         ADD TO CART
                                     </Button>
 
                                     <Button variant="contained"
-                                        className="bg-[orangered] p-3 px-12 text-base font-semibold mb-4"> <BoltIcon className="mr-2" /> BUY NOW</Button>
+                                        className="bg-[orangered] p-3 px-12 text-base font-semibold mb-4 lg:px-8 lg:p-3"> <BoltIcon className="mr-2" /> BUY NOW</Button>
                                 </div>
                             </div>
                         </div>

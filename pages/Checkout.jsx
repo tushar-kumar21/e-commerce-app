@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import NorthRoundedIcon from '@mui/icons-material/NorthRounded';
 import ShoppingBasketRoundedIcon from '@mui/icons-material/ShoppingBasketRounded';
 import DoneRoundedIcon from '@mui/icons-material/DoneRounded';
@@ -10,7 +10,7 @@ import { useFirebase } from '@/firebase/firebase';
 const styles = {
     totalAmount: 'text-2xl font-semibold my-2 mt-10',
     itemSection: 'p-12 basis-1/2 grow shrink',
-    paymentSection: 'w-1/2 flex flex-col basis-[33%] grow shrink p-12 shadow-[-3px_0px_10px_#80808061]',
+    paymentSection: 'w-1/2 flex flex-col basis-[33%] grow shrink p-12 shadow-[-3px_0px_10px_#80808061] md:w-full',
     emailInput: 'outline-none border-[1.5px] border-[#808080] py-[7px] px-4 rounded-md text-base mb-6 placeholder:text-sm',
     cardInfo: 'flex gap-1 border-[1.5px] border-[#808080] rounded-md overflow-hidden px-4 justify-between items-center py-1',
     cardInput: 'outline-none border-none py-1 placeholder:text-sm',
@@ -19,12 +19,13 @@ const styles = {
     cvcInput: 'basis-[50%] grow shrink px-4 py-[7px] outline-none placeholder:text-sm',
     nameInput: 'py-[7px] px-4 border-[1.5px] border-[#808080] rounded-md outline-none mb-6 placeholder:text-sm',
     terms: 'border-[1.5px] border-[#808080] rounded-md flex items-start p-3 mb-6',
-    checkbox: 'border-[1.5px] border-[#808080] h-5 w-5 flex justify-center items-center rounded-[3px] cursor-pointer',
+    checkbox: 'border-[1.5px] border-[#808080] h-[22px] min-w-[22px] flex justify-center items-center rounded-[3px] cursor-pointer',
     shoppingBasket: 'rounded-full text-gray-600 shadow-[0px_2px_10px_0px_rgba(133,131,133,1)] p-[2px]'
 }
 
 const Checkout = () => {
 
+    const [tick, setTick] = useState(false);
     const fb = useFirebase()
     const { productsData, getProductsData, getCurrentUser, currentUser, totalPrice } = fb;
 
@@ -34,7 +35,7 @@ const Checkout = () => {
     }, [currentUser])
 
     return (
-        <main className='flex justify-between'>
+        <main className='flex justify-between md:flex-col'>
             <section className={styles.itemSection}>
                 <div className='flex gap-2'>
                     <NorthRoundedIcon className='text-[#808080] rotate-[-90deg]' />
@@ -90,11 +91,11 @@ const Checkout = () => {
                 <label htmlFor="" className='text-sm text-gray-700'>Card information</label>
                 <div className={styles.cardInfo}>
                     <input type="text" placeholder='1234 1234 1234 1234' className={styles.cardInput} />
-                    <div className='flex gap-1'>
-                        <img src="https://uploads-ssl.webflow.com/63e857eaeaf853471d5335ff/63eb1ce82d440b7ab84a993f_visa.png" alt="" className='h-3' />
-                        <img src="https://uploads-ssl.webflow.com/63e857eaeaf853471d5335ff/63eb1ce8f032504012a5896b_Mastercard.png" alt="" className='h-3' />
-                        <img src="https://uploads-ssl.webflow.com/63e857eaeaf853471d5335ff/63eb1ce7c4510cf9a55828a0_PayPal.png" alt="" className='h-3' />
-                        <img src="https://uploads-ssl.webflow.com/63e857eaeaf853471d5335ff/63eb1f55dc68c5ee83d0cbf8_GooglePay.png" alt="" className='h-3' />
+                    <div className='flex gap-1 md:ml-[-1em]'>
+                        <img src="https://uploads-ssl.webflow.com/63e857eaeaf853471d5335ff/63eb1ce82d440b7ab84a993f_visa.png" alt="" className='h-3 sm:h-[.6rem]' />
+                        <img src="https://uploads-ssl.webflow.com/63e857eaeaf853471d5335ff/63eb1ce8f032504012a5896b_Mastercard.png" alt="" className='h-3 sm:h-[.6rem]' />
+                        <img src="https://uploads-ssl.webflow.com/63e857eaeaf853471d5335ff/63eb1ce7c4510cf9a55828a0_PayPal.png" alt="" className='h-3 sm:h-[.6rem]' />
+                        <img src="https://uploads-ssl.webflow.com/63e857eaeaf853471d5335ff/63eb1f55dc68c5ee83d0cbf8_GooglePay.png" alt="" className='h-3 sm:h-[.6rem]' />
                     </div>
                 </div>
                 <div className={styles.valid}>
@@ -116,9 +117,12 @@ const Checkout = () => {
                     className={styles.nameInput}
                 />
                 <div className={styles.terms}>
-                    <div className={styles.checkbox}>
-                        <DoneRoundedIcon className='scale-[.9]'
-                        />
+                    <div className={styles.checkbox}
+                    onClick={()=>{                        
+                        tick ? setTick(false) : setTick(true)
+                    }} >
+                       { tick && <DoneRoundedIcon className='tick'
+                         />}
                     </div>
                     <div>
                         <h3 className='m-0 p-0 text-base pl-2'>Securely save my information for 1-click checkout</h3>

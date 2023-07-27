@@ -104,7 +104,7 @@ export const TodayDeals = () => {
 
 
     return (
-        <div className="max-w-full pt-16">
+        <div className="max-w-full pt-16" id="category">
 
             <h2 className="text-3xl py-0 px-4 pb-8 sm:pb-6 sm:text-2xl">Todays Best Deals For You!</h2>
             <select className={styles.selectBox}  

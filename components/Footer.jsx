@@ -7,7 +7,7 @@ const styles = {
     footerContainer: "max-w-full flex justify-center flex-wrap gap-4 py-0 px-9 mt-24",
     sections: "border-t-[1px] border-[#0000004d] flex flex-col gap-2 flex-grow flex-shrink basis-[fit-content] pt-12 pb-8 sm:pt-6",
     logoName: "text-main text-[1.6rem] tracking-wide font-bold",
-    lastFooter: "w-full flex border-t-[1px] border-[#00000059] justify-between py-10 px-0 hidden",
+    lastFooter: "w-full flex border-t-[1px] border-[#00000059] justify-between py-10 px-0 flex-wrap",
     options: "flex justify-between flex-wrap w-64 gap-2",
 }
 
@@ -84,7 +84,7 @@ export const Footer = () => {
                         height={20}
                         width={20}
                     />
-                    <span>Become Seller</span>
+                    <span className="sm:leading-10">Become Seller</span>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -93,7 +93,7 @@ export const Footer = () => {
                         height={25}
                         width={25}
                     />
-                    <span>Gift Cards</span>
+                    <span className="sm:leading-10">Gift Cards</span>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -102,12 +102,13 @@ export const Footer = () => {
                         height={25}
                         width={25}
                     />
-                    <span>Help Center</span>
+                    <span className="sm:leading-10">Help Center</span>
                 </div>
-
+                <aside className="sm:flex sm:flex-wrap sm:gap-2">
                 <span className="text-sm">Terms of Service</span>
                 <span className="text-sm">Privacy & Policy</span>
                 <span className="text-sm">All Right reserved by Shopexpress | 2023</span>
+                </aside>
             </div>
         </div>
     )

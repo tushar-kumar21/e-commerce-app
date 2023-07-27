@@ -31,7 +31,7 @@ const styles = {
     productName: "flex justify-between gap-4 mx-1 my-0 title",
     productContent: "text-[1rem] font-semibold tracking-wide sm:mt-[-3em]",
     productCategory: "text-[#757575] text-xs tracking-wide ml-1",
-    cartBtn: "border-black border-[1.3px] text-black font-semibold text-xs w-fit py-3 px-6 rounded-[2rem] tracking-wide transition-all duration-300 hover:bg-black hover:text-white bg-white absolute bottom-0 sm:bottom-[-8px] mb-4 cbtn ",
+    cartBtn: "border-black border-[1.3px] text-black font-semibold text-xs w-fit py-3 px-6 rounded-[2rem] tracking-wide transition-all duration-300 hover:bg-black hover:text-white bg-white absolute bottom-0 sm:bottom-[-8px] mb-4 flex items-center cbtn",
 }
 
 export const Deals = () => {
@@ -97,7 +97,7 @@ export const Deals = () => {
     };
 
     return (
-            <div className={styles.dealsContainer}>
+            <div className={styles.dealsContainer} id="deals">
                 <h2 className="text-3xl sm:text-2xl">Todays Best Deals For You!</h2>
                 <div className={styles.dealsCards} style={{ transform: `translateX(${transform}%)` }}>
                     {
@@ -157,6 +157,7 @@ export const Deals = () => {
                                             desc={product.description}
                                             id={product.id}
                                             onClick={addItemToCart}>
+                                            <img src="/assets/ring.gif" className="w-6 h-6 absolute left-1" alt="" />
                                             Add to Cart</button>
                                     </div>
                                 </div>

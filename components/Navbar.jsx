@@ -1,12 +1,12 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import Image from 'next/image';
-import { getAuth, signOut } from "firebase/auth";
 import { useFirebase } from '@/firebase/firebase';
 import useSWR from "swr";
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { Loader } from './Loader';
-import { useMyContext } from '@/Context/context';
+import Link from 'next/link';
+import { auth } from '@/firebase/firebase';
 
 // MATERIAL ICONS
 import CallIcon from '@mui/icons-material/Call';
@@ -15,6 +15,8 @@ import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import AddShoppingCartRoundedIcon from '@mui/icons-material/AddShoppingCartRounded';
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+import { signOut } from 'firebase/auth';
 
 //STYLES
 
@@ -32,6 +34,7 @@ const styles = {
     searchInput: 'bg-transparent outline-none tracking-wide placeholder:text-borderGrey placeholder:text-[.9rem] px-0 py-auto searchInput',
     searchProducts: 'list-none px-3 py-1 border-b-[1.5px] border-b-[#80808023] flex gap-5 items-center justify-start cursor-pointer hover:bg-gray-100',
     searchBox: 'absolute top-[100%] w-full bg-white h-fit left-0 z-10 mt-2 rounded-lg max-h-[430px] overflow-auto search-scrollbar',
+    logout:'absolute top-6 right-[-3.5em] flex items-center gap-2 shadow-[0px_0px_8px_lightgrey] px-4 py-1 z-50 rounded-md bg-white'
 }
 
 const productFetcher = async (url) => {
@@ -47,20 +50,21 @@ export const Navbar = () => {
 
     const [query, setQuery] = useState(null);
     const [input, setInput] = useState("");
-    const [loader, setLoader] = useState(false);
-    const auth = getAuth();
+    const [loader, setLoader] = useState(false);    
+    const [logoutPopUP, setLogoutPopUP] = useState(false);
     const fb = useFirebase();
-    const { signInWithGoogle, getCartSize, cartSize } = fb;    
+    const { signInWithGoogle, getCartSize, cartSize, currentUser, getCurrentUser } = fb;
     const router = useRouter();
 
     const { data: queryData, error: errorData } = useSWR(`https://dummyjson.com/products/search?q=${query}`, productFetcher)
 
-    useLayoutEffect(()=>{
+    useLayoutEffect(() => {
         setLoader(false)
-    },[])
+    }, [])
 
     useEffect(() => {
         let input = document.querySelector('.searchInput')
+        getCurrentUser();
         setInput(input);
         getCartSize()
     }, [])
@@ -94,30 +98,41 @@ export const Navbar = () => {
                         src={`/assets/shopexpress.jpg`}
                         height={70}
                         width={70}
-                        alt="dasd"                        
+                        alt="dasd"
                     />
                     <span className={styles.logoName}>ShopExpress</span>
                 </div>
                 <div className={styles.navMenu}>
                     <li className='relative mr-2'>
-                        <span>Category</span>
+                        <Link
+                            href="#category"
+                            scroll={true}>
+                            <span>Category</span>
+                        </Link>
+                    </li>
 
-                        <Image
-                            src={`/assets/arrow-down.svg`}
-                            height={20}
-                            width={20}
-                            className='absolute top-1 invert right-[-1.3em]'
-                            alt="ddfsdf"
-                        />
-                    </li>
                     <li>
-                        <span>Deals</span>
+                        <Link
+                            href="#deals"
+                            scroll={true}>
+                            <span>Deals</span>
+                        </Link>
                     </li>
+
                     <li>
-                        <span>What's New</span>
+                        <Link
+                            href="#new"
+                            scroll={true}>
+                            <span>What's New</span>
+                        </Link>
                     </li>
+
                     <li >
-                        <span>Delivery</span>
+                        <Link
+                            href="#delivery"
+                            scroll={true}>
+                            <span>Delivery</span>
+                        </Link>
                     </li>
                 </div>
                 <div className={styles.searchItem}>
@@ -140,7 +155,7 @@ export const Navbar = () => {
                                         className={styles.searchProducts}
                                         onClick={() => {
                                             setLoader(true)
-                                            router.push(`/Products/${product.id}`)                                            
+                                            router.push(`/Products/${product.id}`)
                                         }}
                                     >
                                         <img
@@ -157,26 +172,36 @@ export const Navbar = () => {
 
                 </div>
 
-                <div className="flex gap-4 cursor-pointer max-[1130px]:ml-4 md:hidden" onClick={signInWithGoogle}>
+                <div className="flex gap-4 cursor-pointer max-[1130px]:ml-4 md:hidden relative">
 
-                    {auth.currentUser ?
+                    {currentUser ?
                         <>
                             <Image
-                                src={`https://res.cloudinary.com/demo/image/fetch/${auth.currentUser.photoURL}`}
+                                src={`https://res.cloudinary.com/demo/image/fetch/${currentUser.photoURL}`}
                                 height={20}
                                 width={20}
                                 alt="asdasdas"
                                 className='rounded-full scale-[1.8]'
                             />
 
-                            <span className='text-[.9rem] text-black ml-[-3px]'>{auth.currentUser.displayName}</span>
+                            <span className='text-[.9rem] text-black ml-[-3px]'
+                            onMouseEnter={()=>setLogoutPopUP(true)}
+                            >{currentUser.displayName}</span>
+                            <KeyboardArrowDownRoundedIcon className='absolute right-[-1em]' />
                         </>
                         :
                         <>
-                            <AccountCircleRoundedIcon />
-                            <span className='text-[.9rem] text-black'>Account</span>
+                            <AccountCircleRoundedIcon onClick={signInWithGoogle} className='scale-[1.5]' />
+                            <span className='text-[.9rem] text-black' onClick={signInWithGoogle}>Account</span>                            
                         </>
                     }
+                 { logoutPopUP && <span className={styles.logout}
+                    onClick={()=>{
+                        signOut(auth)
+                        setLogoutPopUP(false)                        
+                    }}
+                    onMouseLeave={()=>setLogoutPopUP(false)}
+                    ><LogoutRoundedIcon className="text-[1.1rem]" />Logout</span>}
                 </div>
 
                 <div className={styles.cart} onClick={() => router.push("/Cart")}>
@@ -184,9 +209,9 @@ export const Navbar = () => {
                     <span className='text-base'>Cart</span>
                     <span className={styles.cartSize}>{cartSize}</span>
                 </div>
-                <MenuRoundedIcon className='text-black hidden md:block'/>
+                <MenuRoundedIcon className='text-black hidden md:block' />
             </div>
-            { loader && <Loader/> }
+            {loader && <Loader />}
         </div>
     )
 }

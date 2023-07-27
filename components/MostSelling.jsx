@@ -93,7 +93,7 @@ export const MostSelling = () => {
         }
     };    
     return (
-        <div className={styles.dealsContainer}>
+        <div className={styles.dealsContainer} id="new">
             {/* <ArrowBackIosNewRoundedIcon className={styles.rightArrow} />
             <ArrowForwardIosRoundedIcon className={styles.leftArrow} /> */}
             <h2 className="text-3xl sm:text-2xl">Most Selling Product</h2>

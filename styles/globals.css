@@ -4,6 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html{
+scroll-behavior: smooth!important;
+}
+
 body {
   margin: 0;
   box-sizing: border-box;
@@ -47,6 +51,13 @@ body {
       height: .8em;
       cursor: pointer;
     }
+    
+    .scrollbar-main::-webkit-scrollbar {
+      width: .5em;
+      height: .8em;
+      cursor: pointer;
+    }
+
 
     .search-scrollbar::-webkit-scrollbar {
       width: 0.6em;
@@ -59,6 +70,11 @@ body {
       border-radius: 100vw;
       cursor: pointer;
     }
+    .scrollbar-main::-webkit-scrollbar-track {
+      background: rgba(128, 128, 128, .5);
+      border-radius: 100vw;
+      cursor: pointer;
+    }
 
     .search-scrollbar::-webkit-scrollbar-track {
       background: #5b18ac;
@@ -66,9 +82,14 @@ body {
       cursor: pointer;
     }
 
-    .scrollbar::-webkit-scrollbar-thumb {
-      /* background:#ffffffde; */
+    .scrollbar::-webkit-scrollbar-thumb {      
       background: linear-gradient(90deg, #5b18ac, #fff);
+      border: 1px solid #fff;
+      border-radius: 100vw;
+      cursor: pointer;
+    }
+    .scrollbar-main::-webkit-scrollbar-thumb {      
+      background: #5b18ac;
       border: 1px solid #fff;
       border-radius: 100vw;
       cursor: pointer;
@@ -387,4 +408,12 @@ body {
   .category-title {
     transform-style: none;
   } 
+}
+@media(width<500px){
+  .search-scrollbar::-webkit-scrollbar{    
+    height: 0.5em;
+  }
+  .search-scrollbar::-webkit-scrollbar-track{
+    background: rgba(128, 128, 128, 0.206);
+  }
 }
