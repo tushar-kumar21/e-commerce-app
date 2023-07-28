@@ -66,28 +66,28 @@ export const offData=[
         desc:'Explore Our Furniture & Home Furnishing Range',
         color:'#cb9917',
         bgcolor:'#f2e4d9',
-        img:'https://res.cloudinary.com/demo/image/fetch/https://uploads-ssl.webflow.com/63e857eaeaf853471d5335ff/63e8c4e6cd367817e964f756_sofa-min.png'
+        img:'https://uploads-ssl.webflow.com/63e857eaeaf853471d5335ff/63e8c4e6cd367817e964f756_sofa-min.png'
     },
     {
         price:"29",
         desc:'Explore Our Books & Library Books Range',
         color:'#961f1f',
         bgcolor:'#f9dcdc',
-        img:'https://res.cloudinary.com/demo/image/fetch/https://uploads-ssl.webflow.com/63e857eaeaf853471d5335ff/63e8c4e4e006822af104db61_book-min.png'
+        img:'https://uploads-ssl.webflow.com/63e857eaeaf853471d5335ff/63e8c4e4e006822af104db61_book-min.png'
     },
     {
         price:"67",
         desc:'Explore Our Clothes & Stores and Clothes Range',
         color:'#94623c',
         bgcolor:'#f2e4d9',
-        img:'https://res.cloudinary.com/demo/image/fetch/https://uploads-ssl.webflow.com/63e857eaeaf853471d5335ff/63e8c4e61a7c20076aec5fe7_shirt-min.png'
+        img:'https://uploads-ssl.webflow.com/63e857eaeaf853471d5335ff/63e8c4e61a7c20076aec5fe7_shirt-min.png'
     },
     {
         price:"59",
         desc:'Explore Our Bagpacks and Stores Baggages Range',
         color:'#003d29;',
         bgcolor:'#d2f7ec',
-        img:'https://res.cloudinary.com/demo/image/fetch/https://uploads-ssl.webflow.com/63e857eaeaf853471d5335ff/63e8c4e53f7127592743f6be_bug%20%26%20book-min.png'
+        img:'https://uploads-ssl.webflow.com/63e857eaeaf853471d5335ff/63e8c4e53f7127592743f6be_bug%20%26%20book-min.png'
     },
 ]
 

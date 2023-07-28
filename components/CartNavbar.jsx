@@ -62,7 +62,7 @@ export const CartNavbar = () => {
                         className={styles.cartInputSearch}
                         onChange={(e) => handleChange(e.target.value)}
                     />
-                    <SearchRoundedIcon className="w-5 h-5"/>
+                    <SearchRoundedIcon className="!w-5 !h-5"/>
                     <aside className={styles.searchBox}>
                         {
                           products && products.map((data) => {
@@ -107,10 +107,11 @@ export const CartNavbar = () => {
                             />
                         </div>
                 }
-                <div className={styles.cart} onClick={() => router.push("/Cart")}>
+                <div className={styles.cart} 
+                onClick={() => router.push("/Cart")}>
                     <AddShoppingCartRoundedIcon sx={{ color: '#5b18ac' }} />
                     <span>Cart</span>
-                    <span className={styles.cartSize}>{cartSize}</span>
+                  { currentUser && <span className={styles.cartSize}>{cartSize}</span>}
                 </div>
             </div>
         </div>

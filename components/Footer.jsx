@@ -79,7 +79,7 @@ export const Footer = () => {
                
             <div className={styles.lastFooter}>
                 <div className="flex items-center gap-2">
-                    <Image
+                    <img
                         src={`/assets/bag.svg`}
                         height={20}
                         width={20}
@@ -88,7 +88,7 @@ export const Footer = () => {
                 </div>
 
                 <div className="flex items-center gap-2">
-                    <Image
+                    <img
                         src={`/assets/gift.svg`}
                         height={25}
                         width={25}
@@ -97,7 +97,7 @@ export const Footer = () => {
                 </div>
 
                 <div className="flex items-center gap-2">
-                    <Image
+                    <img
                         src={`/assets/question.svg`}
                         height={25}
                         width={25}

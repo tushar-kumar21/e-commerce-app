@@ -30,7 +30,7 @@ export const Offs = () => {
                                     </div>
                                     <span className="tracking-wide leading-6 mt-2">{data.desc}</span>
                                 </div>
-                                <Image
+                                <img
                                     src={data.img}
                                     alt="sdasd"
                                     height={100}

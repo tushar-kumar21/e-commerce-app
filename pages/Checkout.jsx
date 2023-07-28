@@ -20,7 +20,7 @@ const styles = {
     nameInput: 'py-[7px] px-4 border-[1.5px] border-[#808080] rounded-md outline-none mb-6 placeholder:text-sm',
     terms: 'border-[1.5px] border-[#808080] rounded-md flex items-start p-3 mb-6',
     checkbox: 'border-[1.5px] border-[#808080] h-[22px] min-w-[22px] flex justify-center items-center rounded-[3px] cursor-pointer',
-    shoppingBasket: 'rounded-full text-gray-600 shadow-[0px_2px_10px_0px_rgba(133,131,133,1)] p-[2px]'
+    shoppingBasket: '!rounded-full !text-gray-600 !shadow-[0px_2px_10px_0px_rgba(133,131,133,1)] !p-[2px]'
 }
 
 const Checkout = () => {
@@ -38,7 +38,7 @@ const Checkout = () => {
         <main className='flex justify-between md:flex-col'>
             <section className={styles.itemSection}>
                 <div className='flex gap-2'>
-                    <NorthRoundedIcon className='text-[#808080] rotate-[-90deg]' />
+                    <NorthRoundedIcon className='!text-[#808080] !rotate-[-90deg]' />
                     <ShoppingBasketRoundedIcon className={styles.shoppingBasket} />
                     <span className='text-black'>Place Your Orders</span>
                 </div>
@@ -121,7 +121,7 @@ const Checkout = () => {
                     onClick={()=>{                        
                         tick ? setTick(false) : setTick(true)
                     }} >
-                       { tick && <DoneRoundedIcon className='tick'
+                       { tick && <DoneRoundedIcon className='!tick'
                          />}
                     </div>
                     <div>
@@ -131,7 +131,7 @@ const Checkout = () => {
                 </div>
                 <Button
                     variant="contained"
-                    className='bg-blue-500 text-md py-[5px]'>pay</Button>
+                    className='!bg-blue-500 !text-md !py-[5px]'>pay</Button>
             </section>
         </main>
     )

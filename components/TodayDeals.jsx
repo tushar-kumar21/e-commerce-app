@@ -30,15 +30,23 @@ const styles = {
     productName:"flex justify-between gap-4 my-1 mx-0 ttitle md:mt-[-3em]",
     btn:'text-white bg-main border-[1.5px] border-transparent border-solid text-lg mt-2 w-fit tracking-wide px-8 py-3 rounded-[2rem] cursor-pointer transition duration-500 hover:bg-transparent hover:text-main hover:border-main md:text-base md:px-6 md:py-2',
     cashback:"max-w-full flex justify-around items-center bg-[#ffe6cc] mt-24 flex-wrap md:px-4 md:gap-4 ",
-    selectBox:"hidden md:block border-2 border-slate-600 rounded-md mx-4 px-2 py-1 focus:border-main focus:border-[3px]"
+    selectBox:"hidden md:block border-2 border-slate-600 rounded-md mx-4 px-2 py-1 focus:border-main focus:border-[3px]",
+    loader:"h-24 w-24 absolute z-[9999] top-[52%] left-1/2 translate-x-[-50%] translate-y-[-50%]"
 }
 
 export const TodayDeals = () => {
-    const [value, setValue] = useState(0);
+    const [value, setValue] = useState();
+    const [loader, setLoader] = useState(false);
+    const [btnLoader, setBtnLoader] = useState(false);
     const [category, setCategory] = useState("smartphones");
     const fb = useFirebase()
     const { addItemToCart } = fb;
     const router = useRouter();
+
+    useEffect(() => {
+        setBtnLoader(false)
+        setLoader(false);
+    }, [])
 
     const { data: productsData, error: productsError } = useSWR(`https://dummyjson.com/products/category/${category}`, productsFetcher);
 
@@ -105,6 +113,7 @@ export const TodayDeals = () => {
 
     return (
         <div className="max-w-full pt-16" id="category">
+              { loader && <img src="/assets/eliipsis.gif" alt="" className={styles.loader} />}
 
             <h2 className="text-3xl py-0 px-4 pb-8 sm:pb-6 sm:text-2xl">Todays Best Deals For You!</h2>
             <select className={styles.selectBox}  
@@ -151,7 +160,11 @@ export const TodayDeals = () => {
                                     onMouseMove={(e) => thandleMouseMove(e, ind)}
                                     onMouseEnter={() => handleMouseEnter(ind)}
                                     onMouseLeave={() => handleMouseLeave(ind)}
-                                    onClick={() => router.push(`/Products/${product.id}`)}>
+                                    onClick={() => {
+                                        router.push(`/Products/${product.id}`)
+                                        setLoader(true)
+                                    }}
+                                    >
 
                                     <img
                                         src={product.thumbnail}
@@ -159,7 +172,7 @@ export const TodayDeals = () => {
                                         className={styles.productImg}
                                     />
 
-                                    <Image
+                                    <img
                                         src={`/assets/like.svg`}
                                         height={20}
                                         width={20}
@@ -175,14 +188,21 @@ export const TodayDeals = () => {
                                     <div className="tproduct-details">
                                         <span className="text-[#757575] text-xs tracking-wide">{product.category}</span>
                                         <div className="flex mt-2">
-                                            <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
-                                            <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
-                                            <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
-                                            <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
-                                            <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
+                                            <img src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
+                                            <img src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
+                                            <img src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
+                                            <img src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
+                                            <img src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
                                             <span className="text-[#3c3c3c] text-xs ml-1">{product.rating}</span>
                                         </div>
+                                        { value === ind && btnLoader ? 
                                         <button
+                                            className={styles.cartBtn}>
+                                            <img src="/assets/ring.gif" className="w-6 h-6 absolute left-[1px] invert" alt="" />
+                                            Processing</button>
+                                            :
+                                        <button
+                                            className={styles.cartBtn}
                                             img={product.thumbnail}
                                             name={product.title}
                                             brand={product.brand}
@@ -192,8 +212,12 @@ export const TodayDeals = () => {
                                             stock={product.stock}
                                             desc={product.description}
                                             id={product.id}
-                                            className={styles.cartBtn}
-                                            onClick={addItemToCart}>Add to Cart</button>
+                                            onClick={(e)=>{
+                                                addItemToCart(e)
+                                                setBtnLoader(true)
+                                                setValue(ind)
+                                                }}>                                           
+                                            Add to Cart</button>}
                                     </div>
                                 </div>
                             )

@@ -29,18 +29,24 @@ const styles = {
     productContent: "text-[1rem] font-semibold tracking-wide sm:mt-[-2.5em]",
     productCategory: "text-[#757575] text-xs tracking-wide ml-1",
     cartBtn: "border-black border-[1.3px] text-black font-semibold text-xs w-fit py-3 px-6 rounded-[2rem] tracking-wide transition-all duration-300 bg-white absolute bottom-0 mb-4 hover:bg-black hover:text-white sm:bottom-[-12px] mcbtn",
+    loader:"h-24 w-24 absolute z-[9999] top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]"
     // leftArrow: "absolute bottom-[45%] scale-[2] my-0 mx-4 z-10 cursor-pointer border border-[#00000042] px-[.1em] bg-white rounded-md invisible pointer-events-none right-0 right arrows",
     // rightArrow: "absolute bottom-[45%] scale-[2] my-0 mx-4 z-10 cursor-pointer border border-[#00000042] px-[.1em] bg-white rounded-md invisible pointer-events-none left-0 left arrows"
 }
 
 export const MostSelling = () => {
-    const [transform, setTransform] = useState(0);
-    const [width, setWidth] = useState(0);
+    const [transform, setTransform] = useState(0);    
+    const [loader, setLoader] = useState(false);
+    const [btnLoader, setBtnLoader] = useState(false);
+    const [value, setValue] = useState()
     const fb = useFirebase()
-    const { addItemToCart } = fb;
-    const carousel = useRef();
+    const { addItemToCart, currentUser } = fb;
     const router = useRouter();
-    const context = useMyContext();    
+
+    useEffect(() => {
+        setBtnLoader(false)
+        setLoader(false);
+    }, [])
 
     const { data: productsData, error: productsError } = useSWR(`https://dummyjson.com/products?limit=30&skip=8`, productsFetcher)
 
@@ -94,6 +100,7 @@ export const MostSelling = () => {
     };    
     return (
         <div className={styles.dealsContainer} id="new">
+            { loader && <img src="/assets/eliipsis.gif" alt="" className={styles.loader} />}
             {/* <ArrowBackIosNewRoundedIcon className={styles.rightArrow} />
             <ArrowForwardIosRoundedIcon className={styles.leftArrow} /> */}
             <h2 className="text-3xl sm:text-2xl">Most Selling Product</h2>
@@ -107,7 +114,10 @@ export const MostSelling = () => {
                                 onMouseMove={(e)=>mhandleMouseMove(e,ind)}     
                                 onMouseEnter={()=>handleMouseEnter(ind)}                
                                 onMouseLeave={()=>handleMouseLeave(ind)}                
-                                onClick={() => router.push(`/Products/${product.id}`)}
+                                onClick={() => {
+                                    router.push(`/Products/${product.id}`)
+                                    setLoader(true)
+                                }}
                                 >
                                 <img
                                     src={product.thumbnail}
@@ -115,7 +125,7 @@ export const MostSelling = () => {
                                     className={styles.productImg}
                                 />
 
-                                <Image
+                                <img
                                     src={`/assets/like.svg`}
                                     height={20}
                                     width={20}
@@ -130,25 +140,36 @@ export const MostSelling = () => {
                                 <div className="mproduct-details">
                                     <span className={styles.productCategory}>{product.category}</span>
                                     <div className="flex mt-2">
-                                        <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
-                                        <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
-                                        <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
-                                        <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
-                                        <Image src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
+                                        <img src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
+                                        <img src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
+                                        <img src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
+                                        <img src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
+                                        <img src={`/assets/stars.svg`} height={15} width={15} alt="rsnds" />
                                         <span className="text-[#3c3c3c] text-xs ml-1">{product.rating}</span>
                                     </div>
-                                    <button
-                                        className={styles.cartBtn}
-                                        img={product.thumbnail}
-                                        name={product.title}
-                                        brand={product.brand}
-                                        discount={product.discountPercentage}
-                                        category={product.category}
-                                        price={product.price}
-                                        stock={product.stock}
-                                        desc={product.description}
-                                        id={product.id}
-                                        onClick={addItemToCart}>Add to Cart</button>
+                                    { value === ind && btnLoader ? 
+                                        <button
+                                            className={styles.cartBtn}>
+                                            <img src="/assets/ring.gif" className="w-6 h-6 absolute left-[1px] invert" alt="" />
+                                            Processing</button>
+                                            :
+                                        <button
+                                            className={styles.cartBtn}
+                                            img={product.thumbnail}
+                                            name={product.title}
+                                            brand={product.brand}
+                                            discount={product.discountPercentage}
+                                            price={product.price}
+                                            category={product.category}
+                                            stock={product.stock}
+                                            desc={product.description}
+                                            id={product.id}
+                                            onClick={(e)=>{
+                                                currentUser && addItemToCart(e)
+                                                setBtnLoader(true)
+                                                setValue(ind)
+                                                }}>                                           
+                                            Add to Cart</button>}
                                 </div>
                             </div>
                         )

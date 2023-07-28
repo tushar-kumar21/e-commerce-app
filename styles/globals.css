@@ -115,7 +115,6 @@ body {
     .tcard {
       transform-style: preserve-3d;
     }
-
     .category-cards-container {
       perspective: 1000px;
     }
@@ -134,6 +133,26 @@ body {
 
     .animation-wrapper {
       animation: contentanim 13s cubic-bezier(0.19, 1, 0.22, 1) infinite;
+    }
+    .google-bg{
+      background:linear-gradient(45deg,red,orange 30%,green 50%,skyblue);
+      background-clip:text;
+      color:transparent;
+    }
+    .github-bg{
+      background:linear-gradient(45deg,black,white);
+      background-clip:text;
+      color:transparent;
+    }
+    .main-google-bg{
+      background:linear-gradient(45deg,red,orange 30%,green 50%,skyblue);
+    }
+    .main-github-bg{
+      background:linear-gradient(45deg,black,white);
+    }
+    .kk{
+      background: #000;
+      font-size:2rem;
     }
   }
 }

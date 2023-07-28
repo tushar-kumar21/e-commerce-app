@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 
 import 
 {
+  GithubAuthProvider,
   GoogleAuthProvider,
   getAuth,
   onAuthStateChanged,
@@ -70,6 +71,16 @@ export const FirebaseProvider = ({ children }) => {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
     } catch (error) {
+      console.log(error)
+    }
+  }
+  const signInWithGithub = async () =>{
+    const provider = new GithubAuthProvider();
+    try{
+      const result = await signInWithPopup(auth, provider)
+      const user = result.user;
+      console.log(user)
+    } catch(error){
       console.log(error)
     }
   }
@@ -181,6 +192,7 @@ export const FirebaseProvider = ({ children }) => {
       addItemToCart,
       getCartSize,
       getProductsData,
+      signInWithGithub,
       productsData: state.productsData,
       currentUser: state.currentUser,
       cartSize: state.cartSize,

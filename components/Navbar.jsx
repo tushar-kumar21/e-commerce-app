@@ -70,8 +70,9 @@ export const Navbar = () => {
     }, [])
 
     return (
-        <div className="max-w-full">
+        <div className="max-w-full relative">
             <div className={styles.smallNavbar}>
+    
                 <div className="flex items-center gap-[.5em]">
                     <CallIcon className={styles.callIcon} />
                     <span className={styles.navText}>+001234567890</span>
@@ -172,44 +173,47 @@ export const Navbar = () => {
 
                 </div>
 
-                <div className="flex gap-4 cursor-pointer max-[1130px]:ml-4 md:hidden relative">
+                <div className="flex gap-4 cursor-pointer max-[1130px]:ml-4 relative md:mx-2">
 
                     {currentUser ?
                         <>
-                            <Image
-                                src={`https://res.cloudinary.com/demo/image/fetch/${currentUser.photoURL}`}
+                            <img
+                                src={currentUser.photoURL}
                                 height={20}
                                 width={20}
                                 alt="asdasdas"
                                 className='rounded-full scale-[1.8]'
                             />
 
-                            <span className='text-[.9rem] text-black ml-[-3px]'
+                            <span className='text-[.9rem] text-black ml-[-3px] md:hidden'
                             onMouseEnter={()=>setLogoutPopUP(true)}
                             >{currentUser.displayName}</span>
-                            <KeyboardArrowDownRoundedIcon className='absolute right-[-1em]' />
+                            <KeyboardArrowDownRoundedIcon className='!absolute !right-[-1em] md:hidden' />
                         </>
                         :
                         <>
-                            <AccountCircleRoundedIcon onClick={signInWithGoogle} className='scale-[1.5]' />
-                            <span className='text-[.9rem] text-black' onClick={signInWithGoogle}>Account</span>                            
+                            <AccountCircleRoundedIcon 
+                            onClick={()=>router.push("/")} 
+                            className='!scale-[1.5] md:!scale-[1.8]' />
+                            <span className='text-[.9rem] text-black md:hidden'>Account</span>                            
                         </>
                     }
-                 { logoutPopUP && <span className={styles.logout}
+                 { logoutPopUP && 
+                 <span className={styles.logout}
                     onClick={()=>{
                         signOut(auth)
                         setLogoutPopUP(false)                        
                     }}
                     onMouseLeave={()=>setLogoutPopUP(false)}
-                    ><LogoutRoundedIcon className="text-[1.1rem]" />Logout</span>}
+                    ><LogoutRoundedIcon className="!text-[1.1rem]" />Logout</span>}
                 </div>
 
-                <div className={styles.cart} onClick={() => router.push("/Cart")}>
+                <div className={styles.cart} 
+                onClick={() => router.push("/Cart")}>
                     <AddShoppingCartRoundedIcon />
-                    <span className='text-base'>Cart</span>
-                    <span className={styles.cartSize}>{cartSize}</span>
-                </div>
-                <MenuRoundedIcon className='text-black hidden md:block' />
+                    <span className='!text-base'>Cart</span>
+                  {currentUser && <span className={styles.cartSize}>{cartSize}</span>}
+                </div>                
             </div>
             {loader && <Loader />}
         </div>

@@ -38,13 +38,15 @@ const styles = {
     assuredText: 'text-[.65rem] italic bg-main text-white py-0 px-[.9em] ml-[-7px] rounded-lg leading-snug',
     starRating: 'text-white bg-green-500 text-xs flex items-center w-fit py-1 px-2 rounded-md gap-[.1em] m-2',
     blueStarRating: 'text-white bg-[#137be1] text-xs flex items-center w-fit py-1 px-2 rounded-xl gap-[.1em]',
+    addToCartBtn:"!p-3 !bg-[#5b18ac] !px-12 !text-base !font-semibold !mb-4 lg:!px-8 lg:!p-3 xs:!px-4 xs:!text-sm",
+    buyNowBtn:"!bg-[orangered] !p-3 !px-12 !text-base !font-semibold !mb-4 lg:!px-8 lg:!p-3 xs:!px-4 xs:!text-sm"
 }
 
 const Product = ({ id }) => {
     const [value, setValue] = useState(0);
     const router = useRouter();
     const fb = useFirebase();
-    const { addItemToCart } = fb;    
+    const { addItemToCart, currentUser } = fb;    
 
     const { data: productsData, error: productsError } = useSWR(`https://dummyjson.com/products/${id}`, productsFetcher);
 
@@ -75,13 +77,13 @@ const Product = ({ id }) => {
                                 }
                             </div>
                             <div className={styles.mainProduct}>
-                                <div className={styles.mainProductImg}>
+                             <div className={styles.mainProductImg}>
                                     <img className="rounded-lg w-[90%] h-[90%] object-contain" src={productsData.images[value]} alt="" />
                                 </div>
                                 <div className={styles.btns}>
                                     <Button
                                         variant="contained"
-                                        className="p-3 bg-[#5b18ac] px-12 text-base font-semibold mb-4 lg:px-8 lg:p-3"
+                                        className={styles.addToCartBtn}
                                         img={productsData.thumbnail}
                                         price={productsData.price}
                                         name={productsData.title}
@@ -90,15 +92,18 @@ const Product = ({ id }) => {
                                         id={productsData.id}
                                         onClick={(e) => {
                                             addItemToCart(e)
+                                            currentUser ? 
                                             router.push("/Cart")
+                                            :
+                                            router.push("/Login")
                                         }}
                                     >
-                                        <AddShoppingCartRoundedIcon className='mr-2' />
+                                        <AddShoppingCartRoundedIcon className='!mr-2' />
                                         ADD TO CART
                                     </Button>
 
                                     <Button variant="contained"
-                                        className="bg-[orangered] p-3 px-12 text-base font-semibold mb-4 lg:px-8 lg:p-3"> <BoltIcon className="mr-2" /> BUY NOW</Button>
+                                        className={styles.buyNowBtn}> <BoltIcon className="!mr-2" /> BUY NOW</Button>
                                 </div>
                             </div>
                         </div>
@@ -107,7 +112,7 @@ const Product = ({ id }) => {
                             <span className='flex text-[#808080] text-sm items-center'>
 
                                 <span className={styles.starRating}>{productsData.rating}<StarRoundedIcon
-                                    className='text-white text-sm'
+                                    className='!text-white !text-sm'
                                 />
                                 </span>
                                 <span> 27,888 Ratings & 2,238 Reviews </span>
@@ -134,25 +139,25 @@ const Product = ({ id }) => {
 
                             <span className='text-sm flex items-center gap-3' >
 
-                                <CalendarViewDayRoundedIcon className='text-green-500 text-sm' />
+                                <CalendarViewDayRoundedIcon className='!text-green-500 !text-sm' />
                                 <span className='font-semibold'>No cost EMI $20/month</span>. Standard EMI also available </span>
 
                             <h3>Available offers</h3>
 
                             <span className='text-sm flex items-center gap-3'>
-                                <SellRoundedIcon className='text-green-500 text-lg' />
+                                <SellRoundedIcon className='!text-green-500 !text-lg' />
                                 <span className='text-black font-semibold' >Bank Offer</span> 5% Cashback on Flipkart Axis
 
                                 Bank Card <span className='text-[#137be1] font-semibold' >T&C</span></span>
 
                             <span className='text-sm flex items-center gap-3'>
 
-                                <SellRoundedIcon className='text-green-500 text-lg' />
+                                <SellRoundedIcon className='!text-green-500 !text-lg' />
 
                                 <span className='text-black font-semibold'>Special Price </span>Get extra {productsData && productsData.discountPercentage}% off (price inclusive of cashback/coupon) <span className='text-[#137be1] font-semibold'>T&C</span></span>
 
                             <span className='text-sm flex items-center gap-[.875]'>
-                                <SellRoundedIcon className='text-green-500 text-lg mr-[.7em] '
+                                <SellRoundedIcon className='!text-green-500 !text-lg !mr-[.7em] '
                                 />Get extra {productsData && productsData.discountPercentage}% off (price inclusive of cashback/coupon)
 
                                 <span className='text-[#137be1] font-semibold'>T&C</span></span>
@@ -164,7 +169,7 @@ const Product = ({ id }) => {
                                 <span className='ml-[5.5em] text-[#137be1]'>{productsData.brand}</span>
 
                                 <span className={styles.blueStarRating}>{productsData.rating}<StarRoundedIcon
-                                    className="text-white text-sm"
+                                    className="!text-white !text-sm"
                                 />
                                 </span></span>
                             <span className='flex justify-center w-fit'>
