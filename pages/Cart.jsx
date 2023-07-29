@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useLayoutEffect } from "react";
 import { useState } from "react";
 import Image from "next/image";
 import { Button } from "@mui/material";
@@ -7,11 +7,10 @@ import SecurityTwoToneIcon from '@mui/icons-material/SecurityTwoTone';
 import { useFirebase } from "@/firebase/firebase";
 import { monthsData } from "@/data";
 import { RemoveItem } from "@/components/RemoveItem";
-import { collection, doc, onSnapshot, updateDoc } from "firebase/firestore";
-import { db } from "@/firebase/firebase";
 import { getAuth } from "firebase/auth";
 import { useRouter } from "next/router";
 import { ActionTypes } from "@/components/reducer";
+import { SaveForLater } from "@/components/SaveForLater";
 
 //STYLES
 
@@ -40,80 +39,84 @@ const Cart = () => {
 
   const [currentDate, setCurrentDate] = useState(0);
   const [currentMonth, setCurrentMonth] = useState(0);
-  const [isRemoveBox, setIsRemoveBox] = useState(false);
+  const [user, setUser] = useState(false);
 
   const fb = useFirebase();
   const auth = getAuth();
   const router = useRouter();
-  const { 
-    currentUser, 
-    productsData, 
-    getProductsData, 
-    getCurrentUser, 
-    getCartSize, 
-    cartSize, 
-    totalPrice, 
-    totalDiscount, 
-    dispatch 
+  const {
+    currentUser,
+    productsData,
+    getProductsData,
+    deleteProduct,
+    addItemToSaveForLater,
+    getCurrentUser,
+    getCartSize,
+    cartSize,
+    totalPrice,
+    totalDiscount,
+    dispatch
   } = fb;
 
-  const { 
-    SET_ITEM_QUANTITY, 
-    SET_TOTAL_PRICE, 
-    SET_TOTAL_DISCOUNT 
+  const {
+    SET_ITEM_QUANTITY,
+    SET_TOTAL_PRICE,
+    SET_TOTAL_DISCOUNT
   } = ActionTypes;
 
   const [counter, setCounter] = useState(0);
 
 
   const addItems = (id, e, ind) => {
-    setCounter(counter + 1)        
-    productsData[ind].quantity <= productsData[ind].stock && 
-    dispatch({
-      type:SET_TOTAL_PRICE, 
-      payload:totalPrice + parseInt(e.target.getAttribute('price'))
-    })
-
-    productsData[ind].quantity <= productsData[ind].stock && 
-    dispatch({
-      type: SET_TOTAL_DISCOUNT, 
-      payload:totalDiscount + parseInt(e.target.getAttribute('discount'))
-    })
-    
+    setCounter(counter + 1)
+    productsData[ind].quantity <= productsData[ind].stock &&
       dispatch({
-        type: SET_ITEM_QUANTITY, payload:{
-          id,
-          quantity: productsData[ind].quantity <= productsData[ind].stock ? productsData[ind].quantity + 1 : productsData[ind].quantity,
-        },
-      });
+        type: SET_TOTAL_PRICE,
+        payload: totalPrice + parseInt(e.target.getAttribute('price'))
+      })
+
+    productsData[ind].quantity <= productsData[ind].stock &&
+      dispatch({
+        type: SET_TOTAL_DISCOUNT,
+        payload: totalDiscount + parseInt(e.target.getAttribute('discount'))
+      })
+
+    dispatch({
+      type: SET_ITEM_QUANTITY, payload: {
+        id,
+        quantity: productsData[ind].quantity <= productsData[ind].stock ? productsData[ind].quantity + 1 : productsData[ind].quantity,
+      },
+    });
   };
 
 
   const removeItems = (id, e, ind) => {
     if (counter > 0) {
       setCounter(counter - 1)
-      
-      dispatch({
-        type:SET_TOTAL_PRICE, 
-        payload: totalPrice - parseInt(e.target.getAttribute('price'))})
 
       dispatch({
-        type:SET_TOTAL_DISCOUNT, 
+        type: SET_TOTAL_PRICE,
+        payload: totalPrice - parseInt(e.target.getAttribute('price'))
+      })
+
+      dispatch({
+        type: SET_TOTAL_DISCOUNT,
         payload: totalDiscount - parseInt(e.target.getAttribute('discount'))
       })
-    }    
+    }
 
     dispatch({
-      type:SET_ITEM_QUANTITY, payload:{
+      type: SET_ITEM_QUANTITY, payload: {
         id,
         quantity: productsData[ind].quantity > 1 ? productsData[ind].quantity - 1 : productsData[ind].quantity
       }
-    })  
+    })
   };
 
   let date = new Date().getDate() + 3;
   let month = new Date().getMonth() + 1;
-
+     
+  
   useEffect(() => {
     getCurrentUser()
     !currentUser && getCartSize()
@@ -124,13 +127,15 @@ const Cart = () => {
     }
     setCurrentDate(date)
     setCurrentMonth(month)
-  }, [currentUser])
-
+    !currentUser && router.push("/")
+    currentUser && router.push("/Cart")
+    currentUser ? setUser(true) : setUser(false)
+  }, [currentUser])    
 
 
 
   return (
-    <>
+    user && 
       <div className="max-w-full h-screen">
         <CartNavbar />
         <div className={styles.mainCart}>
@@ -146,6 +151,7 @@ const Cart = () => {
             <div className="pb-16 md:pb-6">
               {
                 productsData && productsData.map((item, ind) => {
+                  
                   return (
                     <Fragment key={item.id}>
                       <div className={styles.cartItems} >
@@ -155,7 +161,7 @@ const Cart = () => {
                           className="rounded-xl h-24 w-24" />
                         <div className="flex flex-col md:absolute md:right-0 md:w-[58%] md:h-fit">
                           <span className="text-base">{item.name}</span>
-                          <span className="text-[#808080] text-xs mt-1">smartphones</span>
+                          <span className="text-[#808080] text-xs mt-1">{item.category}</span>
                           <span className="text-[#808080] text-xs mt-4 inline-flex items-center">Seller: <span>&nbsp;{item.brand}</span>
                             <span className="inline-flex items-center ml-[.6em]">
                               <Image
@@ -194,16 +200,28 @@ const Cart = () => {
                             id={item.id}
                             discount={item.discount}>+</span>
                         </span>
-                        <span className={styles.productBtn}>SAVE FOR LATER</span>
-                        <span onClick={() => setIsRemoveBox(true)} className={styles.productBtn}>REMOVE</span>
+                        <span
+                          className={styles.productBtn}
+                          img={item.image}
+                          name={item.name}
+                          brand={item.brand}
+                          discount={item.discount}
+                          price={item.price}
+                          category={item.category}
+                          stock={item.stock}
+                          desc={item.desc}
+                          id={item.id+100}
+                          onClick={addItemToSaveForLater}>SAVE FOR LATER</span>
+                        <span className={styles.productBtn} onClick={()=>deleteProduct(item.id)}>REMOVE</span>
                       </div>
                     </Fragment>
                   )
                 })
               }
+              <SaveForLater />
             </div>
-            <div className={styles.placeOrder} 
-            onClick={() => router.push("/Checkout")}>
+            <div className={styles.placeOrder}
+              onClick={() => router.push("/Checkout")}>
               <Button variant="contained" className={styles.placeBtn}>PLACE ORDER</Button>
             </div>
           </div>
@@ -237,8 +255,7 @@ const Cart = () => {
           </div>
         </div>
       </div>
-      {isRemoveBox && <RemoveItem setIsRemoveBox={setIsRemoveBox} />}
-    </>
+    
   )
 }
 export default Cart;

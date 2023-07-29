@@ -12,7 +12,7 @@ const Login = () => {
 
     useEffect(()=>{
      getCurrentUser()
-     currentUser ? router.push("/Cart") : router.push("/Login")
+     currentUser ? router.push("/") : router.push("/Login")
      console.log("cshlfnaaam;mdas")
     },[currentUser])
 

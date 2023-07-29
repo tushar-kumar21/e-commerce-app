@@ -4,7 +4,8 @@ export const ActionTypes = {
     SET_PRODUCTS_DATA: 'SET_PRODUCTS_DATA',
     SET_ITEM_QUANTITY: 'SET_ITEM_QUANTITY',
     SET_TOTAL_PRICE: 'SET_TOTAL_PRICE',
-    SET_TOTAL_DISCOUNT: 'SET_TOTAL_DISCOUNT',    
+    SET_TOTAL_DISCOUNT: 'SET_TOTAL_DISCOUNT',   
+    SET_SAVEFORLATER_PRODUCTS_DATA:'SET_SAVEFORLATER_PRODUCTS_DATA'
 };
 
 export const reducer = (state, action) => {
@@ -15,6 +16,7 @@ export const reducer = (state, action) => {
         SET_PRODUCTS_DATA,
         SET_TOTAL_PRICE,
         SET_TOTAL_DISCOUNT,        
+        SET_SAVEFORLATER_PRODUCTS_DATA
     } = ActionTypes;
 
     switch (action.type) {
@@ -39,17 +41,21 @@ export const reducer = (state, action) => {
             return { ...state, totalPrice: action.payload }
 
         case SET_TOTAL_DISCOUNT:
-            return { ...state, totalDiscount: action.payload }        
+            return { ...state, totalDiscount: action.payload }
+       
+        case SET_SAVEFORLATER_PRODUCTS_DATA:
+            return{ ...state, saveForLater:action.payload }    
 
         default: throw new Error();
     }
 }
 
 export const initialStates = {
-    currentUser: "",
+    currentUser:"",
     cartSize: 0,
     productsData: "",
     totalPrice: "",
     totalDiscount: 0,
     totalPrice: 0,
+    saveForLater:"",
 }

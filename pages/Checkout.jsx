@@ -4,6 +4,7 @@ import ShoppingBasketRoundedIcon from '@mui/icons-material/ShoppingBasketRounded
 import DoneRoundedIcon from '@mui/icons-material/DoneRounded';
 import Button from '@mui/material/Button';
 import { useFirebase } from '@/firebase/firebase';
+import { useRouter } from 'next/router';
 
 //STYLES
 
@@ -26,15 +27,22 @@ const styles = {
 const Checkout = () => {
 
     const [tick, setTick] = useState(false);
+    const [user, setUser] = useState(false);
     const fb = useFirebase()
     const { productsData, getProductsData, getCurrentUser, currentUser, totalPrice } = fb;
+    const router = useRouter();
 
-    useEffect(() => {
-        getProductsData()
+    useEffect(() => {        
         getCurrentUser()
+        getProductsData()
+        if(currentUser){
+            currentUser ? router.push("/Checkout") : router.push("/")
+            currentUser ? setUser(true) : setUser(false);
+        }
     }, [currentUser])
 
     return (
+        user &&
         <main className='flex justify-between md:flex-col'>
             <section className={styles.itemSection}>
                 <div className='flex gap-2'>

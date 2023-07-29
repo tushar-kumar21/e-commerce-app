@@ -33,7 +33,7 @@ const styles = {
     searchItem: 'border border-borderGrey flex justify-between items-center h-[2.5em] w-[23%] px-[1em] py-[0] rounded-lg relative md:grow ',
     searchInput: 'bg-transparent outline-none tracking-wide placeholder:text-borderGrey placeholder:text-[.9rem] px-0 py-auto searchInput',
     searchProducts: 'list-none px-3 py-1 border-b-[1.5px] border-b-[#80808023] flex gap-5 items-center justify-start cursor-pointer hover:bg-gray-100',
-    searchBox: 'absolute top-[100%] w-full bg-white h-fit left-0 z-10 mt-2 rounded-lg max-h-[430px] overflow-auto search-scrollbar',
+    searchBox: 'absolute top-[100%] w-full bg-white h-fit z-[9999999] left-0 mt-2 rounded-lg max-h-[430px] overflow-auto search-scrollbar ',  
     logout:'absolute top-6 right-[-3.5em] flex items-center gap-2 shadow-[0px_0px_8px_lightgrey] px-4 py-1 z-50 rounded-md bg-white'
 }
 
@@ -173,7 +173,7 @@ export const Navbar = () => {
 
                 </div>
 
-                <div className="flex gap-4 cursor-pointer max-[1130px]:ml-4 relative md:mx-2">
+                <div className="flex gap-4 cursor-pointer max-[1130px]:ml-4 relative md:mx-2" onClick={()=>!currentUser && router.push("/Login")}>
 
                     {currentUser ?
                         <>
@@ -182,13 +182,13 @@ export const Navbar = () => {
                                 height={20}
                                 width={20}
                                 alt="asdasdas"
-                                className='rounded-full scale-[1.8]'
+                                className='rounded-full scale-[1.8]'                                
                             />
 
                             <span className='text-[.9rem] text-black ml-[-3px] md:hidden'
                             onMouseEnter={()=>setLogoutPopUP(true)}
                             >{currentUser.displayName}</span>
-                            <KeyboardArrowDownRoundedIcon className='!absolute !right-[-1em] md:hidden' />
+                            <KeyboardArrowDownRoundedIcon className='!absolute !right-[-1em] md:!hidden' />
                         </>
                         :
                         <>

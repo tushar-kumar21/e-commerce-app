@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@mui/material';
 import useSWR from "swr";
@@ -46,9 +46,9 @@ const Product = ({ id }) => {
     const [value, setValue] = useState(0);
     const router = useRouter();
     const fb = useFirebase();
-    const { addItemToCart, currentUser } = fb;    
+    const {getCurrentUser, addItemToCart, currentUser } = fb;    
 
-    const { data: productsData, error: productsError } = useSWR(`https://dummyjson.com/products/${id}`, productsFetcher);
+    const { data: productsData, error: productsError } = useSWR(`https://dummyjson.com/products/${id}`, productsFetcher);    
 
     return (
         <>
@@ -103,7 +103,14 @@ const Product = ({ id }) => {
                                     </Button>
 
                                     <Button variant="contained"
-                                        className={styles.buyNowBtn}> <BoltIcon className="!mr-2" /> BUY NOW</Button>
+                                        className={styles.buyNowBtn}
+                                        onClick={()=>{
+                                            currentUser ? 
+                                            router.push("/Cart")
+                                            :
+                                            router.push("/Login")
+                                        }}
+                                        > <BoltIcon className="!mr-2" /> BUY NOW</Button>
                                 </div>
                             </div>
                         </div>

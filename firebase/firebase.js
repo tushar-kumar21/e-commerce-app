@@ -18,7 +18,8 @@ import
   doc,
   getDocs,
   onSnapshot,
-  updateDoc 
+  updateDoc, 
+  deleteDoc
 } from "firebase/firestore";
 
 import 
@@ -60,7 +61,8 @@ export const FirebaseProvider = ({ children }) => {
     SET_ITEM_QUANTITY,
     SET_PRODUCTS_DATA,
     SET_TOTAL_PRICE,
-    SET_TOTAL_DISCOUNT
+    SET_TOTAL_DISCOUNT,
+    SET_SAVEFORLATER_PRODUCTS_DATA
   } = ActionTypes;
 
   const [state, dispatch] = useReducer(reducer, initialStates)
@@ -183,17 +185,101 @@ export const FirebaseProvider = ({ children }) => {
     }
   }
 
+  const addItemToSaveForLater=async(e)=>{    
+    const name = e.target.getAttribute('name');
+    const price = e.target.getAttribute('price');
+    const img = e.target.getAttribute('img');
+    const discount = e.target.getAttribute('discount');
+    const brand = e.target.getAttribute('brand');
+    const category = e.target.getAttribute('category');
+    const stock = e.target.getAttribute('stock');
+    const id = e.target.getAttribute('id');
+    const desc = e.target.getAttribute('desc')
+    
+    if (stock && desc && category) {
+      try {
+        const userCollectionRef = collection(db, `${state.currentUser.uid}`);
+        const productDocRef = doc(userCollectionRef, `${state.currentUser.displayName}_Details`);
+        const productCollectionRef = collection(productDocRef, 'save_For_Later_Products');
+        await setDoc(doc(productCollectionRef, `SaveForLater_product_Details${id}`), {
+          name: name,
+          price: price,
+          brand: brand,
+          image: img,
+          discount: discount,
+          category: category,
+          stock: stock,
+          id: id && id,
+          quantity: 1,
+          desc: desc
+        })
+
+        console.log("Data added successfully!");
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
+
+  const getSaveForLaterData=async(e)=>{
+    if (state.currentUser) {
+      const userCollectionRef = collection(db, `${state.currentUser.uid}`);
+      const productDocRef = doc(userCollectionRef, `${state.currentUser.displayName}_Details`);
+      const productCollectionRef = collection(productDocRef, 'save_For_Later_Products');      
+
+      const data=[];
+
+      onSnapshot(productCollectionRef, (snap) => {
+        data.length=0;
+        snap.forEach((docs) => {
+          data.push(docs.data());
+        });
+        dispatch({ type: SET_SAVEFORLATER_PRODUCTS_DATA, payload: data });
+      });      
+    
+    }
+  }
+
+  const deleteProduct=async(id)=>{    
+    if(state.currentUser){
+      const userCollectionRef = collection(db, `${state.currentUser.uid}`);
+      const productDocRef = doc(userCollectionRef, `${state.currentUser.displayName}_Details`);
+      const productCollectionRef = collection(productDocRef, 'products');
+    try{      
+      await deleteDoc(doc(productCollectionRef,`product_Details${id}`))
+    }catch(err){
+      console.log(err)
+    }}
+  }
+
+  const deleteSaveForLaterProduct=async(id)=>{    
+    if(state.currentUser){
+    const userCollectionRef = collection(db, `${state.currentUser.uid}`);
+    const productDocRef = doc(userCollectionRef, `${state.currentUser.displayName}_Details`);
+    const productCollectionRef = collection(productDocRef, 'save_For_Later_Products');
+    try{      
+      await deleteDoc(doc(productCollectionRef,`SaveForLater_product_Details${id}`))
+    }catch(err){
+      console.log(err)
+    }}
+  }
+ 
 
   return (
     <FirebaseContext.Provider value={{
       signInWithGoogle,
       getCurrentUser,
+      deleteProduct,
       userCollection,
       addItemToCart,
+      addItemToSaveForLater,
+      getSaveForLaterData,
+      deleteSaveForLaterProduct,
       getCartSize,
       getProductsData,
       signInWithGithub,
       productsData: state.productsData,
+      saveForLater:state.saveForLater,
       currentUser: state.currentUser,
       cartSize: state.cartSize,
       totalPrice: state.totalPrice,
